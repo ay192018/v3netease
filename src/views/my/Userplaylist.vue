@@ -71,7 +71,7 @@
       </van-tab>
 
       <van-tab :title="playlist.collection ? '收藏歌单' : ''">
-        <div class="ceated ceateds" v-if="cookie">
+        <div class="ceated ceateds padding" v-if="cookie">
           <div class="trackCount gedan">
             收藏歌单 ({{ playlist.collection.length }}个)
           </div>
@@ -215,8 +215,8 @@ export default {
     margin-top: 15px;
     width: 95vw;
     background: #fefefe;
-    padding-bottom: 100px;
-    min-height: 50px;
+
+    height: auto;
   }
   .names {
     width: 60vw;
@@ -235,6 +235,9 @@ export default {
   }
   /deep/ .van-empty {
     height: 20vh;
+  }
+  .padding {
+    padding-bottom: 200px;
   }
 }
 </style>

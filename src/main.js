@@ -8,9 +8,5 @@ import Vant from "vant";
 import "vant/lib/index.css";
 import "./less/nake.css";
 import "animate.css";
-createApp(App)
-  .use(store)
-  .use(router)
-  .use(Vant)
 
-  .mount("#app");
+createApp(App).use(store).use(router).use(Vant).mount("#app");

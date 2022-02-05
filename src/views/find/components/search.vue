@@ -16,7 +16,7 @@
         <van-icon name="bars" size="25" />
       </template>
       <template #right>
-        <a href="https://github.com/ay192018/vue3.0netease">
+        <a href="https://github.com/ay192018/v3netease">
           <van-image
             width="30"
             height="30"

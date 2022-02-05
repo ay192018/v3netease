@@ -54,6 +54,13 @@ const routes = [
     name: "search",
     component: () => import("@/views/search/index.vue"),
   },
+  {
+    path: "/video:id",
+    name: "video",
+    component: () => import("@/components/video/"),
+    props: true,
+    meta: { transition: "slide-fade" },
+  },
 ];
 
 const router = createRouter({

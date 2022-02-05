@@ -7929,6 +7929,11 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.nlark.com/vue-template-es2015-compiler/download/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha1-HuO8mhbsv1EYvjNLsV+cRvgvWCU=
 
+vue3-danmaku@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.npmmirror.com/vue3-danmaku/-/vue3-danmaku-0.2.0.tgz#997c5fb454ce1f0e445f433e17d6c91869881eea"
+  integrity sha512-pSoUBzBUdDOe2r8IlG/EL5Th53IYLbsD+9n3Iul9fdkZlbG2Gv2vczY4NaPtVXzk9+Hre3U0IonHicf5NEPOPQ==
+
 vue@^3.0.0:
   version "3.2.29"
   resolved "https://registry.npmmirror.com/vue/download/vue-3.2.29.tgz#3571b65dbd796d3a6347e2fd45a8e6e11c13d56a"

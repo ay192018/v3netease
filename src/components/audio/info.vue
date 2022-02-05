@@ -29,9 +29,7 @@
       fit="cover"
       class="rotateimg"
       :class="
-        store.state.isplay &&
-        store.state.audio.played &&
-        store.state.audio.readyState == 4
+        store.state.audio.played && store.state.audio.readyState == 4
           ? 'active'
           : ''
       "
@@ -195,6 +193,7 @@ export default {
     );
     /**
      * @param {Number} 传入1||-1来决定上下首
+     *
      */
     const switchsong = (index) => {
       if (store.state.songlist.length === store.state.curret + index) {
@@ -208,6 +207,7 @@ export default {
           background: "#7232dd",
           message: "没有上一首咯",
         });
+        documenM;
         return;
       }
       store.dispatch("setsetcurret", store.state.curret + index);
