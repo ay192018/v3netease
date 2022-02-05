@@ -1,0 +1,25 @@
+<template>
+  <div class="advice">
+    <van-cell
+      :title="item.keyword"
+      icon="search"
+      v-for="(item, index) in attrs.suggestlist"
+      :key="index"
+      @click="attrs.onSearch(item.keyword)"
+    />
+  </div>
+</template>
+<script>
+export default {
+  setup(props, { attrs }) {
+    return {
+      attrs,
+    };
+  },
+};
+</script>
+
+<style lang="less" scoped>
+.advice {
+}
+</style>

@@ -1,0 +1,48 @@
+<template>
+  <div class="search">
+    <van-nav-bar :border="false" fixed>
+      <template #title>
+        <van-button
+          size="small"
+          color="#ccc"
+          round
+          type="primary"
+          to="/search"
+          icon="search"
+          >搜索</van-button
+        >
+      </template>
+      <template #left>
+        <van-icon name="bars" size="25" />
+      </template>
+      <template #right>
+        <a href="https://github.com/ay192018/vue3.0netease">
+          <van-image
+            width="30"
+            height="30"
+            fit="cover"
+            src="https://b.yzcdn.cn/vant/logo/github.svg"
+        /></a>
+      </template>
+    </van-nav-bar>
+  </div>
+</template>
+
+<script>
+export default {};
+</script>
+
+<style lang="less" scoped>
+.search {
+  /deep/ .van-nav-bar__content {
+    background-color: pink;
+  }
+
+  /deep/ .van-button {
+    width: 220px;
+  }
+  /deep/.van-badge__wrapper {
+    color: #fff;
+  }
+}
+</style>
