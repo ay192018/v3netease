@@ -20,6 +20,7 @@ export default {
     const route = useRoute();
 
     watch(route, (val) => {
+      console.log(val.path);
       switch (val.path) {
         case "/":
           nextTick(() => {

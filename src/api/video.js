@@ -22,6 +22,13 @@ export const getvideodetail = (params) => {
     params,
   });
 };
+export const getmvdetail = (params) => {
+  return http({
+    method: "GET",
+    url: "/mv/detail",
+    params,
+  });
+};
 export const getvideourl = (params) => {
   return http({
     method: "GET",
@@ -29,10 +36,24 @@ export const getvideourl = (params) => {
     params,
   });
 };
+export const getmvurl = (params) => {
+  return http({
+    method: "GET",
+    url: "/mv/url",
+    params,
+  });
+};
 export const getvideocomment = (params) => {
   return http({
     method: "GET",
     url: "/comment/video",
+    params,
+  });
+};
+export const getmvcomment = (params) => {
+  return http({
+    method: "GET",
+    url: "/comment/mv",
     params,
   });
 };

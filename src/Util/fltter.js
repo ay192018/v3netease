@@ -103,3 +103,32 @@ export const lyrics = (lyric) => {
     key,
   };
 };
+
+/**
+ * @param  {String} 传入一个字符判断要请求那个接口
+ * @return  {String} 返回一个接口地址字符串
+ */
+export const tocommnts = (val) => {
+  if (val === 0) {
+    return "/comment/music";
+  } else if (val === 2) {
+    return "/comment/playlist";
+  } else if (val === 5) {
+    return "/comment/video";
+  }
+  // switch (val) {
+  //   case 0:
+  //     "/comment/music";
+  //     break;
+  //   case 2:
+  //     return "/comment/playlist";
+
+  //     break;
+  //   case 5:
+  //     " /comment/video";
+  //     break;
+
+  //   default:
+  //     break;
+  // }
+};

@@ -8,64 +8,188 @@
     <VueDanmaku
       :danmus="danmus"
       ref="danmaku"
-      autoplay
       :loop="true"
       class="Danmaku"
       :right="4"
       :speeds="100"
       :debounce="1000"
+      :randomChannel="true"
     />
 
-    <video :src="url" class="controls" controls ref="video"></video>
+    <video
+      :src="url"
+      class="controls"
+      ref="video"
+      autoplay
+      @click="playstatus"
+      @timeupdate="onTimeupdate"
+      @loadedmetadata="loadedmetadata"
+      @ended="ended"
+    />
+    <van-icon
+      name="play"
+      @click="play"
+      color="#fff"
+      size="50"
+      class="play"
+      v-if="icon"
+    />
+    <Data :data="datas" :attrs="attrs.id" />
+    <van-slider
+      v-model="value"
+      @change="onChange"
+      active-color="red"
+      button-size="15"
+      class="slider"
+      min="0"
+      :max="duration"
+    />
   </div>
 </template>
 
 <script>
-import { getvideodetail, getvideourl, getvideocomment } from "@/api/video.js";
+import {
+  getvideodetail,
+  getvideourl,
+  getvideocomment,
+  getmvcomment,
+  getvideorelated,
+  getmvdetail,
+  getmvurl,
+} from "@/api/video.js";
 import { nextTick, onMounted } from "@vue/runtime-core";
 import { useRouter } from "vue-router";
 import VueDanmaku from "vue3-danmaku";
-import { ref } from "vue";
+import { ref, reactive } from "vue";
+import Data from "./components/data.vue";
+
 export default {
-  components: { VueDanmaku },
+  components: { VueDanmaku, Data },
   setup(props, { attrs }) {
-    const data = ref({});
+    const datas = reactive({
+      data: {},
+      creator: {},
+      vid: "",
+    });
+    const value = ref(0);
+    const onChange = (value) => {
+      video.value.currentTime = value;
+    };
     const url = ref("");
     const video = ref(null);
     const danmaku = ref(null);
     const router = useRouter();
-
+    const icon = ref(false);
     const danmus = ref([]);
+    const duration = ref(0);
+
+    const playstatus = () => {
+      //播放状态
+      if (video.value.paused) {
+        nextTick(() => {
+          video.value.play();
+          icon.value = !icon.value;
+          danmaku.value.play();
+        });
+      } else {
+        nextTick(() => {
+          video.value.pause();
+          icon.value = !icon.value;
+          danmaku.value.pause();
+        });
+      }
+    };
+    const ended = () => {
+      icon.value = !icon.value;
+      nextTick(() => {
+        danmaku.value.stop();
+      });
+    };
+    const loadedmetadata = (e) => {
+      duration.value = e.target.duration;
+      // console.log(duration.value);
+    };
+    const play = () => {
+      nextTick(() => {
+        video.value.play();
+      });
+      icon.value = !icon.value;
+    };
+    const onTimeupdate = (e) => {
+      value.value = e.target.currentTime;
+    };
 
     onMounted(async () => {
-      const { data } = await getvideodetail({
-        id: attrs.id,
-      });
-      const res = await getvideourl({
-        id: attrs.id,
-      });
-      const comment = await getvideocomment({
-        id: attrs.id,
-        limit: 100,
-      });
+      if (attrs.id.length > 8) {
+        const { data } = await getvideodetail({
+          //视频详情
+          id: attrs.id,
+        });
+        console.log(data);
+        const res = await getvideourl({
+          //视频地址
+          id: attrs.id,
+        });
+        const comment = await getvideocomment({
+          //视频评论弹幕
+          id: attrs.id,
+          limit: 100,
+        });
+        let arr = [];
+        comment.data.comments.forEach((item) => {
+          arr.push(item.content);
+        });
+        danmus.value = arr;
 
-      let arr = [];
-      comment.data.comments.forEach((item) => {
-        arr.push(item.content);
-      });
-      danmus.value = arr;
+        datas.data = data.data;
+        datas.creator = data.data.creator;
+        datas.vid = data.data.vid;
+        url.value = res.data.urls[0].url;
+      } else {
+        const data = await getmvdetail({
+          //相关视频
+          mvid: attrs.id,
+        });
+        const res = await getmvurl({
+          //视频地址
+          id: attrs.id,
+        });
+        const comment = await getmvcomment({
+          //视频评论弹幕
+          id: attrs.id,
+          limit: 100,
+        });
+        // console.log(data.data.data, res, comment.data.comments);
+        datas.data = data.data.data;
+        url.value = res.data.data.url;
+        let arr = [];
+        comment.data.comments.forEach((item) => {
+          arr.push(item.content);
+        });
+        danmus.value = arr;
 
-      data.value = data.data;
+        datas.vid = data.data.vid;
 
-      url.value = res.data.urls[0].url;
+        // console.log(mv, res, comment);
+      }
     });
     return {
-      data,
+      datas,
       url,
       video,
       router,
       danmus,
       danmaku,
+      playstatus,
+      icon,
+      play,
+      onChange,
+      value,
+      onTimeupdate,
+      loadedmetadata,
+      duration,
+      attrs,
+      ended,
     };
   },
 };
@@ -73,7 +197,7 @@ export default {
 
 <style lang="less" scoped>
 .video {
-  background: #fff;
+  background: #000;
   position: absolute;
   left: 0;
   right: 0;
@@ -84,22 +208,12 @@ export default {
   height: 100%;
   .controls {
     z-index: -1;
-    background: #000;
-    object-fit: contain;
-    position: fixed !important;
-    top: 0px !important;
-    right: 0px !important;
-    bottom: 0px !important;
-    left: 0px !important;
-    box-sizing: border-box !important;
-    min-width: 0px !important;
-    max-width: none !important;
-    min-height: 0px !important;
-    max-height: none !important;
-    width: 100% !important;
-    height: 100% !important;
-    transform: none !important;
-    margin: 0px !important;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-70%);
   }
   /deep/ .van-nav-bar {
     background: transparent;
@@ -111,6 +225,17 @@ export default {
     left: 0;
     top: 10vh;
     right: 0;
+  }
+  .play {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -150%);
+  }
+  .slider {
+    position: absolute;
+    left: 0;
+    bottom: 3vh;
   }
 }
 </style>

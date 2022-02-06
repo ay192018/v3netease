@@ -29,7 +29,23 @@
               </div>
             </div>
           </div>
-          <van-icon name="ellipsis" size="20" />
+          <div class="icons">
+            <van-icon
+              name="tv-o"
+              v-if="item.mv"
+              size="20"
+              @click.stop="
+                router.push({
+                  name: 'video',
+                  params: {
+                    id: item.mv,
+                  },
+                })
+              "
+              class="tv"
+            />
+            <van-icon name="ellipsis" size="20" />
+          </div>
         </div>
         <div class="van-hairline--bottom"></div>
       </div>
@@ -41,6 +57,7 @@
 import { getcloudsearch } from "@/api/search.js";
 import { nextTick, ref } from "vue";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 import { Toast } from "vant";
 export default {
   setup(props, { attrs }) {
@@ -50,7 +67,7 @@ export default {
     const results = ref([]);
     const offset = ref(1);
     const store = useStore();
-
+    const router = useRouter();
     const onLoad = async () => {
       const { data } = await getcloudsearch({
         keywords: attrs.attrs.value,
@@ -120,6 +137,7 @@ export default {
       offset,
       store,
       play,
+      router,
     };
   },
 };
@@ -176,6 +194,11 @@ export default {
     margin: 10px auto;
     .playall {
       margin-left: 5px;
+    }
+  }
+  .icons {
+    .tv {
+      margin-right: 15px;
     }
   }
 }

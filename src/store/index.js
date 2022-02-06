@@ -21,6 +21,8 @@ export default createStore({
     playmodel: 1, //0,顺序播放，1随机播放，2循环播放
     profile: JSON.parse(localStorage.getItem("profile")) || {},
     flag: 0, //控制请求歌曲评论还是歌单评论   0，歌曲评论 2，歌单评论
+    videolist: [],
+    videocurret: 0,
   },
 
   mutations: {
@@ -47,6 +49,12 @@ export default createStore({
     setplaymodel(state, data) {
       state.playmodel = data;
     },
+    setvideolist(state, data) {
+      state.videolist = data;
+    },
+    setvideocurret(state, data) {
+      state.videocurret = data;
+    },
   },
   actions: {
     setisplay(mutation) {
@@ -71,6 +79,9 @@ export default createStore({
     },
     setplaymodel(mutation, playod) {
       mutation.commit("setplaymodel", playod);
+    },
+    setvideocurret(mutation, playod) {
+      mutation.commit("setvideocurret", playod);
     },
   },
   modules: {},

@@ -73,6 +73,7 @@ export default {
       /**
        * @params 判断每次追加的元素在原来的数组中是否有，如果有直接删除有的那个元素在追加到首位
        */
+      console.log(historylist.value.indexOf(value.value));
       if (historylist.value.indexOf(value.value) !== -1) {
         historylist.value.splice(historylist.value.indexOf(value.value), 1);
       }

@@ -6,10 +6,10 @@
       <van-tab title="歌手"> <Singer :attrs="attrs" /></van-tab>
       <van-tab title="歌单"> <Playlist :attrs="attrs" /></van-tab>
       <van-tab title="用户"> <User :attrs="attrs" /></van-tab>
-      <van-tab title="MV"> <Muisclist :attrs="attrs" /></van-tab>
+      <van-tab title="MV"> <Mv :attrs="attrs" /></van-tab>
       <van-tab title="歌词"> <Muisclist :attrs="attrs" /></van-tab>
-      <van-tab title="电台"> <Muisclist :attrs="attrs" /></van-tab>
-      <van-tab title="视频"> <Muisclist :attrs="attrs" /></van-tab>
+     
+      <van-tab title="视频"> <Video :attrs="attrs" /></van-tab>
     </van-tabs>
   </div>
 </template>
@@ -21,6 +21,8 @@ import Album from "./album.vue";
 import Singer from "./singer.vue";
 import Playlist from "./playlist.vue";
 import User from "./user.vue";
+import Video from "./video.vue";
+import Mv from "./mv.vue";
 export default {
   components: {
     Muisclist,
@@ -28,6 +30,8 @@ export default {
     Singer,
     Playlist,
     User,
+    Video,
+    Mv,
   },
   setup(props, { attrs }) {
     // 取值意义 : 1: 单曲, 10: 专辑, 100: 歌手,

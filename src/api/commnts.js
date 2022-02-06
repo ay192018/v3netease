@@ -1,5 +1,6 @@
 import http from "@/Util/http.js";
 import store from "../store";
+import { tocommnts } from "@/Util/fltter.js";
 
 /**
  *
@@ -13,7 +14,7 @@ import store from "../store";
 export const comment = (params) => {
   return http({
     method: "GET",
-    url: store.state.flag === 0 ? "/comment/music" : "/comment/playlist",
+    url: tocommnts(store.state.flag),
     params,
   });
 };

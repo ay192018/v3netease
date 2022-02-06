@@ -25,7 +25,23 @@
             </div>
           </div>
         </div>
-        <van-icon name="ellipsis" size="20" />
+        <div class="icons">
+          <van-icon
+            name="tv-o"
+            v-if="item.mv"
+            size="20"
+            @click.stop="
+              router.push({
+                name: 'video',
+                params: {
+                  id: item.mv,
+                },
+              })
+            "
+            class="tv"
+          />
+          <van-icon name="ellipsis" size="20" />
+        </div>
       </div>
     </div>
   </div>
@@ -36,6 +52,7 @@ import { myMixin } from "@/mixin/index.js";
 import { playCount } from "@/Util/fltter.js";
 import { getallsongs } from "@/api/songsheet.js";
 import { ref, computed, watchEffect, nextTick } from "vue";
+import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { Toast } from "vant";
 export default {
@@ -43,10 +60,10 @@ export default {
   setup(props, { attrs, emit }) {
     const id = ref([]);
     const allsongs = ref([]);
+    const router = useRouter();
     const store = useStore();
     const load = ref(false);
     watchEffect(async () => {
-     
       attrs.songsdata.trackIds.forEach((item) => {
         id.value.push(item.id);
       });
@@ -120,6 +137,7 @@ export default {
       play,
       myMixin,
       load,
+      router,
     };
   },
 };
@@ -168,6 +186,11 @@ export default {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+  }
+  .icons {
+    .tv {
+      margin-right: 15px;
+    }
   }
 }
 </style>

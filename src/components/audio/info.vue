@@ -29,7 +29,9 @@
       fit="cover"
       class="rotateimg"
       :class="
-        store.state.audio.played && store.state.audio.readyState == 4
+        store.state.isplay &&
+        store.state.audio.played &&
+        store.state.audio.readyState == 4
           ? 'active'
           : ''
       "
