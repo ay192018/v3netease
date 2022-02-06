@@ -70,6 +70,7 @@ export default {
       data: {},
       creator: {},
       vid: "",
+      artists: null,
     });
     const value = ref(0);
     const onChange = (value) => {
@@ -85,7 +86,7 @@ export default {
 
     const playstatus = () => {
       //播放状态
-      if (video.value.paused) {
+      if (video.value.paused && video.value.readyState === 4) {
         nextTick(() => {
           video.value.play();
           icon.value = !icon.value;
@@ -145,6 +146,7 @@ export default {
         datas.creator = data.data.creator;
         datas.vid = data.data.vid;
         url.value = res.data.urls[0].url;
+        console.log(url.value);
       } else {
         const data = await getmvdetail({
           //相关视频
@@ -159,9 +161,10 @@ export default {
           id: attrs.id,
           limit: 100,
         });
-        // console.log(data.data.data, res, comment.data.comments);
+        console.log(data.data.data);
         datas.data = data.data.data;
         url.value = res.data.data.url;
+        console.log(url.value);
         let arr = [];
         comment.data.comments.forEach((item) => {
           arr.push(item.content);
@@ -169,6 +172,8 @@ export default {
         danmus.value = arr;
 
         datas.vid = data.data.vid;
+
+        datas.artists = data.data.data.artists[0];
 
         // console.log(mv, res, comment);
       }

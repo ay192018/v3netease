@@ -30,7 +30,7 @@
       </div>
       <div class="number van-multi-ellipsis--l2 title">
         {{
-          attrs.attrs.length > 8 ? attrs.data.data.title : attrs.data.data.desc
+          attrs.attrs.length > 8 ? attrs.data.data.title : attrs.data.data.name
         }}
       </div>
       <span class="number"
@@ -48,9 +48,11 @@
         <van-icon name="good-job" color="#fff" size="35" class="play" /><span
           class="number"
           >{{
-            attrs.attrs.length > 8
-              ? attrs.data.data.praisedCount
-              : attrs.data.data.subCount
+            jobCount(
+              attrs.attrs.length > 8
+                ? attrs.data.data.praisedCount
+                : attrs.data.data.subCount
+            )
           }}</span
         >
       </div>
@@ -61,12 +63,14 @@
           size="35"
           class="play"
           @click="tocommnts"
-        /><span class="number">{{ attrs.data.data.commentCount }}</span>
+        /><span class="number">{{
+          jobCount(attrs.data.data.commentCount)
+        }}</span>
       </div>
       <div class="item">
         <van-icon name="share" color="#fff" size="35" class="play" /><span
           class="number"
-          >{{ attrs.data.data.shareCount }}</span
+          >{{ jobCount(attrs.data.data.shareCount) }}</span
         >
       </div>
       <div class="item">
@@ -88,10 +92,10 @@
 
 <script>
 import Commnts from "./commnts.vue";
-import { playCount } from "@/Util/fltter.js";
+import { playCount, jobCount } from "@/Util/fltter.js";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
-import { ref } from "vue";
+import { ref, watchEffect, reactive } from "vue";
 export default {
   components: {
     Commnts,
@@ -100,9 +104,13 @@ export default {
     const show = ref(false);
     const router = useRouter();
     const store = useStore();
-
+    const artists = reactive({
+      followed: {},
+    });
+    watchEffect(() => {
+      artists.followed = attrs.data.artists;
+    });
     const tocommnts = () => {
-      // console.log(attrs.attrs);
       store.dispatch("setflag", 5);
       show.value = true;
       // router.push({
@@ -119,6 +127,8 @@ export default {
       router,
       tocommnts,
       show,
+      jobCount,
+      artists,
     };
   },
 };

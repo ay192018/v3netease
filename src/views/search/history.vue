@@ -21,17 +21,7 @@ import { Dialog } from "vant";
 export default {
   setup(props, { attrs, emit }) {
     const historylist = computed(() => {
-      if (attrs.historylist.length) {
-        return Array.from(
-          new Set(
-            attrs.historylist.concat(
-              JSON.parse(localStorage.getItem("historylist"))
-            )
-          )
-        );
-      } else {
-        return JSON.parse(localStorage.getItem("historylist"));
-      }
+      return JSON.parse(localStorage.getItem("historylist"));
     });
     const reset = () => {
       Dialog.confirm({

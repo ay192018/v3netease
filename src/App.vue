@@ -14,13 +14,17 @@ import Audio from "@/components/audio/";
 import { nextTick, watch } from "vue";
 import { useRoute } from "vue-router";
 import { changeaudio, initaudio } from "@/Util/fltter.js";
+import { useStore } from "vuex";
 export default {
   components: { Audio, Layout },
   setup() {
     const route = useRoute();
-
+    const store = useStore();
     watch(route, (val) => {
-      console.log(val.path);
+      if (val.path.at(1) === "v" && val.path.at(5) === "o") {
+        store.dispatch("setisplay", !store.state.isplay);
+        store.state.audio.pause();
+      }
       switch (val.path) {
         case "/":
           nextTick(() => {
@@ -39,6 +43,10 @@ export default {
           changeaudio();
 
           break;
+        case "/Videosquare":
+          changeaudio();
+
+          break;
 
         default:
           nextTick(() => {
@@ -48,6 +56,7 @@ export default {
     });
     return {
       route,
+      store,
     };
   },
 };

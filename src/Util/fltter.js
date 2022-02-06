@@ -17,6 +17,14 @@ export const playCount = (num) => {
     return num;
   }
 };
+export const jobCount = (num) => {
+  if (num > 1000) {
+    num = (num / 1000).toFixed(1);
+    return `${num}k`;
+  } else {
+    return num;
+  }
+};
 /**
  * @param {number} second
  * @return {String}返回一个时间字符串

@@ -57,3 +57,24 @@ export const getmvcomment = (params) => {
     params,
   });
 };
+export const getvideogroup = (params) => {
+  return http({
+    method: "GET",
+    url: "/video/group/list",
+    params,
+  });
+};
+export const getvideocategory = (params) => {
+  return http({
+    method: "GET",
+    url: "/video/category/list",
+    params,
+  });
+};
+export const getgroup = (params) => {
+  return http({
+    method: "GET",
+    url: "/video/group",
+    params,
+  });
+};

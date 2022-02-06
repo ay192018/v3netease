@@ -18,6 +18,13 @@ const routes = [
         component: () => import("@/views/my/"),
       },
       {
+        path: "/Videosquare",
+        name: "Videosquare",
+        component: () => import("@/views/Videosquare/"),
+        props: true,
+        meta: { transition: "slide-fade" },
+      },
+      {
         path: "/follow",
         name: "follow",
         component: () => import("@/views/follow/"),
