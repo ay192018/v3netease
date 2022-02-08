@@ -13,11 +13,11 @@ The liver code is not easy. If it is published online, please indicate the sourc
 
 
 
-姓名|技能|排行
---|:--:|--:
-刘备|哭|大哥
-关羽|打|二哥
-张飞|骂|三弟
+姓名|技能|排行|姓名|技能|排行
+--|:--:|--:|--|:--:|--:
+刘备|哭|大哥|刘备|哭|大哥
+关羽|打|二哥|关羽|打|二哥
+张飞|骂|三弟|关羽|打|二哥
 
 
 [![H8pB79.png](https://s4.ax1x.com/2022/02/09/H8pB79.png)](https://imgtu.com/i/H8pB79)
