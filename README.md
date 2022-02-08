@@ -6,7 +6,7 @@ The liver code is not easy. If it is published online, please indicate the sourc
 
 [Github Adress](https://github.com/daoshengfu/Vue-NeteaseCloud-WebMusicApp)
 
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0915/095720_2490a5ae_7602838.jpeg "qrcode_1600134831290.jpg")
+![输入图片说明](https://s4.ax1x.com/2022/02/09/H8SA2T.png")
 
 
 
