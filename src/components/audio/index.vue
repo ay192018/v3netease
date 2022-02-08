@@ -97,9 +97,6 @@ export default {
     const store = useStore();
     const show = ref(false);
     const showPopup = () => {
-      if (store.state.songlist.length === 0) {
-        return;
-      }
       show.value = true;
     };
     /**

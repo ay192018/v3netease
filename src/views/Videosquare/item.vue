@@ -47,7 +47,7 @@
             {{ item.data.creator.nickname }}
           </div>
           <div class="job">
-            <van-icon name="good-job-o" /><span style="font-size: 5px">{{
+            <van-icon name="good-job-o" /><span>{{
               playCount(item.data.playTime)
             }}</span>
           </div>
@@ -129,7 +129,7 @@ export default {
         color: #323233;
       }
       .title {
-        width: 40%;
+        width: 35%;
       }
     }
   }
@@ -138,6 +138,11 @@ export default {
     justify-content: space-around;
     flex-wrap: wrap;
     padding-bottom: 50px;
+  }
+  .job {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
 }
 </style>
