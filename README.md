@@ -23,10 +23,6 @@ The liver code is not easy. If it is published online, please indicate the sourc
 [![H8pcp6.png](https://s4.ax1x.com/2022/02/09/H8pcp6.png)](https://imgtu.com/i/H8pcp6)
 [![H8p26O.png](https://s4.ax1x.com/2022/02/09/H8p26O.png)](https://imgtu.com/i/H8p26O)
 [![H8ph0H.png](https://s4.ax1x.com/2022/02/09/H8ph0H.png)](https://imgtu.com/i/H8ph0H)
-||
----|:--:|---:
-[![H8prkR.jpg](https://s4.ax1x.com/2022/02/09/H8prkR.jpg)](https://imgtu.com/i/H8prkR)|[![H8p00J.png](https://s4.ax1x.com/2022/02/09/H8p00J.png)](https://imgtu.com/i/H8p00J)|[![H8pwm4.png](https://s4.ax1x.com/2022/02/09/H8pwm4.png)](https://imgtu.com/i/H8pwm4)
-[![H8paXF.png](https://s4.ax1x.com/2022/02/09/H8paXF.png)](https://imgtu.com/i/H8paXF)|[![H8pU6U.png](https://s4.ax1x.com/2022/02/09/H8pU6U.png)](https://imgtu.com/i/H8pU6U)|[![H8pst1.png](https://s4.ax1x.com/2022/02/09/H8pst1.png)](https://imgtu.com/i/H8pst1)
 
 
 
