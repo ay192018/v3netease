@@ -20,9 +20,18 @@ export const comment = (params) => {
 };
 
 export const sendcomment = (params) => {
+  // console.log(params);
   return http({
     method: "GET",
     url: "/comment",
+    params,
+  });
+};
+export const sendcommentlike = (params) => {
+  // console.log(params);
+  return http({
+    method: "GET",
+    url: "/comment/like",
     params,
   });
 };

@@ -105,10 +105,17 @@ export default {
     const router = useRouter();
     const store = useStore();
     const artists = reactive({
+      creator: {},
       followed: {},
     });
     watchEffect(() => {
-      artists.followed = attrs.data.artists;
+      if (attrs.attrs.length > 8) {
+        artists.creator = attrs.data.creator;
+      } else {
+        artists.followed = attrs.data.artists;
+        console.log(attrs.data.artists);
+      }
+      console.log(artists);
     });
     const tocommnts = () => {
       store.dispatch("setflag", 5);

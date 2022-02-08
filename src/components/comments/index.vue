@@ -53,8 +53,9 @@
               <div class="right">
                 {{ playCount(item.likedCount) }}
                 <van-icon
-                  :name="item.liked === false ? 'good-job-o' : 'good-job'"
+                  :name="item.liked ? 'good-job' : 'good-job-o'"
                   size="25"
+                  @click="islike(item)"
                 />
               </div>
             </div>
@@ -91,9 +92,9 @@
 </template>
 
 <script>
-import { comment, sendcomment } from "@/api/commnts.js";
+import { comment, sendcomment, sendcommentlike } from "@/api/commnts.js";
 import { data } from "@/Util/dayjs.js";
-import { Toast } from "vant";
+import { Toast, Dialog } from "vant";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { reactive } from "@vue/runtime-core";
@@ -117,25 +118,61 @@ export default {
       router.back();
     };
     const sendcommit = async () => {
+      if (!JSON.parse(localStorage.getItem("cookie"))) {
+        return router.push("/login");
+      }
       const { data } = await sendcomment({
         t: 1,
         type: store.state.flag,
         id: attrs.id,
         content: message.value,
       });
+      if (data.code === 200) {
+        show.value = !show.value;
+        message.value = "";
+        comments.comment.unshift(data.comment);
+        Toast("评论成功");
+      } else {
+        show.value = !show.value;
+        message.value = "";
+        Dialog.alert({
+          title: data.data.dialog.title,
+          message: data.data.dialog.subtitle,
+          confirmButtonText: data.data.dialog.buttonMsg,
+        }).then(() => {
+          window.location = data.data.dialog.buttonUrl;
+        });
+      }
       console.log(data);
     };
     const onClickright = () => {
       Toast("分享事件");
     };
-
+    const islike = async (item) => {
+      if (!JSON.parse(localStorage.getItem("cookie"))) {
+        return router.push("/login");
+      }
+      const { data } = await sendcommentlike({
+        id: item.user.userId,
+        cid: attrs.id,
+        t: item.liked ? 0 : 1,
+        type: store.state.flag,
+      });
+      if (!item.liked) {
+        item.liked = !item.liked;
+        item.likedCount++;
+      } else {
+        item.liked = !item.liked;
+        item.likedCount--;
+      }
+    };
     const onLoad = async () => {
       const { data } = await comment({
         limit: 10,
         id: attrs.id,
         offset: (comments.offset - 1) * 20,
       });
-
+      console.log(data);
       comments.total = data.total;
       comments.comment.push(...data.comments);
 
@@ -160,6 +197,7 @@ export default {
       store,
       message,
       sendcommit,
+      islike,
     };
   },
 };

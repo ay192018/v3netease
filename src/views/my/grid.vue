@@ -61,7 +61,7 @@ export default {
         },
       ],
     });
-    console.log(application.app);
+
     return {
       application,
     };

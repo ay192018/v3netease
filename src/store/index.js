@@ -1,20 +1,8 @@
 import { createStore } from "vuex";
-const defaultMusic = {
-  name: "浪漫主义",
-  id: 1887917182,
-  ar: [
-    {
-      name: "姜云升",
-    },
-  ],
-  al: {
-    picUrl:
-      "http://p3.music.126.net/lFFiY-jvO1ENHtK2bZ6eUw==/109951166531420475.jpg",
-  },
-};
+
 export default createStore({
   state: {
-    songlist: [defaultMusic], //当前正在播放音乐的歌单
+    songlist: [], //当前正在播放音乐的歌单
     isplay: false, //播放状态
     audio: null, //audio dom元素
     curret: 0, //当前歌曲索引

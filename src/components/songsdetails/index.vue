@@ -61,6 +61,7 @@
                 size="mini"
                 icon="add-o"
                 round
+                v-if="songsdata.creator.userId !== store.state.profile.userId"
                 >关注</van-button
               >
             </div>
@@ -72,10 +73,27 @@
       </div>
       <div class="item">
         <div>
-          <van-icon
-            :name="songsdata.songs.subscribed ? 'success' : 'add-o'"
-            size="20"
-          />
+          <van-button
+            color="#e8e8e8"
+            :disabled="
+              songsdata.creator.userId === store.state.profile.userId
+                ? true
+                : false
+            "
+            size="mini"
+          >
+            <van-icon
+              :name="
+                songsdata.songs.subscribed ||
+                songsdata.creator.userId === store.state.profile.userId
+                  ? 'success'
+                  : 'add-o'
+              "
+              @click="issubscrib"
+              color="#323233"
+              size="20"
+          /></van-button>
+
           <div>{{ playCount(songsdata.songs.subscribedCount) }}</div>
         </div>
         <div @click="tocommnts">
@@ -166,13 +184,14 @@
 
 <script>
 import Playall from "./components/playall.vue";
-import { getsongsdetail } from "@/api/songsheet.js";
+import { getsongsdetail, getsubscribe } from "@/api/songsheet.js";
+
 
 import { onMounted, reactive, ref } from "vue";
 import { useStore } from "vuex";
 import { playCount } from "@/Util/fltter.js";
 import { useRouter, useRoute } from "vue-router";
-import { Toast } from "vant";
+import { Toast, Dialog } from "vant";
 export default {
   components: { Playall },
   setup(props, { attrs }) {
@@ -190,8 +209,44 @@ export default {
     const route = useRoute();
     const store = useStore();
     const cookie = JSON.parse(localStorage.getItem("profile"));
+    const issubscrib = async () => {
+      if (songsdata.songs.subscribed) {
+        Dialog.confirm({
+          confirmButtonText: "取消收藏",
+          message: "确定要取消收藏该歌单吗?",
+        })
+          .then(async () => {
+            const { data } = await getsubscribe({
+              t: songsdata.songs.subscribed ? 2 : 1,
+              id: songsdata.creator.userId,
+            });
+            songsdata.songs.subscribed = !songsdata.songs.subscribed;
+            if (songsdata.songs.subscribed) {
+              Toast("歌单已收藏");
+            } else {
+              Toast("取消收藏");
+            }
+          })
+          .catch(() => {
+            // on cancel
+          });
+      } else {
+        const { data } = await getsubscribe({
+          t: songsdata.songs.subscribed ? 2 : 1,
+          id: songsdata.creator.userId,
+        });
+        console.log(data);
+        songsdata.songs.subscribed = !songsdata.songs.subscribed;
+        if (songsdata.songs.subscribed) {
+          Toast("歌单已收藏");
+        } else {
+          Toast("取消收藏");
+        }
+      }
+    };
     const tocommnts = async () => {
       store.dispatch("setflag", 2);
+      
       router.push({
         name: "comments",
         params: {
@@ -239,6 +294,7 @@ export default {
       tocommnts,
       show,
       cookie,
+      issubscrib,
     };
   },
 };

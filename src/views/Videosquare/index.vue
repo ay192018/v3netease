@@ -5,9 +5,8 @@
       left-arrow
       @click-left="onClickLeft"
       :border="false"
-    >
-      <template #left
-        ><van-icon name="arrow-left" size="24" color="#323233" />
+      ><template #left>
+        <van-icon name="arrow-left" size="20" color="#323233" />
       </template>
     </van-nav-bar>
     <van-tabs v-model:active="active" animated>
@@ -32,7 +31,7 @@ export default {
       const res = await getvideocategory();
 
       tab.value = data.data;
-      console.log(tab.value, res);
+      // console.log(tab.value, res);
     });
     const onClickLeft = () => history.back();
     return {

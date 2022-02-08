@@ -70,3 +70,11 @@ export const getalbumdetail = (params) => {
     params,
   });
 };
+export const getsubscribe = (params) => {
+  // console.log(params);
+  return http({
+    method: "GET",
+    url: "/playlist/subscribe",
+    params,
+  });
+};

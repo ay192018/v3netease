@@ -4,9 +4,13 @@
       ref="audio"
       @timeupdate="onTimeupdate"
       @error="error"
-      :src="`https://music.163.com/song/media/outer/url?id=${
-        store.state.songlist[store.state.curret].id
-      }.mp3`"
+      :src="
+        useStore().state.songlist.length !== 0
+          ? `https://music.163.com/song/media/outer/url?id=${
+              store.state.songlist[store.state.curret].id
+            }.mp3`
+          : ''
+      "
       @playing="playing"
       @ended="ended"
       @waiting="waiting"
@@ -28,7 +32,11 @@
               ? 'active'
               : ''
           "
-          :src="useStore().state.songlist[useStore().state.curret].al.picUrl"
+          :src="
+            useStore().state.songlist.length !== 0
+              ? useStore().state.songlist[useStore().state.curret].al.picUrl
+              : 'http://p3.music.126.net/tBTNafgjNnTL1KlZMt7lVA==/18885211718935735.jpg'
+          "
         >
           <template v-slot:loading>
             <van-loading type="spinner" size="10" color="#000" /> </template
@@ -36,9 +44,11 @@
 
         <span class="songname van-ellipsis"
           >{{
-            `${store.state.songlist[store.state.curret].name}-${
-              store.state.songlist[store.state.curret].ar[0].name
-            }`
+            useStore().state.songlist.length !== 0
+              ? `${store.state.songlist[store.state.curret].name}-${
+                  store.state.songlist[store.state.curret].ar[0].name
+                }`
+              : "网易云音乐"
           }}
         </span>
       </div>
@@ -87,6 +97,9 @@ export default {
     const store = useStore();
     const show = ref(false);
     const showPopup = () => {
+      if (store.state.songlist.length === 0) {
+        return;
+      }
       show.value = true;
     };
     /**
@@ -108,7 +121,6 @@ export default {
       }
     };
     const ended = () => {
-    
       nextTick(() => {
         store.dispatch("setisplay");
         store.state.audio.pause();
@@ -159,6 +171,9 @@ export default {
     };
 
     const error = () => {
+      if (store.state.songlist.length === 0) {
+        return;
+      }
       Toast.fail("此歌曲暂不能播放");
       store.dispatch("setisplay");
       nextTick(() => {

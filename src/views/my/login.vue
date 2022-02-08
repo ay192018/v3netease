@@ -68,12 +68,14 @@ export default {
         localStorage.setItem("cookie", JSON.stringify(data.cookie));
         localStorage.setItem("profile", JSON.stringify(data.profile));
         Toast.clear();
+        Toast.success("登录成功");
+        router.push({
+          path: "/",
+          profile: data.profile,
+        });
+      } else {
+        Toast.fail("登录失败,请检查手机号密码是否有误");
       }
-      Toast.success("登录成功");
-      router.push({
-        path: "/",
-        profile: data.profile,
-      });
     };
 
     return {

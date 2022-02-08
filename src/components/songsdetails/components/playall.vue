@@ -72,7 +72,7 @@ export default {
         if (data.code === 200) {
           load.value = true;
           allsongs.value = data.songs;
-          console.log(data.songs);
+          // console.log(data.songs);
           emit("length", allsongs.value.length);
         } else {
           Toast.fail("加载失败,也许歌曲太多了");

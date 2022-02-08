@@ -21,10 +21,13 @@ export default {
     const route = useRoute();
     const store = useStore();
     watch(route, (val) => {
-      if (val.path.at(1) === "v" && val.path.at(5) === "o") {
-        store.dispatch("setisplay", !store.state.isplay);
-        store.state.audio.pause();
+      if (store.state.isplay) {
+        if (val.path.at(1) === "v" && val.path.at(5) === "o") {
+          store.dispatch("setisplay", !store.state.isplay);
+          store.state.audio.pause();
+        }
       }
+
       switch (val.path) {
         case "/":
           nextTick(() => {

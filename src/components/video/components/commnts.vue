@@ -33,7 +33,8 @@
                 {{ playCount(item.likedCount) }}
                 <van-icon
                   size="25"
-                  :name="item.liked === false ? 'good-job-o' : 'good-job'"
+                  :name="item.liked ? 'good-job' : 'good-job-o'"
+                  @click="islike(item)"
                 />
               </div>
             </div>
@@ -69,9 +70,11 @@
 
 <script>
 import { getvideocomment, getmvcomment } from "@/api/video.js";
+import { sendcomment, sendcommentlike } from "@/api/commnts.js";
 import { data } from "@/Util/dayjs.js";
 import { ref, reactive } from "vue";
 import { useStore } from "vuex";
+import { Toast } from "vant";
 import { playCount } from "@/Util/fltter.js";
 export default {
   setup(props, { attrs }) {
@@ -85,8 +88,51 @@ export default {
       total: 0,
       offset: 1,
     });
-    const sendcommit = () => {
-      console.log(1);
+    const sendcommit = async () => {
+      if (!JSON.parse(localStorage.getItem("cookie"))) {
+        return router.push("/login");
+      }
+      const { data } = await sendcomment({
+        t: 1,
+        type: attrs.attrs.attrs.length > 8 ? 5 : 1,
+        id: attrs.attrs.attrs,
+        content: message.value,
+      });
+      console.log(data);
+      if (data.code === 200) {
+        shows.value = !shows.value;
+        message.value = "";
+        comments.comment.unshift(data.comment);
+        Toast("评论成功");
+      } else {
+        shows.value = !shows.value;
+        message.value = "";
+        Dialog.alert({
+          title: data.data.dialog.title,
+          message: data.data.dialog.subtitle,
+          confirmButtonText: data.data.dialog.buttonMsg,
+        }).then(() => {
+          window.location = data.data.dialog.buttonUrl;
+        });
+      }
+    };
+    const islike = async (item) => {
+      if (!JSON.parse(localStorage.getItem("cookie"))) {
+           return router.push("/login");
+      }
+      const { data } = await sendcommentlike({
+        id: attrs.attrs.attrs,
+        cid: item.commentId,
+        t: item.liked ? 0 : 1,
+        type: attrs.attrs.attrs.length > 8 ? 5 : 1,
+      });
+      if (!item.liked) {
+        item.liked = !item.liked;
+        item.likedCount++;
+      } else {
+        item.liked = !item.liked;
+        item.likedCount--;
+      }
     };
     const onLoad = async () => {
       if (attrs.attrs.attrs.length > 8) {
@@ -134,6 +180,7 @@ export default {
       playCount,
       data,
       sendcommit,
+      islike,
     };
   },
 };

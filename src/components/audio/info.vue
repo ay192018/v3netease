@@ -49,7 +49,7 @@
         :class="
           attrs.currentTime >= lyric.key[index] &&
           attrs.currentTime < lyric.key[index + 1]
-            ? 'actives   shake-constant shake-slow'
+            ? 'actives'
             : ''
         "
       >
@@ -166,11 +166,9 @@ export default {
       () => {
         value.value = Number(attrs.currentTime);
 
-        if (document.querySelector(".lyrics").scrollTop) {
-          setTimeout(() => {
-            document.querySelector(".lyrics").scrollTop =
-              document.querySelector(".actives").offsetTop - 150;
-          }, 1000);
+        if (document.querySelector(".actives")) {
+          document.querySelector(".lyrics").scrollTop =
+            document.querySelector(".actives").offsetTop - 150;
         }
       }
     );
@@ -309,7 +307,7 @@ export default {
     left: 10%;
     top: 12%;
     width: 80vw;
-    color: #f6f7f8;
+    color: #ccc;
     height: 55vh;
     scroll-behavior: smooth;
     & {
@@ -320,7 +318,7 @@ export default {
     transform: rotateX(360deg);
     color: palevioletred;
     text-shadow: 2px 2px 4px #fbd0db;
-    transition: all 0.5s;
+    transition: all 1s;
     font-size: 18px;
     transition: all 0.5s;
   }

@@ -3,13 +3,12 @@
     <van-tabs v-model:active="active" animated>
       <van-tab title="单曲"> <Muisclist :attrs="attrs" /></van-tab>
       <van-tab title="专辑"> <Album :attrs="attrs" /></van-tab>
+      <van-tab title="视频"> <Video :attrs="attrs" /></van-tab>
       <van-tab title="歌手"> <Singer :attrs="attrs" /></van-tab>
       <van-tab title="歌单"> <Playlist :attrs="attrs" /></van-tab>
       <van-tab title="用户"> <User :attrs="attrs" /></van-tab>
       <van-tab title="MV"> <Mv :attrs="attrs" /></van-tab>
       <van-tab title="歌词"> <Muisclist :attrs="attrs" /></van-tab>
-     
-      <van-tab title="视频"> <Video :attrs="attrs" /></van-tab>
     </van-tabs>
   </div>
 </template>

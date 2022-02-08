@@ -83,7 +83,9 @@ export default {
     const icon = ref(false);
     const danmus = ref([]);
     const duration = ref(0);
-
+    nextTick(() => {
+      console.log(video.value);
+    });
     const playstatus = () => {
       //播放状态
       if (video.value.paused && video.value.readyState === 4) {
@@ -126,7 +128,7 @@ export default {
           //视频详情
           id: attrs.id,
         });
-        console.log(data);
+        // console.log(data);
         const res = await getvideourl({
           //视频地址
           id: attrs.id,
@@ -146,10 +148,10 @@ export default {
         datas.creator = data.data.creator;
         datas.vid = data.data.vid;
         url.value = res.data.urls[0].url;
-        console.log(url.value);
+        console.log(datas);
       } else {
         const data = await getmvdetail({
-          //相关视频
+          //mv
           mvid: attrs.id,
         });
         const res = await getmvurl({
@@ -161,7 +163,7 @@ export default {
           id: attrs.id,
           limit: 100,
         });
-        console.log(data.data.data);
+        // console.log(data.data.data);
         datas.data = data.data.data;
         url.value = res.data.data.url;
         console.log(url.value);
@@ -175,7 +177,7 @@ export default {
 
         datas.artists = data.data.data.artists[0];
 
-        // console.log(mv, res, comment);
+        console.log(datas);
       }
     });
     return {
