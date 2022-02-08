@@ -15,7 +15,7 @@ The liver code is not easy. If it is published online, please indicate the sourc
 
 
 
-[![H8prkR.jpg](https://s4.ax1x.com/2022/02/09/H8prkR.jpg)](https://imgtu.com/i/H8prkR)
+
 [![H8pyfx.png](https://s4.ax1x.com/2022/02/09/H8pyfx.png)](https://imgtu.com/i/H8pyfx)
 [![H8pg1K.png](https://s4.ax1x.com/2022/02/09/H8pg1K.png)](https://imgtu.com/i/H8pg1K)
 [![H8pfne.png](https://s4.ax1x.com/2022/02/09/H8pfne.png)](https://imgtu.com/i/H8pfne)
@@ -25,37 +25,10 @@ The liver code is not easy. If it is published online, please indicate the sourc
 [![H8ph0H.png](https://s4.ax1x.com/2022/02/09/H8ph0H.png)](https://imgtu.com/i/H8ph0H)
 ||
 ---|:--:|---:
-[![H8pB79.png](https://s4.ax1x.com/2022/02/09/H8pB79.png)](https://imgtu.com/i/H8pB79)|[![H8p00J.png](https://s4.ax1x.com/2022/02/09/H8p00J.png)](https://imgtu.com/i/H8p00J)|[![H8pwm4.png](https://s4.ax1x.com/2022/02/09/H8pwm4.png)](https://imgtu.com/i/H8pwm4)
+[![H8prkR.jpg](https://s4.ax1x.com/2022/02/09/H8prkR.jpg)](https://imgtu.com/i/H8prkR)|[![H8p00J.png](https://s4.ax1x.com/2022/02/09/H8p00J.png)](https://imgtu.com/i/H8p00J)|[![H8pwm4.png](https://s4.ax1x.com/2022/02/09/H8pwm4.png)](https://imgtu.com/i/H8pwm4)
 [![H8paXF.png](https://s4.ax1x.com/2022/02/09/H8paXF.png)](https://imgtu.com/i/H8paXF)|[![H8pU6U.png](https://s4.ax1x.com/2022/02/09/H8pU6U.png)](https://imgtu.com/i/H8pU6U)|[![H8pst1.png](https://s4.ax1x.com/2022/02/09/H8pst1.png)](https://imgtu.com/i/H8pst1)
 
-| leaderboard ![输入图片说明](https://s4.ax1x.com/2022/02/09/H8SA2T.png") |  leaderboard  ![输入图片说明](https://images.gitee.com/uploads/images/2021/0220/012953_9857b7de_7602838.png "屏幕截图.png") |leaderboard  ![输入图片说明](https://images.gitee.com/uploads/images/2021/0220/013025_ab2d440c_7602838.png "屏幕截图.png") |
-|---|---|---|
 
-#### playlist & playlistdetail
-
-|Singer Details-Biography [![H8S3RK.png](https://s4.ax1x.com/2022/02/09/H8S3RK.png)](https://imgtu.com/i/H8S3RK)  |Similar singers ![输入图片说明][![H8S9Vs.png](https://s4.ax1x.com/2022/02/09/H8S9Vs.png)](https://imgtu.com/i/H8S9Vs)|Singers ![输入图片说明](https://images.gitee.com/uploads/images/2021/0220/013535_bcfe5162_7602838.png "屏幕截图.png")  |
-|---|---|---|
-
-|Singers ![输入图片说明](https://images.gitee.com/uploads/images/2021/0220/013125_8983bc8c_7602838.png "屏幕截图.png")  |Singers detials ![输入图片说明](https://images.gitee.com/uploads/images/2021/0220/013215_106bb0f4_7602838.png "屏幕截图.png")  |Singers MV![输入图片说明](https://images.gitee.com/uploads/images/2021/0220/013229_77cba857_7602838.png "屏幕截图.png")   |
-|---|---|---|
-
-#### MV & MV player
-
-|MV ![输入图片说明](https://images.gitee.com/uploads/images/2021/0220/013609_7afb2cbd_7602838.png "屏幕截图.png") |MV Leaderboard ![输入图片说明](https://images.gitee.com/uploads/images/2021/0220/013638_8e75f908_7602838.png "屏幕截图.png")  |Total MV ![输入图片说明](https://images.gitee.com/uploads/images/2021/0220/013700_f95da2ea_7602838.png "屏幕截图.png")  |
-|---|---|---|
-
-|MV Play page ![输入图片说明](https://images.gitee.com/uploads/images/2021/0220/013833_1052918e_7602838.png "屏幕截图.png")   |MV Play  ![输入图片说明](https://images.gitee.com/uploads/images/2021/0220/014010_56ae1105_7602838.png "屏幕截图.png") | MV Play  ![输入图片说明](https://images.gitee.com/uploads/images/2021/0220/014044_e582c372_7602838.png "屏幕截图.png")|
-|---|---|---|
-
-#### Player
-
-|Player  ![输入图片说明](https://images.gitee.com/uploads/images/2021/0220/014825_ee2d1475_7602838.png "屏幕截图.png") |Player ![输入图片说明](https://images.gitee.com/uploads/images/2021/0220/014929_db8070a9_7602838.png "屏幕截图.png")  |Player![输入图片说明](https://images.gitee.com/uploads/images/2021/0220/020325_1b835cc2_7602838.png "屏幕截图.png")|
-|---|---|---|
-
-#### Search
-
-|Hot search list  ![输入图片说明](https://images.gitee.com/uploads/images/2021/0220/020400_1de6b893_7602838.png "屏幕截图.png") | Search suggestions ![](https://images.gitee.com/uploads/images/2021/0220/020436_e04c6aec_7602838.png "屏幕截图.png")  |Search details  ![输入图片说明](https://images.gitee.com/uploads/images/2021/0220/020512_2b796716_7602838.png "屏幕截图.png") |
-|---|---|---|
 
 #### Other
 
