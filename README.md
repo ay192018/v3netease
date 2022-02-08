@@ -13,7 +13,7 @@ The liver code is not easy. If it is published online, please indicate the sourc
 
 
 
-登录|首页|音乐|搜索|歌单|mv
+登录|首页|音乐|搜索用户|视频列表|歌单列表
 --|:--:|--:|--|:--:|--:
 [![H8ph0H.png](https://s4.ax1x.com/2022/02/09/H8ph0H.png)](https://imgtu.com/i/H8ph0H)|[![H8pfne.png](https://s4.ax1x.com/2022/02/09/H8pfne.png)](https://imgtu.com/i/H8pfne)|[![H8pg1K.png](https://s4.ax1x.com/2022/02/09/H8pg1K.png)](https://imgtu.com/i/H8pg1K)|[![H8pst1.png](https://s4.ax1x.com/2022/02/09/H8pst1.png)](https://imgtu.com/i/H8pst1)|[![H8p26O.png](https://s4.ax1x.com/2022/02/09/H8p26O.png)](https://imgtu.com/i/H8p26O)|[![H8pwm4.png](https://s4.ax1x.com/2022/02/09/H8pwm4.png)](https://imgtu.com/i/H8pwm4)
 |视频|视频详情|评论|audio详情|视频评论|歌单详情
