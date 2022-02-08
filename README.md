@@ -14,7 +14,7 @@ The liver code is not easy. If it is published online, please indicate the sourc
 | leaderboard ![输入图片说明](https://s4.ax1x.com/2022/02/09/H8SA2T.png") |  leaderboard  ![输入图片说明](https://images.gitee.com/uploads/images/2021/0220/012953_9857b7de_7602838.png "屏幕截图.png") |leaderboard  ![输入图片说明](https://images.gitee.com/uploads/images/2021/0220/013025_ab2d440c_7602838.png "屏幕截图.png") |
 |---|---|---|
 
-#### Singer & Singer Details
+#### playlist & playlistdetail
 
 |Singer Details-Biography ![输入图片说明](https://images.gitee.com/uploads/images/2021/0220/013344_9814ade8_7602838.png "屏幕截图.png")  |Similar singers ![输入图片说明](https://images.gitee.com/uploads/images/2021/0220/013406_7e7f7857_7602838.png "屏幕截图.png")  |Singers ![输入图片说明](https://images.gitee.com/uploads/images/2021/0220/013535_bcfe5162_7602838.png "屏幕截图.png")  |
 |---|---|---|
