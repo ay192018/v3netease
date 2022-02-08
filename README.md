@@ -16,7 +16,7 @@ The liver code is not easy. If it is published online, please indicate the sourc
 登录|视频|音乐|搜索|歌单|mv
 --|:--:|--:|--|:--:|--:
 [![H8ph0H.png](https://s4.ax1x.com/2022/02/09/H8ph0H.png)](https://imgtu.com/i/H8ph0H)|[![H8pfne.png](https://s4.ax1x.com/2022/02/09/H8pfne.png)](https://imgtu.com/i/H8pfne)|[![H8pg1K.png](https://s4.ax1x.com/2022/02/09/H8pg1K.png)](https://imgtu.com/i/H8pg1K)|
-|哭|大哥
+|视频|视频详情
 [![H8pB79.png](https://s4.ax1x.com/2022/02/09/H8pB79.png)](https://imgtu.com/i/H8pB79)|[![H8pyfx.png](https://s4.ax1x.com/2022/02/09/H8pyfx.png)](https://imgtu.com/i/H8pyfx)|[![H8pcp6.png](https://s4.ax1x.com/2022/02/09/H8pcp6.png)](https://imgtu.com/i/H8pcp6)|[![H8pRXD.png](https://s4.ax1x.com/2022/02/09/H8pRXD.png)](https://imgtu.com/i/H8pRXD)|[![H8paXF.png](https://s4.ax1x.com/2022/02/09/H8paXF.png)](https://imgtu.com/i/H8paXF)|[![H8pU6U.png](https://s4.ax1x.com/2022/02/09/H8pU6U.png)](https://imgtu.com/i/H8pU6U)
 
 [![H8pst1.png](https://s4.ax1x.com/2022/02/09/H8pst1.png)](https://imgtu.com/i/H8pst1)|
