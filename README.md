@@ -16,7 +16,7 @@ The liver code is not easy. If it is published online, please indicate the sourc
 
 #### playlist & playlistdetail
 
-|Singer Details-Biography ![输入图片说明](https://images.gitee.com/uploads/images/2021/0220/013344_9814ade8_7602838.png "屏幕截图.png")  |Similar singers ![输入图片说明](https://images.gitee.com/uploads/images/2021/0220/013406_7e7f7857_7602838.png "屏幕截图.png")  |Singers ![输入图片说明](https://images.gitee.com/uploads/images/2021/0220/013535_bcfe5162_7602838.png "屏幕截图.png")  |
+|Singer Details-Biography [![H8S3RK.png](https://s4.ax1x.com/2022/02/09/H8S3RK.png)](https://imgtu.com/i/H8S3RK)  |Similar singers ![输入图片说明][![H8S9Vs.png](https://s4.ax1x.com/2022/02/09/H8S9Vs.png)](https://imgtu.com/i/H8S9Vs)|Singers ![输入图片说明](https://images.gitee.com/uploads/images/2021/0220/013535_bcfe5162_7602838.png "屏幕截图.png")  |
 |---|---|---|
 
 |Singers ![输入图片说明](https://images.gitee.com/uploads/images/2021/0220/013125_8983bc8c_7602838.png "屏幕截图.png")  |Singers detials ![输入图片说明](https://images.gitee.com/uploads/images/2021/0220/013215_106bb0f4_7602838.png "屏幕截图.png")  |Singers MV![输入图片说明](https://images.gitee.com/uploads/images/2021/0220/013229_77cba857_7602838.png "屏幕截图.png")   |
