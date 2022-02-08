@@ -12,7 +12,7 @@ The liver code is not easy. If it is published online, please indicate the sourc
 
 
 
-| leaderboard ![输入图片说明]([![H8SA2T.png](https://s4.ax1x.com/2022/02/09/H8SA2T.png)](https://imgtu.com/i/H8SA2T)") |  leaderboard  ![输入图片说明](https://images.gitee.com/uploads/images/2021/0220/012953_9857b7de_7602838.png "屏幕截图.png") |leaderboard  ![输入图片说明](https://images.gitee.com/uploads/images/2021/0220/013025_ab2d440c_7602838.png "屏幕截图.png") |
+| leaderboard ![输入图片说明](https://s4.ax1x.com/2022/02/09/H8SA2T.png") |  leaderboard  ![输入图片说明](https://images.gitee.com/uploads/images/2021/0220/012953_9857b7de_7602838.png "屏幕截图.png") |leaderboard  ![输入图片说明](https://images.gitee.com/uploads/images/2021/0220/013025_ab2d440c_7602838.png "屏幕截图.png") |
 |---|---|---|
 
 #### Singer & Singer Details
