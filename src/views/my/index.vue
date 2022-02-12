@@ -13,53 +13,55 @@
         />
       </template>
     </van-nav-bar>
-    <div class="userdata">
-      <van-image
-        width="60"
-        height="60"
-        round
-        fit="cover"
-        class="img animate__animated animate__zoomInUp"
-        @click="!cookie ? router.push('/login') : retrun"
-        :src="
-          cookie
-            ? users.avatarUrl
-            : 'http://p3.music.126.net/tBTNafgjNnTL1KlZMt7lVA==/18885211718935735.jpg'
-        "
-      />
-      <br />
-      <span
-        class="name"
-        style="font-size: 16px; font-weight: bold; font-size: 16px"
-        :class="!cookie ? 'temp' : ''"
-        >{{ cookie ? users.nickname : "立即登录" }}</span
-      ><van-icon
-        class="name"
-        name="vip-card-o"
-        v-if="cookie"
-        :color="users.vipType === 0 ? '#c0c0c0' : 'red'"
-        size="25"
-        ><span style="font-size: 13px; vertical-align: top">
-          {{ users.vipType }}
-        </span></van-icon
-      ><br />
+    <van-pull-refresh loosing-text=" " loading-text=" " @refresh="onRefresh">
+      <div class="userdata">
+        <van-image
+          width="60"
+          height="60"
+          round
+          fit="cover"
+          class="img animate__animated animate__zoomInUp"
+          @click="!cookie ? router.push('/login') : retrun"
+          :src="
+            cookie
+              ? users.avatarUrl
+              : 'http://p3.music.126.net/tBTNafgjNnTL1KlZMt7lVA==/18885211718935735.jpg'
+          "
+        />
+        <br />
+        <span
+          class="name"
+          style="font-size: 16px; font-weight: bold; font-size: 16px"
+          :class="!cookie ? 'temp' : ''"
+          >{{ cookie ? users.nickname : "立即登录" }}</span
+        ><van-icon
+          class="name"
+          name="vip-card-o"
+          v-if="cookie"
+          :color="users.vipType === 0 ? '#c0c0c0' : 'red'"
+          size="25"
+          ><span style="font-size: 13px; vertical-align: top">
+            {{ users.vipType }}
+          </span></van-icon
+        ><br />
 
-      <div v-if="cookie">
-        <span class="title">{{ user.profile.followeds }} 关注</span>
-        <span class="title">{{ user.profile.follows }} 粉丝</span>
-        <span class="title">{{ user.level }} Lv</span>
+        <div v-if="cookie">
+          <span class="title">{{ user.profile.followeds }} 关注</span>
+          <span class="title">{{ user.profile.follows }} 粉丝</span>
+          <span class="title">{{ user.level }} Lv</span>
+        </div>
       </div>
-    </div>
 
-    <Grid />
-    <Userplaylist />
+      <Grid />
+      <Userplaylist />
+    </van-pull-refresh>
   </div>
 </template>
 
 <script>
 import Grid from "./grid.vue";
 import { useStore } from "vuex";
-
+import { ref } from "vue";
 import { getuserdata } from "@/api/user.js";
 import { onMounted } from "@vue/runtime-core";
 import { reactive, computed } from "vue";
@@ -81,6 +83,17 @@ export default {
     const cookie = computed(() => {
       return JSON.parse(localStorage.getItem("cookie"));
     });
+    const loading = ref(false);
+    const onRefresh = () => {
+      !cookie
+        ? router.push("/login")
+        : router.push({
+            name: "user",
+            params: {
+              id: store.state.profile.userId,
+            },
+          });
+    };
     const users = computed(() => {
       return JSON.parse(localStorage.getItem("profile"));
     });
@@ -102,6 +115,9 @@ export default {
       user,
       router,
       users,
+
+      loading,
+      onRefresh,
     };
   },
 };

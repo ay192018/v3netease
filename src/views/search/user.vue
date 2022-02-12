@@ -6,7 +6,20 @@
       finished-text="没有更多了"
       @load="onLoad"
     >
-      <van-cell v-for="(item, index) in artists" :key="index" clickable border>
+      <van-cell
+        v-for="(item, index) in artists"
+        :key="index"
+        clickable
+        border
+        @click="
+          router.push({
+            name: 'user',
+            params: {
+              id: item.userId,
+            },
+          })
+        "
+      >
         <template #icon>
           <div>
             <van-image
@@ -57,13 +70,13 @@ export default {
     const router = useRouter();
     const offset = ref(1);
     const onLoad = async () => {
-      console.log(attrs.attrs.value);
+      // console.log(attrs.attrs.value);
       const { data } = await getcloudsearch({
         keywords: attrs.attrs.value,
         type: 1002,
         offset: (offset.value - 1) * 20,
       });
-
+      console.log(data);
       artists.value.push(...data.result.userprofiles);
       loading.value = false;
       if (data.result.userprofiles.length) {

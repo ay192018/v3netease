@@ -43,6 +43,7 @@
           <van-icon name="ellipsis" size="20" />
         </div>
       </div>
+    <nut-backtop :bottom="150" :right="50" :duration="3000" ></nut-backtop>
     </div>
   </div>
 </template>

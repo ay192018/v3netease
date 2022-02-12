@@ -3,7 +3,6 @@
     <transition name="slide-fade">
       <component class="child-view" :is="Component"> </component>
     </transition>
-
     <Audio v-if="route.path !== '/login'" ref="Audio" />
   </router-view>
 </template>
@@ -18,7 +17,9 @@ import { useStore } from "vuex";
 export default {
   components: { Audio, Layout },
   setup() {
+	  
     const route = useRoute();
+	
     const store = useStore();
     watch(route, (val) => {
       if (store.state.isplay) {

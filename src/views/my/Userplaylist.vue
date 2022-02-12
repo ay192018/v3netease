@@ -233,7 +233,7 @@ export default {
     margin: 5px auto;
     padding: 5px;
   }
-  /deep/ .van-empty {
+  ::v-deep(.van-empty) {
     height: 20vh;
   }
   .padding {

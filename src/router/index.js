@@ -54,7 +54,7 @@ const routes = [
   {
     path: "/login",
     name: "login",
-    component: () => import("@/views/my/login.vue"),
+    component: () => import("@/views/login/login.vue"),
   },
   {
     path: "/search",
@@ -68,9 +68,17 @@ const routes = [
     props: true,
     meta: { transition: "slide-fade" },
   },
+  {
+    path: "/user:id",
+    name: "user",
+    component: () => import("@/components/user/"),
+    props: true,
+    meta: { transition: "slide-fade" },
+  },
 ];
 
 const router = createRouter({
+  mode: "hash",
   history: createWebHashHistory(),
   routes,
 });

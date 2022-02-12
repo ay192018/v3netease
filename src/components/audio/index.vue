@@ -28,7 +28,7 @@
           :class="
             store.state.isplay &&
             store.state.audio.played &&
-            store.state.audio.readyState == 4
+            store.state.audio.readyState === 4
               ? 'active'
               : ''
           "
@@ -97,7 +97,9 @@ export default {
     const store = useStore();
     const show = ref(false);
     const showPopup = () => {
-      show.value = true;
+      if (store.state.songlist.length) {
+        show.value = true;
+      }
     };
     /**
      * @param {Boolean} 接收布尔值改变父级弹出层状态
@@ -163,6 +165,9 @@ export default {
         loadingType: "spinner",
       });
     };
+    /**
+     * @event {事件对象}
+     */
     const loadedmetadata = (e) => {
       duration.value = e.target.duration;
     };

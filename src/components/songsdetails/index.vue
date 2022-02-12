@@ -54,7 +54,19 @@
                     color="#000"
                   /> </template
               ></van-image>
-              <p class="username">{{ songsdata.creator.nickname }}</p>
+              <p
+                class="username"
+                @click="
+                  router.push({
+                    name: 'user',
+                    params: {
+                      id: songsdata.creator.userId,
+                    },
+                  })
+                "
+              >
+                {{ songsdata.creator.nickname }}
+              </p>
               <van-button
                 type="primary"
                 color="red"
@@ -186,7 +198,6 @@
 import Playall from "./components/playall.vue";
 import { getsongsdetail, getsubscribe } from "@/api/songsheet.js";
 
-
 import { onMounted, reactive, ref } from "vue";
 import { useStore } from "vuex";
 import { playCount } from "@/Util/fltter.js";
@@ -246,7 +257,7 @@ export default {
     };
     const tocommnts = async () => {
       store.dispatch("setflag", 2);
-      
+
       router.push({
         name: "comments",
         params: {

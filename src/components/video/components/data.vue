@@ -13,11 +13,22 @@
               : attrs.data.data.cover
           "
         />
-        <span class="number username">{{
-          attrs.attrs.length > 8
-            ? attrs.data.creator.nickname
-            : attrs.data.data.artistName
-        }}</span>
+        <span
+          class="number username"
+          @click="
+            router.push({
+              name: 'user',
+              params: {
+                id: attrs.data.creator.userId,
+              },
+            })
+          "
+          >{{
+            attrs.attrs.length > 8
+              ? attrs.data.creator.nickname
+              : attrs.data.data.artistName
+          }}</span
+        >
         <van-button
           type="primary"
           :color="attrs.data.creator.followed ? '#ccc' : 'red'"
@@ -115,7 +126,7 @@ export default {
         artists.followed = attrs.data.artists;
         console.log(attrs.data.artists);
       }
-      console.log(artists);
+      // console.log(artists.followed);
     });
     const tocommnts = () => {
       store.dispatch("setflag", 5);

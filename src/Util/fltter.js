@@ -25,6 +25,7 @@ export const jobCount = (num) => {
     return num;
   }
 };
+
 /**
  * @param {number} second
  * @return {String}返回一个时间字符串

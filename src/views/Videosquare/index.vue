@@ -32,7 +32,9 @@ export default {
 
       tab.value = data.data;
       // console.log(tab.value, res);
+	  
     });
+	
     const onClickLeft = () => history.back();
     return {
       onClickLeft,

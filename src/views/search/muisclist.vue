@@ -45,8 +45,9 @@
               class="tv"
             />
             <van-icon name="ellipsis" size="20" />
-          </div>
+          </div>     
         </div>
+    
         <div class="van-hairline--bottom"></div>
       </div>
     </van-list>

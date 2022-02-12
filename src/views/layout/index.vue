@@ -21,6 +21,7 @@ export default {
   },
   setup() {
     const active = ref(0);
+
     return {
       active,
     };

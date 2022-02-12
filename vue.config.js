@@ -1,5 +1,6 @@
 //配置选项;
 module.exports = {
+  publicPath: "./",
   configureWebpack: {
     resolve: {
       alias: {

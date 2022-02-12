@@ -26,7 +26,19 @@
           <div class="content">
             <div class="top">
               <div class="left">
-                <div class="name">{{ item.user.nickname }}</div>
+                <div
+                  class="name"
+                  @click="
+                    router.push({
+                      name: 'user',
+                      params: {
+                        id: item.user.userId,
+                      },
+                    })
+                  "
+                >
+                  {{ item.user.nickname }}
+                </div>
                 <div class="time">{{ data(item.time) }}</div>
               </div>
               <div class="right">
@@ -74,6 +86,7 @@ import { sendcomment, sendcommentlike } from "@/api/commnts.js";
 import { data } from "@/Util/dayjs.js";
 import { ref, reactive } from "vue";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 import { Toast } from "vant";
 import { playCount } from "@/Util/fltter.js";
 export default {
@@ -83,6 +96,7 @@ export default {
     const message = ref("");
     const store = useStore();
     const shows = ref(false);
+    const router = useRouter();
     const comments = reactive({
       comment: [],
       total: 0,
@@ -118,7 +132,7 @@ export default {
     };
     const islike = async (item) => {
       if (!JSON.parse(localStorage.getItem("cookie"))) {
-           return router.push("/login");
+        return router.push("/login");
       }
       const { data } = await sendcommentlike({
         id: attrs.attrs.attrs,
@@ -181,6 +195,7 @@ export default {
       data,
       sendcommit,
       islike,
+      router,
     };
   },
 };

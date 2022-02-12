@@ -165,7 +165,6 @@ export default {
       () => attrs.currentTime,
       () => {
         value.value = Number(attrs.currentTime);
-
         if (document.querySelector(".actives")) {
           document.querySelector(".lyrics").scrollTop =
             document.querySelector(".actives").offsetTop - 150;
@@ -248,7 +247,7 @@ export default {
     const onChange = (value) => {
       store.state.audio.currentTime = value;
     };
-
+	
     return {
       playstyle,
       changeshow,
@@ -305,18 +304,19 @@ export default {
     text-align: center;
     position: fixed;
     left: 10%;
+
     top: 12%;
     width: 80vw;
     color: #ccc;
     height: 55vh;
     scroll-behavior: smooth;
     & {
-      font-size: 12px;
+      font-size: 15px;
     }
   }
   .actives {
     transform: rotateX(360deg);
-    color: palevioletred;
+    color: #ff6700;
     text-shadow: 2px 2px 4px #fbd0db;
     transition: all 1s;
     font-size: 18px;

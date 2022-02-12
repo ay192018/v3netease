@@ -53,6 +53,7 @@
           </div>
         </div>
       </div>
+        <nut-backtop :bottom="150" :right="50" ></nut-backtop>
     </van-list>
   </div>
 </template>
@@ -90,6 +91,7 @@ export default {
         finished.value = true;
       }
     };
+
     return {
       loading,
       finished,

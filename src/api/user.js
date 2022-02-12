@@ -29,3 +29,10 @@ export const getuserplaylist = (params) => {
     params,
   });
 };
+export const getusersubcounts = (params) => {
+  return http({
+    method: "GET",
+    url: "/artist/video",
+    params,
+  });
+};

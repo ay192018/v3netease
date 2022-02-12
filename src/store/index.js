@@ -1,12 +1,11 @@
 import { createStore } from "vuex";
-
 export default createStore({
   state: {
     songlist: [], //当前正在播放音乐的歌单
     isplay: false, //播放状态
     audio: null, //audio dom元素
     curret: 0, //当前歌曲索引
-    playmodel: 1, //0,顺序播放，1随机播放，2循环播放
+    playmodel: 0, //0,顺序播放，1随机播放，2循环播放
     profile: JSON.parse(localStorage.getItem("profile")) || {},
     flag: 0, //控制请求歌曲评论还是歌单评论   0，歌曲评论 2，歌单评论
     videolist: [],

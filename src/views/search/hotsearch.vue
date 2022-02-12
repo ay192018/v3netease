@@ -10,7 +10,7 @@
         ><span :class="{ actives: index < 3 }">{{ index + 1 }}</span
         >&nbsp;{{ item.searchWord }}</span
       >
-      <van-icon name="fire" color="red" size="15" v-if="index === 0" />
+      <van-icon name="fire" color="red" size="10" v-if="index === 0" />
     </div>
   </div>
 </template>

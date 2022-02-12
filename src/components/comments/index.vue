@@ -47,7 +47,19 @@
           <div class="content">
             <div class="top">
               <div class="left">
-                <div class="name">{{ item.user.nickname }}</div>
+                <div
+                  class="name"
+                  @click="
+                    router.push({
+                      name: 'user',
+                      params: {
+                        id: item.user.userId,
+                      },
+                    })
+                  "
+                >
+                  {{ item.user.nickname }}
+                </div>
                 <div class="time">{{ data(item.time) }}</div>
               </div>
               <div class="right">
@@ -59,7 +71,7 @@
                 />
               </div>
             </div>
-            <div class="bottom" @click="show = !show">
+            <div class="bottom" @click="ahplay(item.user.nickname)">
               {{ item.content }}
             </div>
           </div>
@@ -76,7 +88,7 @@
           clickable
           type="textarea"
           @click-right-icon="sendcommit"
-          placeholder="听说爱评论的粉丝很多"
+          :placeholder="placeholder"
           ><template #right-icon>
             <van-button size="small" type="primary" round>评论</van-button>
           </template></van-field
@@ -84,7 +96,7 @@
       </van-cell-group></van-popup
     >
     <div class="btn">
-      <van-button type="primary" size="large" round @click="show = !show"
+      <van-button type="primary" size="large" round @click="commentdata"
         >听说爱评论的粉丝很多</van-button
       >
     </div>
@@ -100,14 +112,17 @@ import { useRouter } from "vue-router";
 import { reactive } from "@vue/runtime-core";
 import { useStore } from "vuex";
 import { playCount } from "@/Util/fltter.js";
+
 export default {
   setup(props, { attrs }) {
+    const placeholder = ref("听说爱评论的粉丝很多~");
     const router = useRouter();
     const loading = ref(false);
     const finished = ref(false);
     const message = ref("");
     const store = useStore();
     const show = ref(false);
+
     const comments = reactive({
       comment: [],
       total: 0,
@@ -116,6 +131,14 @@ export default {
 
     const onClickLeft = () => {
       router.back();
+    };
+    const ahplay = (item) => {
+      show.value = !show.value;
+      placeholder.value = `回复:${item}`;
+    };
+    const commentdata = () => {
+      show.value = !show.value;
+      placeholder.value = `说点好听的把~`;
     };
     const sendcommit = async () => {
       if (!JSON.parse(localStorage.getItem("cookie"))) {
@@ -198,6 +221,10 @@ export default {
       message,
       sendcommit,
       islike,
+      ahplay,
+      placeholder,
+      commentdata,
+      router,
     };
   },
 };
