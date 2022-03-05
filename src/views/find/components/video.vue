@@ -1,5 +1,5 @@
 <template>
-  <div class="video auto">
+  <div class="video auto" v-if="cookie">
     <div class="title">
       <h3>精选音乐视频</h3>
       <van-button
@@ -40,6 +40,15 @@
       </div>
     </div>
   </div>
+  <van-empty image="network" description="请登录" v-else>
+    <van-button
+      round
+      type="danger"
+      class="bottom-button"
+      @click="router.push('/login')"
+      >登录</van-button
+    >
+  </van-empty>
 </template>
 
 <script>
@@ -47,6 +56,7 @@ import { playCount } from "@/Util/fltter.js";
 import { onMounted, reactive } from "@vue/runtime-core";
 import { getvideo } from "@/api/video.js";
 import { useRouter } from "vue-router";
+import { ref } from "vue";
 export default {
   setup() {
     const router = useRouter();
@@ -54,6 +64,7 @@ export default {
       list: [],
       offset: 0,
     });
+    const cookie = ref(JSON.parse(window.localStorage.getItem("cookie")));
     onMounted(async () => {
       const { data } = await getvideo({
         offset: videolist.offset,
@@ -73,6 +84,8 @@ export default {
       playCount,
       replist,
       router,
+      ref,
+      cookie,
     };
   },
 };
@@ -105,5 +118,9 @@ export default {
       }
     }
   }
+}
+.bottom-button {
+  width: 160px;
+  height: 40px;
 }
 </style>

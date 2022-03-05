@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import { debounce } from "@/Util/fltter.js";
 import Hotsearch from "./hotsearch.vue";
 import { ref, reactive, onMounted } from "vue";
 import History from "./history.vue";
@@ -73,7 +74,7 @@ export default {
       /**
        * @params 判断每次追加的元素在原来的数组中是否有，如果有直接删除有的那个元素在追加到首位
        */
-      console.log(historylist.value.indexOf(value.value));
+      // console.log(historylist.value.indexOf(value.value));
       if (historylist.value.indexOf(value.value) !== -1) {
         historylist.value.splice(historylist.value.indexOf(value.value), 1);
       }
@@ -84,15 +85,16 @@ export default {
     const reset = () => {
       historylist.value = [];
     };
+
     const values = async (val) => {
       if (val.length === 0) return;
-
       const { data } = await getsuggest({
         type: "mobile",
         keywords: val,
       });
       suggestlist.value = data.result.allMatch;
     };
+
     const onCancel = () => router.back();
     return {
       value,
@@ -106,6 +108,7 @@ export default {
       values,
       suggestlist,
       hotsearch,
+      debounce,
     };
   },
 };

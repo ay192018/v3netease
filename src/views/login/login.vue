@@ -69,9 +69,9 @@ export default {
         localStorage.setItem("profile", JSON.stringify(data.profile));
         Toast.clear();
         Toast.success("登录成功");
-        router.push({
+        window;
+        router.go({
           path: "/",
-          profile: data.profile,
         });
       } else {
         Toast.fail("登录失败,请检查手机号密码是否有误");

@@ -104,21 +104,21 @@
 <script>
 import Commnts from "./commnts.vue";
 import { playCount, jobCount } from "@/Util/fltter.js";
-import { useRouter } from "vue-router";
-import { useStore } from "vuex";
-import { ref, watchEffect, reactive } from "vue";
+import { ref, watchEffect, reactive, inject } from "vue";
+import MyHooks from "@/hooks/index.js";
 export default {
   components: {
     Commnts,
   },
   setup(props, { attrs }) {
     const show = ref(false);
-    const router = useRouter();
-    const store = useStore();
+
+    const { router, store } = MyHooks();
     const artists = reactive({
       creator: {},
       followed: {},
     });
+
     watchEffect(() => {
       if (attrs.attrs.length > 8) {
         artists.creator = attrs.data.creator;
@@ -147,6 +147,7 @@ export default {
       show,
       jobCount,
       artists,
+      MyHooks,
     };
   },
 };

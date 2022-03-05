@@ -17,9 +17,8 @@ import { useStore } from "vuex";
 export default {
   components: { Audio, Layout },
   setup() {
-	  
     const route = useRoute();
-	
+
     const store = useStore();
     watch(route, (val) => {
       if (store.state.isplay) {
@@ -37,6 +36,7 @@ export default {
           break;
         case "/login":
           break;
+
         case "/my":
           nextTick(() => {
             changeaudio();

@@ -60,14 +60,12 @@ export const random = (Start, end) => {
  * @param  {Number} 延迟多秒执行
  */
 export const debounce = (fn, delay) => {
-  var timer;
-  return function (...args) {
+  let timer = null;
+  return () => {
     if (timer) {
       clearTimeout(timer);
     }
-    timer = setTimeout(() => {
-      fn.apply(this, args);
-    }, delay);
+    timer = setTimeout(fn, delay);
   };
 };
 /**
@@ -75,7 +73,7 @@ export const debounce = (fn, delay) => {
  *
  */
 export const changeaudio = () => {
-  document.querySelector(".audio").style.bottom = "50px";
+  document.querySelector(".audio").style.bottom = "51px";
 };
 export const initaudio = () => {
   document.querySelector(".audio").style.bottom = 0;
@@ -83,7 +81,7 @@ export const initaudio = () => {
 
 /**
  * @param  {Object} 传入请求的歌曲对象数据进行抽离
- * @return  {Object} 延迟多秒执行
+ * @return  {Object} 键值
  */
 export const lyrics = (lyric) => {
   let lyrics = lyric.lrc.lyric;

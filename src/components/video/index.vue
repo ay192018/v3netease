@@ -60,7 +60,7 @@ import {
 import { nextTick, onMounted } from "@vue/runtime-core";
 import { useRouter } from "vue-router";
 import VueDanmaku from "vue3-danmaku";
-import { ref, reactive } from "vue";
+import { ref, reactive, provide } from "vue";
 import Data from "./components/data.vue";
 
 export default {
@@ -72,6 +72,7 @@ export default {
       vid: "",
       artists: null,
     });
+
     const value = ref(0);
     const onChange = (value) => {
       video.value.currentTime = value;
@@ -83,9 +84,7 @@ export default {
     const icon = ref(false);
     const danmus = ref([]);
     const duration = ref(0);
-    nextTick(() => {
-      console.log(video.value);
-    });
+
     const playstatus = () => {
       //播放状态
       if (video.value.paused && video.value.readyState === 4) {
@@ -136,7 +135,7 @@ export default {
         const comment = await getvideocomment({
           //视频评论弹幕
           id: attrs.id,
-          limit: 100,
+          limit: 20,
         });
         let arr = [];
         comment.data.comments.forEach((item) => {
@@ -148,7 +147,6 @@ export default {
         datas.creator = data.data.creator;
         datas.vid = data.data.vid;
         url.value = res.data.urls[0].url;
-        console.log(datas);
       } else {
         const data = await getmvdetail({
           //mv

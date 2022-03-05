@@ -10,6 +10,7 @@ export default createStore({
     flag: 0, //控制请求歌曲评论还是歌单评论   0，歌曲评论 2，歌单评论
     videolist: [],
     videocurret: 0,
+    audioshow: false,
   },
 
   mutations: {
@@ -42,6 +43,9 @@ export default createStore({
     setvideocurret(state, data) {
       state.videocurret = data;
     },
+    setaudioshow({ audioshow }) {
+      audioshow = !audioshow;
+    },
   },
   actions: {
     setisplay(mutation) {
@@ -69,6 +73,9 @@ export default createStore({
     },
     setvideocurret(mutation, playod) {
       mutation.commit("setvideocurret", playod);
+    },
+    setaudioshow({ commit }) {
+      commit("setaudioshow");
     },
   },
   modules: {},

@@ -80,19 +80,17 @@ export default {
       profile: {},
       level: null,
     });
-    const cookie = computed(() => {
-      return JSON.parse(localStorage.getItem("cookie"));
-    });
+    const cookie = JSON.parse(localStorage.getItem("cookie"));
     const loading = ref(false);
     const onRefresh = () => {
-      !cookie
-        ? router.push("/login")
-        : router.push({
+      cookie !== null
+        ? router.push({
             name: "user",
             params: {
               id: store.state.profile.userId,
             },
-          });
+          })
+        : router.push("/login");
     };
     const users = computed(() => {
       return JSON.parse(localStorage.getItem("profile"));

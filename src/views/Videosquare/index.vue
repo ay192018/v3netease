@@ -1,20 +1,26 @@
 <template>
-  <div class="Videosquare follow animate__fadeIn animate__animated">
-    <van-nav-bar
-      title="视频广场"
-      left-arrow
-      @click-left="onClickLeft"
-      :border="false"
-      ><template #left>
-        <van-icon name="arrow-left" size="20" color="#323233" />
-      </template>
-    </van-nav-bar>
+  <div class="Videosquare  animate__fadeIn animate__animated" v-if="cookie">
+    <van-nav-bar title="视频广场" :border="false"> </van-nav-bar>
     <van-tabs v-model:active="active" animated>
-      <van-tab v-for="(item, index) in tab" :key="index" :title="item.name">
+      <van-tab
+        v-for="(item, index) in tab"
+        :key="index"
+        :title="item.name"
+        :disabled="item.name === 'MV' ? true : false"
+      >
         <Item :item="item.id" />
       </van-tab>
     </van-tabs>
   </div>
+  <van-empty image="network" description="请登录" v-else>
+    <van-button
+      round
+      type="danger"
+      class="bottom-button"
+      @click="router.push('/login')"
+      >登录</van-button
+    >
+  </van-empty>
 </template>
 
 <script>
@@ -22,26 +28,35 @@ import { getvideogroup, getvideocategory } from "@/api/video.js";
 import { onMounted } from "@vue/runtime-core";
 import Item from "./item.vue";
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 export default {
   components: { Item },
   setup() {
     const tab = ref([]);
+    const active = ref(0);
+    const router = useRouter();
+    const cookie = ref(JSON.parse(window.localStorage.getItem("cookie")));
     onMounted(async () => {
       const { data } = await getvideogroup();
       const res = await getvideocategory();
 
       tab.value = data.data;
       // console.log(tab.value, res);
-	  
     });
-	
-    const onClickLeft = () => history.back();
+
     return {
-      onClickLeft,
       tab,
+      active,
+      router,
+      cookie,
     };
   },
 };
 </script>
 
-<style></style>
+<style lang="less" scoped>
+.bottom-button {
+  width: 160px;
+  height: 40px;
+}
+</style>

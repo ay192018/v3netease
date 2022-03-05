@@ -1,6 +1,11 @@
 <template>
   <div class="icons auto">
-    <div class="item" v-for="(item, index) in icons.icon" :key="item.id">
+    <div
+      class="item"
+      v-for="(item, index) in icons.icon"
+      :key="item.id"
+      @click="Notify({ type: 'warning', message: '功能暂未开发' })"
+    >
       <img :src="item.iconUrl" alt="" />
       <span class="title">{{ item.name }}</span>
       <div v-if="index === 0" class="data">
@@ -12,6 +17,7 @@
 
 <script>
 import { getindexFind } from "@/api/indexFind.js";
+import { Notify } from "vant";
 import { onMounted, reactive, markRaw } from "vue";
 import { week } from "@/Util/dayjs.js";
 export default {
@@ -25,6 +31,7 @@ export default {
     return {
       icons,
       week,
+      Notify,
     };
   },
 };

@@ -61,7 +61,7 @@ export default {
 
       artists.value.push(...data.result.artists);
       loading.value = false;
-
+      console.log(data.result.artists);
       if (data.result.artists.length) {
         offset.value++;
       } else {

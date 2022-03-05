@@ -7,27 +7,29 @@ const routes = [
     component: () => import("@/views/layout/"),
     children: [
       {
-        path: "",
+        path: "/",
         name: "find",
-
         component: () => import("@/views/find/"),
+        meta: { keepAlive: true },
       },
       {
         path: "/my",
         name: "my",
         component: () => import("@/views/my/"),
+        meta: { keepAlive: true },
       },
       {
         path: "/Videosquare",
         name: "Videosquare",
         component: () => import("@/views/Videosquare/"),
         props: true,
-        meta: { transition: "slide-fade" },
+        meta: { transition: "slide-fade", keepAlive: true },
       },
       {
         path: "/follow",
         name: "follow",
         component: () => import("@/views/follow/"),
+        keepAlive: true,
       },
     ],
   },
@@ -36,20 +38,21 @@ const routes = [
     name: "albumlist",
     component: () => import("@/components/songsdetails/albumlist.vue"),
     props: true,
-    meta: { transition: "slide-fade" },
+    meta: { transition: "slide-fade", keepAlive: true },
   },
   {
     path: "/songsdetails:id",
     name: "songsdetails",
     component: () => import("@/components/songsdetails/"),
     props: true,
-    meta: { transition: "slide-fade" },
+    meta: { transition: "slide-fade", keepAlive: true },
   },
   {
     path: "/comments:id",
     name: "comments",
     component: () => import("@/components/comments/"),
     props: true,
+    keepAlive: true,
   },
   {
     path: "/login",
@@ -60,20 +63,21 @@ const routes = [
     path: "/search",
     name: "search",
     component: () => import("@/views/search/index.vue"),
+    keepAlive: true,
   },
   {
     path: "/video:id",
     name: "video",
     component: () => import("@/components/video/"),
     props: true,
-    meta: { transition: "slide-fade" },
+    meta: { transition: "slide-fade", keepAlive: true },
   },
   {
     path: "/user:id",
     name: "user",
     component: () => import("@/components/user/"),
     props: true,
-    meta: { transition: "slide-fade" },
+    meta: { transition: "slide-fade", keepAlive: true },
   },
 ];
 
