@@ -1,6 +1,6 @@
 import axios from "axios";
 const http = axios.create({
-  baseURL: "/api",
+  baseURL: "http://www.codeman.ink:3000",
   timeout: 5000,
   params: {
     cookie: localStorage.getItem("cookie"),

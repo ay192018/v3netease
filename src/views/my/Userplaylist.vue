@@ -3,12 +3,14 @@
     <div
       class="like"
       @click="
-        router.push({
-          name: 'songsdetails',
-          params: {
-            id: playlist.like.id,
-          },
-        })
+        cookie
+          ? router.push({
+              name: 'songsdetails',
+              params: {
+                id: playlist.like.id,
+              },
+            })
+          : router.push('/login')
       "
     >
       <div class="left">

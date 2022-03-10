@@ -4,6 +4,7 @@ const routes = [
   {
     path: "/",
     name: "layoue",
+    meta: { keepAlive: true },
     component: () => import("@/views/layout/"),
     children: [
       {
@@ -11,6 +12,7 @@ const routes = [
         name: "find",
         component: () => import("@/views/find/"),
         meta: { keepAlive: true },
+        
       },
       {
         path: "/my",
@@ -29,7 +31,7 @@ const routes = [
         path: "/follow",
         name: "follow",
         component: () => import("@/views/follow/"),
-        keepAlive: true,
+        meta: { transition: "slide-fade", keepAlive: true },
       },
     ],
   },
@@ -38,46 +40,46 @@ const routes = [
     name: "albumlist",
     component: () => import("@/components/songsdetails/albumlist.vue"),
     props: true,
-    meta: { transition: "slide-fade", keepAlive: true },
+    meta: { transition: "slide-fade" },
   },
   {
     path: "/songsdetails:id",
     name: "songsdetails",
     component: () => import("@/components/songsdetails/"),
     props: true,
-    meta: { transition: "slide-fade", keepAlive: true },
+    meta: { transition: "slide-fade" },
   },
   {
     path: "/comments:id",
     name: "comments",
     component: () => import("@/components/comments/"),
     props: true,
-    keepAlive: true,
   },
   {
     path: "/login",
     name: "login",
     component: () => import("@/views/login/login.vue"),
+    meta: { transition: "slide-fade" },
   },
   {
     path: "/search",
     name: "search",
     component: () => import("@/views/search/index.vue"),
-    keepAlive: true,
+    meta: { transition: "slide-fade", keepAlive: true },
   },
   {
     path: "/video:id",
     name: "video",
     component: () => import("@/components/video/"),
     props: true,
-    meta: { transition: "slide-fade", keepAlive: true },
+    meta: { transition: "slide-fade" },
   },
   {
     path: "/user:id",
     name: "user",
     component: () => import("@/components/user/"),
     props: true,
-    meta: { transition: "slide-fade", keepAlive: true },
+    meta: { transition: "slide-fade" },
   },
 ];
 

@@ -18,6 +18,7 @@ import { ref } from "@vue/reactivity";
 
 export default {
   components: { Search, Banner, Findicon, Recommend, Recommendlist, Video },
+  name:"find",
   setup() {},
 };
 </script>

@@ -203,6 +203,7 @@ import { useStore } from "vuex";
 import { playCount } from "@/Util/fltter.js";
 import { useRouter, useRoute } from "vue-router";
 import { Toast, Dialog } from "vant";
+
 export default {
   components: { Playall },
   setup(props, { attrs }) {
@@ -277,7 +278,7 @@ export default {
         id: attrs.id,
         offset: 1,
       });
-      // console.log(data);
+
       try {
         songsdata.songs = data.playlist;
         songsdata.creator = data.playlist.creator;

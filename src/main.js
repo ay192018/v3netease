@@ -10,4 +10,9 @@ import NutUI from "@nutui/nutui";
 import "@nutui/nutui/dist/style.css";
 import "animate.css";
 
-createApp(App).use(store).use(router).use(Vant).use(NutUI).mount("#app");
+createApp(App)
+  .use(store)
+  .use(router)
+  .use(Vant)
+  .use(NutUI)
+  .mount("#app");

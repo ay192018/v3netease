@@ -69,7 +69,7 @@ export default {
       const { data } = await getvideo({
         offset: videolist.offset,
       });
-      // console.log(data);
+
       videolist.list = data.datas;
     });
     const replist = async () => {

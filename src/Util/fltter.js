@@ -101,7 +101,7 @@ export const lyrics = (lyric) => {
   arr.forEach((item) => {
     time = item.split("]")[0];
     value = item.split("]")[1];
-    var t = time.slice(1).split(":");
+    let t = time.slice(1).split(":");
     result.push([parseInt(t[0], 10) * 60 + parseFloat(t[1]), value]);
     key.push(parseInt(t[0], 10) * 60 + parseFloat(t[1]));
   });

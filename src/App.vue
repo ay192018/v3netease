@@ -1,9 +1,15 @@
 <template>
   <router-view v-slot="{ Component }">
     <transition name="slide-fade">
-      <component class="child-view" :is="Component"> </component>
+      <keep-alive v-if="route.meta.keepAlive" :max="20">
+        <component class="child-view" :is="Component"> </component>
+      </keep-alive>
+
+      <component v-else class="child-view" :is="Component"> </component>
     </transition>
-    <Audio v-if="route.path !== '/login'" ref="Audio" />
+    <keep-alive v-if="route.path !== '/login'">
+      <component is="Audio"> </component>
+    </keep-alive>
   </router-view>
 </template>
 

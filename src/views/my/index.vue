@@ -21,7 +21,7 @@
           round
           fit="cover"
           class="img animate__animated animate__zoomInUp"
-          @click="!cookie ? router.push('/login') : retrun"
+          @click="!cookie ? router.push('/login') : (show = true)"
           :src="
             cookie
               ? users.avatarUrl
@@ -55,6 +55,15 @@
       <Grid />
       <Userplaylist />
     </van-pull-refresh>
+    <van-action-sheet
+      v-model:show="show"
+      :actions="actions"
+      cancel-text="取消"
+      close-on-click-action
+      @cancel="show = false"
+      @select="select"
+      teleport="body"
+    />
   </div>
 </template>
 
@@ -67,11 +76,13 @@ import { onMounted } from "@vue/runtime-core";
 import { reactive, computed } from "vue";
 import { useRouter } from "vue-router";
 import Userplaylist from "./Userplaylist.vue";
+import { Toast } from "vant";
 export default {
   components: {
     Grid,
     Userplaylist,
   },
+  name: "my",
   setup() {
     const store = useStore();
 
@@ -80,6 +91,29 @@ export default {
       profile: {},
       level: null,
     });
+    const show = ref(false);
+    const actions = [
+      { name: "个人资料" },
+      { name: "查看好友" },
+      { name: "退出登录", color: "#ee0a24" },
+    ];
+    const select = (index) => {
+      if (index === "个人资料") {
+        router.push({
+          name: "user",
+          params: {
+            id: store.state.profile.userId,
+          },
+        });
+      } else if (index === "查看好友") {
+        return;
+      } else {
+        localStorage.clear();
+        store.dispatch("setprofile", {});
+        router.push("/");
+        Toast.success("退出成功");
+      }
+    };
     const cookie = JSON.parse(localStorage.getItem("cookie"));
     const loading = ref(false);
     const onRefresh = () => {
@@ -113,9 +147,11 @@ export default {
       user,
       router,
       users,
-
       loading,
       onRefresh,
+      show,
+      actions,
+      select,
     };
   },
 };

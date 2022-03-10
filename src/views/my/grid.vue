@@ -28,35 +28,35 @@ export default {
     const application = reactive({
       app: [
         {
-          url: "http://p3.music.126.net/lFFiY-jvO1ENHtK2bZ6eUw==/109951166531420475.jpg",
+          url: require("../../assets/1.png"),
           title: "最近播放",
         },
         {
-          url: "https://p1.music.126.net/XnF_jGR-RLuMjgjfzTM2Yg==/109951166940684877.jpg",
+          url: require("../../assets/2.png"),
           title: "本地下载",
         },
         {
-          url: "https://p2.music.126.net/qrmvVuxPHJsPQcMgRd4N2w==/109951166929961184.jpg",
+          url: require("../../assets/3.png"),
           title: "云盘",
         },
         {
-          url: "https://p1.music.126.net/bRIshzdt9OWH0QvqHwfxjQ==/109951166380164291.jpg",
+          url: require("../../assets/4.png"),
           title: "已购",
         },
         {
-          url: "https://p1.music.126.net/OhIv31cOSwW0LXVg1Vkk7g==/109951166572196484.jpg",
+          url: require("../../assets/5.png"),
           title: "我的好友",
         },
         {
-          url: "https://p1.music.126.net/yN1ke1xYMJ718FiHaDWtYQ==/109951165076380471.jpg",
+          url: require("../../assets/6.png"),
           title: "收藏和赞",
         },
         {
-          url: "https://p1.music.126.net/BMPeBg8b6wRUofmMcfQ--g==/109951165029361219.jpg",
+          url: require("../../assets/7.png"),
           title: "我的播客",
         },
         {
-          url: "https://p1.music.126.net/yxVm_vRFOode6yP67NmMcA==/109951166625738075.jpg",
+          url: require("../../assets/8.png"),
           title: "音乐罐子",
         },
       ],

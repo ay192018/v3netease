@@ -1,0 +1,18 @@
+import { ComponentInterface, EventEmitter } from '../../stencil-public-runtime';
+export declare class Audio implements ComponentInterface {
+  src: string;
+  controls: boolean;
+  autoplay: boolean;
+  loop: boolean;
+  muted: boolean;
+  nativeProps: {};
+  onError: EventEmitter;
+  onPlay: EventEmitter;
+  onPause: EventEmitter;
+  onTimeUpdate: EventEmitter;
+  onEnded: EventEmitter;
+  private audio;
+  private bindevent;
+  componentDidLoad(): void;
+  render(): any;
+}

@@ -52,7 +52,7 @@ export default {
     const password = ref("");
     const router = useRouter();
     const onClickLeft = () => {
-      history.back();
+      router.back();
     };
     const onSubmit = async () => {
       Toast.loading({
@@ -69,10 +69,8 @@ export default {
         localStorage.setItem("profile", JSON.stringify(data.profile));
         Toast.clear();
         Toast.success("登录成功");
-        window;
-        router.go({
-          path: "/",
-        });
+
+        router.push("/");
       } else {
         Toast.fail("登录失败,请检查手机号密码是否有误");
       }

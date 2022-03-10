@@ -12,8 +12,10 @@
         @focus="isresultshow = false"
       />
     </form>
+    <keep-alive v-if="isresultshow" :value="value">
+      <component is="Results"> </component>
+    </keep-alive>
 
-    <Results v-if="isresultshow" :value="value" />
     <Advice v-else-if="value" :suggestlist="suggestlist" :onSearch="onSearch" />
     <History
       v-else
@@ -32,11 +34,11 @@
 <script>
 import { debounce } from "@/Util/fltter.js";
 import Hotsearch from "./hotsearch.vue";
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, onMounted, onActivated, onDeactivated } from "vue";
 import History from "./history.vue";
 import Advice from "./advice.vue";
 import Results from "./results.vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import {
   getcloudsearch,
   getsearchdefault,
@@ -53,6 +55,7 @@ export default {
   setup(props, { expose }) {
     const value = ref("");
     const placeholder = ref("");
+    const route = useRoute();
     const isresultshow = ref(false); //搜索结果的显示状态
     const router = useRouter();
     const historylist = ref([]); //历史搜索列表
@@ -75,8 +78,8 @@ export default {
        * @params 判断每次追加的元素在原来的数组中是否有，如果有直接删除有的那个元素在追加到首位
        */
       // console.log(historylist.value.indexOf(value.value));
-      if (historylist.value.indexOf(value.value) !== -1) {
-        historylist.value.splice(historylist.value.indexOf(value.value), 1);
+      if (historylist.value.lastIndexOf(value.value) !== -1) {
+        historylist.value.splice(historylist.value.lastIndexOf(value.value), 1);
       }
       historylist.value.unshift(value.value);
       localStorage.setItem("historylist", JSON.stringify(historylist.value));
@@ -94,8 +97,15 @@ export default {
       });
       suggestlist.value = data.result.allMatch;
     };
-
-    const onCancel = () => router.back();
+    onActivated(() => {
+      console.log(route.meta.keepAlive);
+    });
+    onDeactivated(() => {
+      console.log(route.meta.keepAlive);
+    });
+    const onCancel = () => {
+      router.back();
+    };
     return {
       value,
       router,
