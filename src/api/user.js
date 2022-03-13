@@ -36,3 +36,18 @@ export const getusersubcounts = (params) => {
     params,
   });
 };
+export const getuserevent = (params) => {
+  return http({
+    method: "GET",
+    url: "/user/event",
+    params,
+  });
+};
+export const getevent = (params) => {
+  console.log(params);
+  return http({
+    method: "GET",
+    url: "/event",
+    params,
+  });
+};

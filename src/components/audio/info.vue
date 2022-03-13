@@ -3,9 +3,11 @@
     <van-nav-bar
       :border="false"
       :fixed="true"
-      :title="`${store.state.songlist[store.state.curret].name}-${
-        store.state.songlist[store.state.curret].ar[0].name
-      }`"
+      :title="
+        `${store.state.songlist[store.state.curret].name}-${
+          store.state.songlist[store.state.curret].ar[0].name
+        }`
+      "
       @click-left="changeshow"
       @click-right="onClickRight"
     >
@@ -102,6 +104,13 @@
           name="exchange"
           size="28"
           color="rgb(50,50,51)"
+          v-else-if="store.state.playmodel === 2"
+          @click="playstyle"
+        />
+        <van-icon
+          name="like-o"
+          size="28"
+          color="rgb(50,50,51)"
           v-else
           @click="playstyle"
         />
@@ -123,7 +132,12 @@
           color="rgb(50,50,51)"
           @click="switchsong(1)"
         />
-        <van-icon name="bars" size="28" color="rgb(50,50,51)" />
+        <van-icon
+          name="bars"
+          size="28"
+          color="rgb(50,50,51)"
+          @click.stop="emit('playstate')"
+        />
       </li>
     </ul>
   </div>
@@ -228,12 +242,18 @@ export default {
           background: "#ff6700",
           message: "循环播放",
         });
-      } else {
+      } else if (store.state.playmodel === 2) {
         store.state.audio.loop = false;
+        store.dispatch("setplaymodel", 3);
+        Notify({
+          background: "#ff6700",
+          message: "心动模式",
+        });
+      } else {
         store.dispatch("setplaymodel", 0);
         Notify({
           background: "#ff6700",
-          message: "顺序播放",
+          message: "列表循环",
         });
       }
     };
@@ -247,7 +267,7 @@ export default {
     const onChange = (value) => {
       store.state.audio.currentTime = value;
     };
-	
+
     return {
       playstyle,
       changeshow,
@@ -265,6 +285,7 @@ export default {
       lyric,
       debounce,
       tocommnts,
+      emit,
     };
   },
 };

@@ -1,6 +1,10 @@
 <template>
   <van-swipe class="my-swipe auto" :autoplay="2000" indicator-color="white">
-    <van-swipe-item v-for="(item, index) in state.banners" :key="index">
+    <van-swipe-item
+      v-for="(item, index) in state.banners"
+      :key="index"
+      style="font-size:0"
+    >
       <van-image
         width="100%"
         height="100%"

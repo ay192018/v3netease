@@ -18,7 +18,9 @@ import Layout from "./views/layout/";
 import Audio from "@/components/audio/";
 import { nextTick, watch } from "vue";
 import { useRoute } from "vue-router";
-import { changeaudio, initaudio } from "@/Util/fltter.js";
+import { useWindowSize } from "@vant/use";
+import { Toast } from "vant";
+import { changeaudio, initaudio, debounce } from "@/Util/fltter.js";
 import { useStore } from "vuex";
 export default {
   components: { Audio, Layout },
@@ -26,6 +28,22 @@ export default {
     const route = useRoute();
 
     const store = useStore();
+    const { width } = useWindowSize();
+    const fail = () => {
+      Toast.fail("请切换手机模式浏览！！！");
+    };
+
+    watch(
+      () => width.value,
+      (val) => {
+        if (val > 500) {
+          debounce(fail, 500);
+        }
+      },
+      {
+        immediate: true,
+      }
+    );
     watch(route, (val) => {
       if (store.state.isplay) {
         if (val.path.at(1) === "v" && val.path.at(5) === "o") {
@@ -67,6 +85,7 @@ export default {
     return {
       route,
       store,
+      width,
     };
   },
 };

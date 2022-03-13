@@ -28,7 +28,12 @@
           >
         </div>
       </div>
-      <van-button round size="mini" icon="like-o" class="btn"
+      <van-button
+        round
+        size="mini"
+        icon="like-o"
+        class="btn"
+        @click.stop="Cardiac"
         >心动模式</van-button
       >
     </div>
@@ -114,17 +119,45 @@
 
 <script>
 import { getuserplaylist } from "@/api/user.js";
+import { getCardiac } from "@/api/songsheet.js";
 import { onMounted, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+import { Toast } from "vant";
+import { nextTick } from "vue";
 export default {
   setup() {
     const active = ref(0);
+    const store = useStore();
     const playlist = reactive({
       user: [],
       collection: [],
       like: [],
     });
+    /*
+  ^心动模式
+  */
+    const Cardiac = async () => {
+      store.dispatch("setplaymodel", 3);
+      Toast({
+        message: "心动模式",
+        icon: "like-o",
+      });
+      if (store.state.songlist.length === 0) return Toast.fail("歌单是空的！");
 
+      const { data } = await getCardiac({
+        id: store.state.songlist[store.state.curret].id,
+        pid: store.state.playlistID,
+      });
+      let arr = [];
+      data.data.forEach((item) => {
+        arr.push(item.songInfo);
+      });
+      store.dispatch("setsonglist", arr);
+      nextTick(() => {
+        store.state.audio.play();
+      });
+    };
     const cookie = JSON.parse(localStorage.getItem("cookie"));
     const router = useRouter();
     onMounted(async () => {
@@ -155,6 +188,8 @@ export default {
       playlist,
       router,
       cookie,
+      Cardiac,
+      store,
     };
   },
 };

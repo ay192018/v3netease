@@ -78,3 +78,10 @@ export const getsubscribe = (params) => {
     params,
   });
 };
+export const getCardiac = (params) => {
+  return http({
+    method: "GET",
+    url: "/playmode/intelligence/list",
+    params,
+  });
+};

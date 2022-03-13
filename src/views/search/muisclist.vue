@@ -45,9 +45,9 @@
               class="tv"
             />
             <van-icon name="ellipsis" size="20" />
-          </div>     
+          </div>
         </div>
-    
+
         <div class="van-hairline--bottom"></div>
       </div>
     </van-list>
@@ -75,7 +75,9 @@ export default {
         type: 1,
         offset: (offset.value - 1) * 30,
       });
-
+      if (!data.result.songs) {
+        return (finished.value = true);
+      }
       results.value.push(...data.result.songs);
       loading.value = false;
       if (data.result.songs.length) {
@@ -152,6 +154,7 @@ export default {
   overflow-y: auto;
   .songslist {
     margin: 0 auto;
+ 
     width: 95vw;
     bottom: 50;
     left: 0;

@@ -12,7 +12,6 @@ const routes = [
         name: "find",
         component: () => import("@/views/find/"),
         meta: { keepAlive: true },
-        
       },
       {
         path: "/my",
@@ -25,7 +24,10 @@ const routes = [
         name: "Videosquare",
         component: () => import("@/views/Videosquare/"),
         props: true,
-        meta: { transition: "slide-fade", keepAlive: true },
+        meta: {
+          transition: "slide-fade",
+          keepAlive: true,
+        },
       },
       {
         path: "/follow",
@@ -84,7 +86,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  mode: "hash",
+  mode: "history",
   history: createWebHashHistory(),
   routes,
 });
@@ -95,10 +97,10 @@ router.afterEach((to, from) => {
 });
 router.beforeEach((to, from, next) => {
   if (to.path === "/login") {
-    if (JSON.parse(localStorage.getItem("profile"))) {
-      return false;
-    } else {
+    if (JSON.parse(localStorage.getItem("cookie")) === null) {
       next();
+    } else {
+      return false;
     }
   } else {
     next();

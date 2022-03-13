@@ -98,14 +98,14 @@ export default {
       { name: "退出登录", color: "#ee0a24" },
     ];
     const select = (index) => {
-      if (index === "个人资料") {
+      if (index.name === "个人资料") {
         router.push({
           name: "user",
           params: {
             id: store.state.profile.userId,
           },
         });
-      } else if (index === "查看好友") {
+      } else if (index.name === "查看好友") {
         return;
       } else {
         localStorage.clear();

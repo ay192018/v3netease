@@ -70,13 +70,14 @@ export default {
     const router = useRouter();
     const offset = ref(1);
     const onLoad = async () => {
-      // console.log(attrs.attrs.value);
       const { data } = await getcloudsearch({
         keywords: attrs.attrs.value,
         type: 1002,
         offset: (offset.value - 1) * 20,
       });
-      console.log(data);
+      if (!data.result.userprofiles) {
+        return (finished.value = true);
+      }
       artists.value.push(...data.result.userprofiles);
       loading.value = false;
       if (data.result.userprofiles.length) {

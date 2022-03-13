@@ -57,7 +57,7 @@
           :name="useStore().state.isplay ? 'pause-circle-o' : 'play-circle-o'"
           size="28"
           @click.stop="play"
-        /><van-icon name="bars" size="28" />
+        /><van-icon name="bars" size="28" @click.stop="playlist = !playlist" />
       </div>
     </div>
     <van-popup
@@ -73,6 +73,16 @@
         :duration="duration"
         :play="play"
         v-model="currentTime"
+        @playstate="playstate"
+    /></van-popup>
+    <van-popup
+      v-model:show="playlist"
+      position="bottom"
+      :style="{ height: '70%', width: '95%', margin: '0 0 0 10px' }"
+      teleport="body"
+      round
+    >
+      <Playlist
     /></van-popup>
   </div>
 </template>
@@ -82,13 +92,14 @@ import Info from "./info.vue";
 import { ref, watchEffect, nextTick } from "vue";
 import { useStore } from "vuex";
 import { Toast } from "vant";
-
+import Playlist from "../playlist/";
 import { random } from "@/Util/fltter.js";
 
 export default {
   name: "Audio",
   components: {
     Info,
+    Playlist,
   },
   setup(props, { emit }) {
     const audio = ref(null);
@@ -96,10 +107,14 @@ export default {
     let duration = ref(0); //当前歌曲长度
     const store = useStore();
     const show = ref(false);
+    const playlist = ref(false);
     const showPopup = () => {
       if (store.state.songlist.length) {
         show.value = true;
       }
+    };
+    const playstate = () => {
+      playlist.value = !playlist.value;
     };
     /**
      * @param {Boolean} 接收布尔值改变父级弹出层状态
@@ -136,6 +151,7 @@ export default {
       if (store.state.playmodel === 0) {
         store.commit("setcurret", store.state.curret + 1);
       } else if (store.state.playmodel === 1) {
+        console.log(random(0, store.state.songlist.length - 1));
         store.commit("setcurret", random(0, store.state.songlist.length - 1));
       } else {
         store.commit("setcurret", store.state.curret);
@@ -211,7 +227,9 @@ export default {
       waiting,
       loadedmetadata,
       duration,
+      playlist,
       canplay,
+      playstate,
     };
   },
 };

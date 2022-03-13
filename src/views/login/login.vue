@@ -48,8 +48,8 @@ import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 export default {
   setup() {
-    const phone = ref("");
-    const password = ref("");
+    const phone = ref("15949665034");
+    const password = ref("wjy0.0.0");
     const router = useRouter();
     const onClickLeft = () => {
       router.back();

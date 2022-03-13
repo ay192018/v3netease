@@ -274,6 +274,8 @@ export default {
       songsdata.length = length;
     };
     onMounted(async () => {
+      store.dispatch("setplaylistID", attrs.id);
+
       const { data } = await getsongsdetail({
         id: attrs.id,
         offset: 1,

@@ -55,7 +55,9 @@ export default {
         type: 10,
         offset: (offset.value - 1) * 30,
       });
-      console.log(data);
+      if (!data.result.albums) {
+        return (finished.value = true);
+      }
       album.value.push(...data.result.albums);
       loading.value = false;
       if (data.result.albums.length) {

@@ -5,12 +5,13 @@ export default createStore({
     isplay: false, //播放状态
     audio: null, //audio dom元素
     curret: 0, //当前歌曲索引
-    playmodel: 0, //0,顺序播放，1随机播放，2循环播放
+    playmodel: 0, //0,列表循环，1随机播放，2单曲循环 3心动模式
     profile: JSON.parse(localStorage.getItem("profile")) || {},
     flag: 0, //控制请求歌曲评论还是歌单评论   0，歌曲评论 2，歌单评论
     videolist: [],
     videocurret: 0,
     audioshow: false,
+    playlistID: null,
   },
 
   mutations: {
@@ -46,6 +47,12 @@ export default createStore({
     setaudioshow({ audioshow }) {
       audioshow = !audioshow;
     },
+    setplaylistID(state, data) {
+      state.playlistID = data;
+    },
+    setremove(state, data) {
+      state.songlist.splice(data, 1);
+    },
   },
   actions: {
     setisplay(mutation) {
@@ -76,6 +83,12 @@ export default createStore({
     },
     setaudioshow({ commit }) {
       commit("setaudioshow");
+    },
+    setplaylistID({ commit }, data) {
+      commit("setplaylistID", data);
+    },
+    setremove({ commit }, data) {
+      commit("setremove", data);
     },
   },
   modules: {},

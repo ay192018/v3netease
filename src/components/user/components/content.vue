@@ -120,7 +120,7 @@
 
 <script>
 import { createTime, datalbum } from "@/Util/dayjs.js";
-import { getuserplaylist } from "@/api/user.js";
+import { getuserplaylist, getuserevent } from "@/api/user.js";
 import { onMounted, reactive, toRefs } from "vue";
 import { useRouter } from "vue-router";
 export default {
@@ -148,6 +148,10 @@ export default {
       });
       playlist.user.shift();
       console.log(playlist);
+      const res = await getuserevent({
+        uid: attrs.user.id,
+      });
+      console.log(res);
     });
     return {
       state,
@@ -156,6 +160,7 @@ export default {
       datalbum,
       ...toRefs(playlist),
       router,
+      getuserevent,
     };
   },
 };

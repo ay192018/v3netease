@@ -1,5 +1,5 @@
 <template>
-  <div class="video auto" v-if="cookie">
+  <div class="video auto">
     <div class="title">
       <h3>精选音乐视频</h3>
       <van-button
@@ -40,7 +40,7 @@
       </div>
     </div>
   </div>
-  <van-empty image="network" description="请登录" v-else>
+  <!--  <van-empty image="network" description="请登录" v-else>
     <van-button
       round
       type="danger"
@@ -48,7 +48,7 @@
       @click="router.push('/login')"
       >登录</van-button
     >
-  </van-empty>
+  </van-empty> -->
 </template>
 
 <script>

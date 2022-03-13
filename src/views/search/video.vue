@@ -56,7 +56,9 @@ export default {
         type: 1014,
         offset: (offset.value - 1) * 20,
       });
-      console.log(data);
+      if (!data.result.videos) {
+        return (finished.value = true);
+      }
       artists.value.push(...data.result.videos);
       loading.value = false;
 

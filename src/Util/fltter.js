@@ -61,12 +61,12 @@ export const random = (Start, end) => {
  */
 export const debounce = (fn, delay) => {
   let timer = null;
-  return () => {
+  return (() => {
     if (timer) {
       clearTimeout(timer);
     }
     timer = setTimeout(fn, delay);
-  };
+  })();
 };
 /**
  * @param  {*} 监听路由改变audio的位置
@@ -123,19 +123,28 @@ export const tocommnts = (val) => {
   } else if (val === 5) {
     return "/comment/video";
   }
-  // switch (val) {
-  //   case 0:
-  //     "/comment/music";
-  //     break;
-  //   case 2:
-  //     return "/comment/playlist";
+};
+/**
+ * @param  {Number} 传入一个字符判断要请求那个接口
 
-  //     break;
-  //   case 5:
-  //     " /comment/video";
-  //     break;
+ */
 
-  //   default:
-  //     break;
-  // }
+export const switchtype = (val) => {
+  if (val === 18) {
+    return "分享单曲";
+  } else if (val === 19) {
+    return "分享专辑";
+  } else if (val === 17 || 28) {
+    return "分享电台节目";
+  } else if (val === 22) {
+    return "转发";
+  } else if (val === 39) {
+    return "发布视频";
+  } else if (val === 35 || 13) {
+    return "分享歌单";
+  } else if (val === 24) {
+    return "分享专栏文章";
+  } else {
+    return "分享视频";
+  }
 };

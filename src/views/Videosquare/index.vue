@@ -1,5 +1,5 @@
 <template>
-  <div class="Videosquare  animate__fadeIn animate__animated" v-if="cookie">
+  <div class="Videosquare  animate__fadeIn animate__animated">
     <van-nav-bar title="视频广场" :border="false"> </van-nav-bar>
     <van-tabs v-model:active="active" animated>
       <van-tab
@@ -12,7 +12,7 @@
       </van-tab>
     </van-tabs>
   </div>
-  <van-empty image="network" description="请登录" v-else>
+  <!--   <van-empty image="network" description="请登录" v-else>
     <van-button
       round
       type="danger"
@@ -20,7 +20,7 @@
       @click="router.push('/login')"
       >登录</van-button
     >
-  </van-empty>
+  </van-empty> -->
 </template>
 
 <script>
