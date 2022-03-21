@@ -1,52 +1,3 @@
-<template>
-  <div class="video">
-    <van-nav-bar :border="false" @click-left="router.back()">
-      <template #left
-        ><van-icon name="arrow-left" color="#fff" size="24" /> </template
-    ></van-nav-bar>
-
-    <VueDanmaku
-      :danmus="danmus"
-      ref="danmaku"
-      :loop="true"
-      class="Danmaku"
-      :right="4"
-      :speeds="100"
-      :debounce="1000"
-      :randomChannel="true"
-    />
-
-    <video
-      :src="url"
-      class="controls"
-      ref="video"
-      autoplay
-      @click="playstatus"
-      @timeupdate="onTimeupdate"
-      @loadedmetadata="loadedmetadata"
-      @ended="ended"
-    />
-    <van-icon
-      name="play"
-      @click="play"
-      color="#fff"
-      size="50"
-      class="play"
-      v-if="icon"
-    />
-    <Data :data="datas" :attrs="attrs.id" />
-    <van-slider
-      v-model="value"
-      @change="onChange"
-      active-color="red"
-      button-size="15"
-      class="slider"
-      min="0"
-      :max="duration"
-    />
-  </div>
-</template>
-
 <script>
 import {
   getvideodetail,
@@ -56,12 +7,12 @@ import {
   getvideorelated,
   getmvdetail,
   getmvurl,
-} from "@/api/video.js";
-import { nextTick, onMounted } from "@vue/runtime-core";
-import { useRouter } from "vue-router";
-import VueDanmaku from "vue3-danmaku";
-import { ref, reactive, provide } from "vue";
-import Data from "./components/data.vue";
+} from '@/api/video.js';
+import { nextTick, onMounted } from '@vue/runtime-core';
+import { useRouter } from 'vue-router';
+import VueDanmaku from 'vue3-danmaku';
+import { ref, reactive, provide } from 'vue';
+import Data from './components/data.vue';
 
 export default {
   components: { VueDanmaku, Data },
@@ -69,7 +20,7 @@ export default {
     const datas = reactive({
       data: {},
       creator: {},
-      vid: "",
+      vid: '',
       artists: null,
     });
 
@@ -77,7 +28,7 @@ export default {
     const onChange = (value) => {
       video.value.currentTime = value;
     };
-    const url = ref("");
+    const url = ref('');
     const video = ref(null);
     const danmaku = ref(null);
     const router = useRouter();
@@ -244,3 +195,44 @@ export default {
   }
 }
 </style>
+
+<template>
+  <div class="video">
+    <van-nav-bar :border="false" @click-left="router.back()">
+      <template #left><van-icon name="arrow-left" color="#fff" size="24" /> </template
+    ></van-nav-bar>
+
+    <VueDanmaku
+      :danmus="danmus"
+      ref="danmaku"
+      :loop="true"
+      class="Danmaku"
+      :right="4"
+      :speeds="100"
+      :debounce="1000"
+      :randomChannel="true"
+    />
+
+    <video
+      :src="url"
+      class="controls"
+      ref="video"
+      autoplay
+      @click="playstatus"
+      @timeupdate="onTimeupdate"
+      @loadedmetadata="loadedmetadata"
+      @ended="ended"
+    />
+    <van-icon name="play" @click="play" color="#fff" size="50" class="play" v-if="icon" />
+    <Data :data="datas" :attrs="attrs.id" />
+    <van-slider
+      v-model="value"
+      @change="onChange"
+      active-color="red"
+      button-size="15"
+      class="slider"
+      min="0"
+      :max="duration"
+    />
+  </div>
+</template>

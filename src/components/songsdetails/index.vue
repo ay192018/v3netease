@@ -1,208 +1,12 @@
-<template>
-  <transition name="slide-fade">
-    <div>
-      <van-nav-bar
-        :border="false"
-        fixed
-        @click-left="onClickLeft"
-        :title="songsdata.songs.name"
-      >
-        <template #left>
-          <van-icon name="arrow-left" size="23" color="#ccc" />
-        </template>
-        <template #right>
-          <van-icon name="ellipsis" size="23" color="#ccc" />
-        </template>
-      </van-nav-bar>
-      <div
-        class="songdata"
-        :style="`background-image: url(${songsdata.songs.coverImgUrl})`"
-      >
-        <div class="content">
-          <div class="left">
-            <van-image
-              width="130"
-              height="130"
-              radius="15"
-              :src="songsdata.songs.coverImgUrl"
-              @click="show = true"
-            >
-              <template v-slot:loading>
-                <van-loading type="spinner" size="20" color="#000" />
-              </template>
-            </van-image>
-            <span class="count">{{
-              playCount(songsdata.songs.playCount)
-            }}</span>
-          </div>
-          <div class="right info">
-            <div class="titless" @click="show = true">
-              {{ songsdata.songs.name }}
-            </div>
-            <div class="userdata">
-              <van-image
-                width="25"
-                height="25"
-                fit="cover"
-                radius="50%"
-                :src="songsdata.creator.avatarUrl"
-              >
-                <template v-slot:loading>
-                  <van-loading
-                    type="spinner"
-                    size="10"
-                    color="#000"
-                  /> </template
-              ></van-image>
-              <p
-                class="username"
-                @click="
-                  router.push({
-                    name: 'user',
-                    params: {
-                      id: songsdata.creator.userId,
-                    },
-                  })
-                "
-              >
-                {{ songsdata.creator.nickname }}
-              </p>
-              <van-button
-                type="primary"
-                color="red"
-                size="mini"
-                icon="add-o"
-                round
-                v-if="songsdata.creator.userId !== store.state.profile.userId"
-                >关注</van-button
-              >
-            </div>
-            <div class="describe van-ellipsis" @click="show = true">
-              {{ songsdata.songs.description }}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="item">
-        <div>
-          <van-button
-            color="#e8e8e8"
-            :disabled="
-              songsdata.creator.userId === store.state.profile.userId
-                ? true
-                : false
-            "
-            size="mini"
-          >
-            <van-icon
-              :name="
-                songsdata.songs.subscribed ||
-                songsdata.creator.userId === store.state.profile.userId
-                  ? 'success'
-                  : 'add-o'
-              "
-              @click="issubscrib"
-              color="#323233"
-              size="20"
-          /></van-button>
-
-          <div>{{ playCount(songsdata.songs.subscribedCount) }}</div>
-        </div>
-        <div @click="tocommnts">
-          <van-icon name="chat-o" size="20" />
-          <div>{{ playCount(songsdata.songs.commentCount) }}</div>
-        </div>
-        <div>
-          <van-icon name="share-o" size="20" />
-          <div>{{ playCount(songsdata.songs.shareCount) }}</div>
-        </div>
-      </div>
-      <div class="title">
-        <van-icon name="play-circle-o" size="20" color="red" />
-        <div>播放全部</div>
-        <div>({{ playCount(songsdata.length) }}首)</div>
-      </div>
-      <van-overlay
-        :show="show"
-        @click="show = false"
-        z-index="9999"
-        :lock-scroll="false"
-      >
-        <div class="wrapper">
-          <div class="block">
-            <div style="text-align: center">
-              <van-image
-                width="100vw"
-                height="100vh"
-                style="
-                  filter: blur(40px);
-                  left: 0;
-                  position: absolute;
-                  z-index: -1;
-                "
-                fit="cover"
-                :src="songsdata.songs.coverImgUrl"
-              />
-              <van-image
-                width="130"
-                height="130"
-                radius="15"
-                style="margin-top: 80px; margin-bottom: 30px"
-                :src="songsdata.songs.coverImgUrl"
-              /><br />
-              <span class="titless"> {{ songsdata.songs.name }} </span><br />
-              <div
-                class="van-hairline--bottom"
-                style="
-                  width: 95vw;
-                  margin: 0 auto;
-                  margin-top: 30px;
-                  margin-bottom: 20px;
-                "
-              ></div>
-            </div>
-            <div
-              style="
-                width: 95vw;
-                height: auto;
-                margin: 0 auto;
-                margin-top: 50px;
-                margin-bottom: 20px;
-                color: #dfdfdf;
-              "
-            >
-              标签:
-              <span
-                class="label"
-                v-for="(item, index) in songsdata.tags"
-                :key="index"
-                >{{ item }}</span
-              >
-            </div>
-            <p
-              v-for="(item, index) in songsdata.description"
-              :key="index"
-              style="color: #dfdfdf; margin-left: 10px"
-            >
-              {{ item }}
-            </p>
-          </div>
-        </div>
-      </van-overlay>
-      <Playall :songsdata="songsdata" @length="length" />
-    </div>
-  </transition>
-</template>
-
 <script>
-import Playall from "./components/playall.vue";
-import { getsongsdetail, getsubscribe } from "@/api/songsheet.js";
+import Playall from './components/playall.vue';
+import { getsongsdetail, getsubscribe } from '@/api/songsheet.js';
 
-import { onMounted, reactive, ref } from "vue";
-import { useStore } from "vuex";
-import { playCount } from "@/Util/fltter.js";
-import { useRouter, useRoute } from "vue-router";
-import { Toast, Dialog } from "vant";
+import { onMounted, reactive, ref } from 'vue';
+import { useStore } from 'vuex';
+import { playCount } from '@/Util/fltter.js';
+import { useRouter, useRoute } from 'vue-router';
+import { Toast, Dialog } from 'vant';
 
 export default {
   components: { Playall },
@@ -214,18 +18,18 @@ export default {
       length: 0,
       time: null,
       tags: [],
-      description: "",
+      description: '',
     });
     const show = ref(false);
     const router = useRouter();
     const route = useRoute();
     const store = useStore();
-    const cookie = JSON.parse(localStorage.getItem("profile"));
+    const cookie = JSON.parse(localStorage.getItem('profile'));
     const issubscrib = async () => {
       if (songsdata.songs.subscribed) {
         Dialog.confirm({
-          confirmButtonText: "取消收藏",
-          message: "确定要取消收藏该歌单吗?",
+          confirmButtonText: '取消收藏',
+          message: '确定要取消收藏该歌单吗?',
         })
           .then(async () => {
             const { data } = await getsubscribe({
@@ -234,9 +38,9 @@ export default {
             });
             songsdata.songs.subscribed = !songsdata.songs.subscribed;
             if (songsdata.songs.subscribed) {
-              Toast("歌单已收藏");
+              Toast('歌单已收藏');
             } else {
-              Toast("取消收藏");
+              Toast('取消收藏');
             }
           })
           .catch(() => {
@@ -250,17 +54,17 @@ export default {
         console.log(data);
         songsdata.songs.subscribed = !songsdata.songs.subscribed;
         if (songsdata.songs.subscribed) {
-          Toast("歌单已收藏");
+          Toast('歌单已收藏');
         } else {
-          Toast("取消收藏");
+          Toast('取消收藏');
         }
       }
     };
     const tocommnts = async () => {
-      store.dispatch("setflag", 2);
+      store.dispatch('setflag', 2);
 
       router.push({
-        name: "comments",
+        name: 'comments',
         params: {
           id: attrs.id,
         },
@@ -274,7 +78,7 @@ export default {
       songsdata.length = length;
     };
     onMounted(async () => {
-      store.dispatch("setplaylistID", attrs.id);
+      store.dispatch('setplaylistID', attrs.id);
 
       const { data } = await getsongsdetail({
         id: attrs.id,
@@ -286,9 +90,12 @@ export default {
         songsdata.creator = data.playlist.creator;
         songsdata.trackIds = data.playlist.trackIds;
         songsdata.tags = data.playlist.tags;
-        songsdata.description = data.playlist.description.split("\n");
+        if (!data.playlist.description) {
+          return;
+        }
+        songsdata.description = data.playlist.description.split('\n');
       } catch (error) {
-        Toast.fail("加载失败,歌曲也许太多了");
+        Toast.fail('加载失败,歌曲也许太多了');
       }
     });
     const scroll = (e) => {
@@ -426,3 +233,153 @@ export default {
   margin-left: 5px;
 }
 </style>
+
+<template>
+  <transition name="slide-fade">
+    <div>
+      <van-nav-bar :border="false" fixed @click-left="onClickLeft" :title="songsdata.songs.name">
+        <template #left>
+          <van-icon name="arrow-left" size="23" color="#ccc" />
+        </template>
+        <template #right>
+          <van-icon name="ellipsis" size="23" color="#ccc" />
+        </template>
+      </van-nav-bar>
+      <div class="songdata" :style="`background-image: url(${songsdata.songs.coverImgUrl})`">
+        <div class="content">
+          <div class="left">
+            <van-image width="130" height="130" radius="15" :src="songsdata.songs.coverImgUrl" @click="show = true">
+              <template v-slot:loading>
+                <van-loading type="spinner" size="20" color="#000" />
+              </template>
+            </van-image>
+            <span class="count">{{ playCount(songsdata.songs.playCount) }}</span>
+          </div>
+          <div class="right info">
+            <div class="titless" @click="show = true">
+              {{ songsdata.songs.name }}
+            </div>
+            <div class="userdata">
+              <van-image width="25" height="25" fit="cover" radius="50%" :src="songsdata.creator.avatarUrl">
+                <template v-slot:loading> <van-loading type="spinner" size="10" color="#000" /> </template
+              ></van-image>
+              <p
+                class="username"
+                @click="
+                  router.push({
+                    name: 'user',
+                    params: {
+                      id: songsdata.creator.userId,
+                    },
+                  })
+                "
+              >
+                {{ songsdata.creator.nickname }}
+              </p>
+              <van-button
+                type="primary"
+                color="red"
+                size="mini"
+                icon="add-o"
+                round
+                v-if="songsdata.creator.userId !== store.state.profile.userId"
+                >关注</van-button
+              >
+            </div>
+            <div class="describe van-ellipsis" @click="show = true">
+              {{ songsdata.songs.description }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="item">
+        <div>
+          <van-button
+            color="#e8e8e8"
+            :disabled="songsdata.creator.userId === store.state.profile.userId ? true : false"
+            size="mini"
+          >
+            <van-icon
+              :name="
+                songsdata.songs.subscribed || songsdata.creator.userId === store.state.profile.userId
+                  ? 'success'
+                  : 'add-o'
+              "
+              @click="issubscrib"
+              color="#323233"
+              size="20"
+          /></van-button>
+
+          <div>{{ playCount(songsdata.songs.subscribedCount) }}</div>
+        </div>
+        <div @click="tocommnts">
+          <van-icon name="chat-o" size="20" />
+          <div>{{ playCount(songsdata.songs.commentCount) }}</div>
+        </div>
+        <div>
+          <van-icon name="share-o" size="20" />
+          <div>{{ playCount(songsdata.songs.shareCount) }}</div>
+        </div>
+      </div>
+      <div class="title">
+        <van-icon name="play-circle-o" size="20" color="red" />
+        <div>播放全部</div>
+        <div>({{ playCount(songsdata.length) }}首)</div>
+      </div>
+      <van-overlay :show="show" @click="show = false" z-index="9999" :lock-scroll="false">
+        <div class="wrapper">
+          <div class="block">
+            <div style="text-align: center">
+              <van-image
+                width="100vw"
+                height="100vh"
+                style="
+                  filter: blur(40px);
+                  left: 0;
+                  position: absolute;
+                  z-index: -1;
+                "
+                fit="cover"
+                :src="songsdata.songs.coverImgUrl"
+              />
+              <van-image
+                width="130"
+                height="130"
+                radius="15"
+                style="margin-top: 80px; margin-bottom: 30px"
+                :src="songsdata.songs.coverImgUrl"
+              /><br />
+              <span class="titless"> {{ songsdata.songs.name }} </span><br />
+              <div
+                class="van-hairline--bottom"
+                style="
+                  width: 95vw;
+                  margin: 0 auto;
+                  margin-top: 30px;
+                  margin-bottom: 20px;
+                "
+              ></div>
+            </div>
+            <div
+              style="
+                width: 95vw;
+                height: auto;
+                margin: 0 auto;
+                margin-top: 50px;
+                margin-bottom: 20px;
+                color: #dfdfdf;
+              "
+            >
+              标签:
+              <span class="label" v-for="(item, index) in songsdata.tags" :key="index">{{ item }}</span>
+            </div>
+            <p v-for="(item, index) in songsdata.description" :key="index" style="color: #dfdfdf; margin-left: 10px">
+              {{ item }}
+            </p>
+          </div>
+        </div>
+      </van-overlay>
+      <Playall :songsdata="songsdata" @length="length" />
+    </div>
+  </transition>
+</template>

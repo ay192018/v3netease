@@ -1,82 +1,12 @@
-<template>
-  <div class="user">
-    <van-nav-bar :border="false" @click-left="onClickLeft" fixed>
-      <template #left
-        ><van-icon name="arrow-left" size="25" color="#323233" />
-      </template>
-    </van-nav-bar>
-    <van-image width="100vw" height="42vh" :src="user.profile.backgroundUrl" />
-    <div class="userdata">
-      <van-image
-        width="60"
-        height="60"
-        round
-        fit="cover"
-        class=" animate__animated animate__zoomInUp"
-        :src="user.profile.avatarUrl"
-      />
-      <br />
-      <span
-        class="name"
-        style="font-size: 16px; font-weight: bold; font-size: 16px"
-        >{{ user.profile.nickname }}</span
-      ><van-icon
-        class="name"
-        name="vip-card-o"
-        :color="user.profile.vipType === 0 ? '#c0c0c0' : 'red'"
-        size="25"
-        ><span style="font-size: 13px; vertical-align: top">
-          {{ user.profile.vipType }}
-        </span></van-icon
-      ><br />
-
-      <div>
-        <span class="title">{{ user.profile.followeds }} 关注</span>
-        <span class="title">{{ user.profile.follows }} 粉丝</span>
-        <span class="title">{{ user.level }} Lv</span>
-      </div>
-      <div class="editor">
-        <van-button
-          v-if="attrs.id == store.state.profile.userId"
-          type="primary"
-          size="mini"
-          round
-          hairline
-          color="#ccc"
-          >编辑资料</van-button
-        >
-        <div v-else>
-          <van-button type="primary" color="red" size="mini" icon="add-o" round
-            >关注</van-button
-          >
-          <van-button type="primary" color="#323233" size="mini" round
-            ><span style="padding:10px;">聊天</span></van-button
-          >
-        </div>
-
-        <van-icon name="arrow-down" size="20" />
-      </div>
-    </div>
-    <Content
-      :user="{
-        profile: user.profile,
-        createDays: user.createDays,
-        createTime: user.createTime,
-        listenSongs: user.listenSongs,
-        id: attrs.id,
-      }"
-    />
-  </div>
-</template>
-
 <script>
-import { getuserdata } from "@/api/user.js";
-import { useStore } from "vuex";
-import { useRouter, useRoute } from "vue-router";
-import { reactive, onMounted } from "vue";
-import Content from "./components/content.vue";
+import { getuserdata } from '@/api/user.js';
+import { useStore } from 'vuex';
+import { useRouter, useRoute } from 'vue-router';
+import { reactive, onMounted, ref } from 'vue';
+import Content from './components/content.vue';
+import UserData from './components/userData.vue';
 export default {
-  components: { Content },
+  components: { Content, UserData },
   setup(props, { attrs }) {
     const user = reactive({
       profile: {},
@@ -85,13 +15,15 @@ export default {
       createTime: 0,
       listenSongs: 0,
     });
-
+    const show = ref(false);
     const router = useRouter();
     const route = useRoute();
     const onClickLeft = () => {
       router.back();
     };
-
+    const changeShow = () => {
+      show.value = !show.value;
+    };
     const store = useStore();
     console.log(attrs.id == store.state.profile.userId);
     onMounted(async () => {
@@ -114,6 +46,8 @@ export default {
       user,
       attrs,
       store,
+      show,
+      changeShow,
     };
   },
 };
@@ -163,3 +97,67 @@ export default {
   }
 }
 </style>
+
+<template>
+  <div class="user">
+    <van-nav-bar :border="false" @click-left="onClickLeft" fixed>
+      <template #left><van-icon name="arrow-left" size="25" color="#323233" /> </template>
+    </van-nav-bar>
+    <van-image width="100vw" height="42vh" :src="user.profile.backgroundUrl" />
+    <div class="userdata">
+      <van-image
+        width="60"
+        height="60"
+        round
+        fit="cover"
+        class=" animate__animated animate__zoomInUp"
+        :src="user.profile.avatarUrl"
+      />
+      <br />
+      <span class="name" style="font-size: 16px; font-weight: bold; font-size: 16px">{{ user.profile.nickname }}</span
+      ><van-icon class="name" name="vip-card-o" :color="user.profile.vipType === 0 ? '#c0c0c0' : 'red'" size="25"
+        ><span style="font-size: 13px; vertical-align: top">
+          {{ user.profile.vipType }}
+        </span></van-icon
+      ><br />
+
+      <div>
+        <span class="title">{{ user.profile.followeds }} 关注</span>
+        <span class="title">{{ user.profile.follows }} 粉丝</span>
+        <span class="title">{{ user.level }} Lv</span>
+      </div>
+      <div class="editor">
+        <van-button
+          v-if="attrs.id == store.state.profile.userId"
+          type="primary"
+          size="mini"
+          round
+          hairline
+          color="#ccc"
+          @click="show = !show"
+          >编辑资料</van-button
+        >
+        <div v-else>
+          <van-button type="primary" color="red" size="mini" icon="add-o" round>关注</van-button>
+          <van-button type="primary" color="#323233" size="mini" round
+            ><span style="padding:10px;">聊天</span></van-button
+          >
+        </div>
+
+        <van-icon name="arrow-down" size="20" />
+      </div>
+    </div>
+    <Content
+      :user="{
+        profile: user.profile,
+        createDays: user.createDays,
+        createTime: user.createTime,
+        listenSongs: user.listenSongs,
+        id: attrs.id,
+      }"
+    />
+    <van-popup v-model:show="show" position="top" :style="{ height: '110%', width: '100%' }"
+      ><UserData @changeShow="changeShow"
+    /></van-popup>
+  </div>
+</template>

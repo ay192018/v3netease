@@ -1,50 +1,12 @@
-<template>
-  <div class="search">
-    <form action="/">
-      <van-search
-        v-model="value"
-        show-action
-        :placeholder="placeholder"
-        @update:model-value="values"
-        @search="onSearch"
-        shape="round"
-        @cancel="onCancel"
-        @focus="isresultshow = false"
-      />
-    </form>
-    <keep-alive v-if="isresultshow" :value="value">
-      <component is="Results"> </component>
-    </keep-alive>
-
-    <Advice v-else-if="value" :suggestlist="suggestlist" :onSearch="onSearch" />
-    <History
-      v-else
-      :historylist="historylist"
-      @reset="reset"
-      :onSearch="onSearch"
-    />
-    <Hotsearch
-      :onSearch="onSearch"
-      :hotsearch="hotsearch"
-      v-if="isresultshow === false"
-    />
-  </div>
-</template>
-
 <script>
-import { debounce } from "@/Util/fltter.js";
-import Hotsearch from "./hotsearch.vue";
-import { ref, reactive, onMounted, onActivated, onDeactivated } from "vue";
-import History from "./history.vue";
-import Advice from "./advice.vue";
-import Results from "./results.vue";
-import { useRouter, useRoute } from "vue-router";
-import {
-  getcloudsearch,
-  getsearchdefault,
-  gethotsearch,
-  getsuggest,
-} from "@/api/search.js";
+import { debounce } from '@/Util/fltter.js';
+import Hotsearch from './hotsearch.vue';
+import { ref, reactive, onMounted, onActivated, onDeactivated } from 'vue';
+import History from './history.vue';
+import Advice from './advice.vue';
+import Results from './results.vue';
+import { useRouter, useRoute } from 'vue-router';
+import { getcloudsearch, getsearchdefault, gethotsearch, getsuggest } from '@/api/search.js';
 export default {
   components: {
     History,
@@ -53,8 +15,8 @@ export default {
     Hotsearch,
   },
   setup(props, { expose }) {
-    const value = ref("");
-    const placeholder = ref("");
+    const value = ref('');
+    const placeholder = ref('');
     const route = useRoute();
     const isresultshow = ref(false); //搜索结果的显示状态
     const router = useRouter();
@@ -71,7 +33,7 @@ export default {
 
     const onSearch = async (val) => {
       value.value = val;
-      if (val === "") {
+      if (val === '') {
         value.value = placeholder.value;
       }
       /**
@@ -82,7 +44,7 @@ export default {
         historylist.value.splice(historylist.value.lastIndexOf(value.value), 1);
       }
       historylist.value.unshift(value.value);
-      localStorage.setItem("historylist", JSON.stringify(historylist.value));
+      localStorage.setItem('historylist', JSON.stringify(historylist.value));
       isresultshow.value = true;
     };
     const reset = () => {
@@ -92,7 +54,7 @@ export default {
     const values = async (val) => {
       if (val.length === 0) return;
       const { data } = await getsuggest({
-        type: "mobile",
+        type: 'mobile',
         keywords: val,
       });
       suggestlist.value = data.result.allMatch;
@@ -128,3 +90,27 @@ export default {
 .search {
 }
 </style>
+
+<template>
+  <div class="search">
+    <form action="/">
+      <van-search
+        v-model="value"
+        show-action
+        :placeholder="placeholder"
+        @update:model-value="values"
+        @search="onSearch"
+        shape="round"
+        @cancel="onCancel"
+        @focus="isresultshow = false"
+      />
+    </form>
+    <keep-alive v-if="isresultshow" :value="value">
+      <component is="Results"> </component>
+    </keep-alive>
+
+    <Advice v-else-if="value" :suggestlist="suggestlist" :onSearch="onSearch" />
+    <History v-else :historylist="historylist" @reset="reset" :onSearch="onSearch" />
+    <Hotsearch :onSearch="onSearch" :hotsearch="hotsearch" v-if="isresultshow === false" />
+  </div>
+</template>

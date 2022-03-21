@@ -1,3 +1,66 @@
+<script>
+import { ref } from 'vue';
+import { getlogin } from '@/api/user.js';
+import { Toast } from 'vant';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
+export default {
+  setup() {
+    const phone = ref('15949665034');
+    const password = ref('wjy0.0.0');
+    const router = useRouter();
+    const onClickLeft = () => {
+      router.back();
+    };
+    const onSubmit = async () => {
+      Toast.loading({
+        message: '加载中...',
+        forbidClick: true,
+      });
+      const { data } = await getlogin({
+        phone: phone.value,
+        password: password.value,
+      });
+      console.log(data);
+      if (data.code === 200) {
+        localStorage.setItem('cookie', JSON.stringify(data.cookie));
+        localStorage.setItem('profile', JSON.stringify(data.profile));
+        Toast.clear();
+        Toast.success('登录成功');
+
+        router.push('/');
+      } else {
+        Toast.fail('登录失败,请检查手机号密码是否有误');
+      }
+    };
+
+    return {
+      router,
+      phone,
+      password,
+      onClickLeft,
+      onSubmit,
+    };
+  },
+};
+</script>
+
+<style lang="less" scoped>
+.login {
+  position: absolute;
+  z-index: 9999;
+  /deep/ .van-nav-bar {
+    background: red;
+  }
+  /deep/ .van-form {
+    margin-top: 30px;
+  }
+  /deep/ .van-nav-bar__title {
+    color: #fff;
+  }
+}
+</style>
+
 <template>
   <div class="login">
     <van-nav-bar title="登录" @click-left="onClickLeft" :border="false">
@@ -39,66 +102,3 @@
     </van-form>
   </div>
 </template>
-
-<script>
-import { ref } from "vue";
-import { getlogin } from "@/api/user.js";
-import { Toast } from "vant";
-import { useRouter } from "vue-router";
-import { useStore } from "vuex";
-export default {
-  setup() {
-    const phone = ref("15949665034");
-    const password = ref("wjy0.0.0");
-    const router = useRouter();
-    const onClickLeft = () => {
-      router.back();
-    };
-    const onSubmit = async () => {
-      Toast.loading({
-        message: "加载中...",
-        forbidClick: true,
-      });
-      const { data } = await getlogin({
-        phone: phone.value,
-        password: password.value,
-      });
-      console.log(data);
-      if (data.code === 200) {
-        localStorage.setItem("cookie", JSON.stringify(data.cookie));
-        localStorage.setItem("profile", JSON.stringify(data.profile));
-        Toast.clear();
-        Toast.success("登录成功");
-
-        router.push("/");
-      } else {
-        Toast.fail("登录失败,请检查手机号密码是否有误");
-      }
-    };
-
-    return {
-      router,
-      phone,
-      password,
-      onClickLeft,
-      onSubmit,
-    };
-  },
-};
-</script>
-
-<style lang="less" scoped>
-.login {
-  position: absolute;
-  z-index: 9999;
-  /deep/ .van-nav-bar {
-    background: red;
-  }
-  /deep/ .van-form {
-    margin-top: 30px;
-  }
-  /deep/ .van-nav-bar__title {
-    color: #fff;
-  }
-}
-</style>

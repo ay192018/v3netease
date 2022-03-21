@@ -1,65 +1,9 @@
-<template>
-  <div class="list">
-    <div class="title">
-      <van-icon name="play-circle-o" size="20" color="red" />
-      <div class="playall">播放全部</div>
-    </div>
-    <van-list
-      v-model:loading="loading"
-      :finished="finished"
-      finished-text="没有更多了"
-      @load="onLoad"
-    >
-      <div class="songslist">
-        <div
-          class="item"
-          v-for="(item, index) in results"
-          :key="item"
-          @click="play(index)"
-        >
-          <div class="left">
-            <div class="index">{{ index + 1 }}</div>
-
-            <div class="data">
-              <div class="songname van-ellipsis">
-                {{ item.name }}
-              </div>
-              <div class="songtitle van-ellipsis">
-                {{ `${item.ar[0].name}--${item.name}` }}
-              </div>
-            </div>
-          </div>
-          <div class="icons">
-            <van-icon
-              name="tv-o"
-              v-if="item.mv"
-              size="20"
-              @click.stop="
-                router.push({
-                  name: 'video',
-                  params: {
-                    id: item.mv,
-                  },
-                })
-              "
-              class="tv"
-            />
-            <van-icon name="ellipsis" size="20" />
-          </div>
-        </div>
-
-        <div class="van-hairline--bottom"></div>
-      </div>
-    </van-list>
-  </div>
-</template>
-
 <script>
-import { getcloudsearch } from "@/api/search.js";
-import { nextTick, ref } from "vue";
-import { useStore } from "vuex";
-import { useRouter } from "vue-router";
-import { Toast } from "vant";
+import { getcloudsearch } from '@/api/search.js';
+import { nextTick, ref } from 'vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
+import { Toast } from 'vant';
 export default {
   setup(props, { attrs }) {
     const list = ref([]);
@@ -87,25 +31,21 @@ export default {
       }
     };
     const play = (index) => {
-      if (
-        store.state.songlist.length &&
-        store.state.audio.played &&
-        index === store.state.curret
-      ) {
+      if (store.state.songlist.length && store.state.audio.played && index === store.state.curret) {
         return;
       }
 
       Toast.loading({
-        message: "加载中...",
+        message: '加载中...',
         forbidClick: true,
-        loadingType: "spinner",
+        loadingType: 'spinner',
       });
       if (store.state.audio.paused) {
-        store.dispatch("setsonglist", results.value);
-        store.dispatch("setsetcurret", index);
+        store.dispatch('setsonglist', results.value);
+        store.dispatch('setsetcurret', index);
         nextTick(() => {
           store.state.audio.play();
-          store.dispatch("setisplay");
+          store.dispatch('setisplay');
           if (store.state.isplay && store.state.audio.readyState == 4) {
             Toast.clear({
               clearAll: true,
@@ -114,15 +54,15 @@ export default {
         });
       } else {
         nextTick(() => {
-          store.dispatch("setisplay");
+          store.dispatch('setisplay');
           store.state.audio.pause();
         });
-        store.dispatch("setsonglist", results.value);
-        store.dispatch("setsetcurret", index);
+        store.dispatch('setsonglist', results.value);
+        store.dispatch('setsetcurret', index);
         nextTick(() => {
           store.state.audio.play();
           if (store.state.audio.played) {
-            store.dispatch("setisplay");
+            store.dispatch('setisplay');
             Toast.clear({
               clearAll: true,
             });
@@ -154,7 +94,7 @@ export default {
   overflow-y: auto;
   .songslist {
     margin: 0 auto;
- 
+
     width: 95vw;
     bottom: 50;
     left: 0;
@@ -207,3 +147,49 @@ export default {
   }
 }
 </style>
+
+<template>
+  <div class="list">
+    <div class="title">
+      <van-icon name="play-circle-o" size="20" color="red" />
+      <div class="playall">播放全部</div>
+    </div>
+    <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+      <div class="songslist">
+        <div class="item" v-for="(item, index) in results" :key="item" @click="play(index)">
+          <div class="left">
+            <div class="index">{{ index + 1 }}</div>
+
+            <div class="data">
+              <div class="songname van-ellipsis">
+                {{ item.name }}
+              </div>
+              <div class="songtitle van-ellipsis">
+                {{ `${item.ar[0].name}--${item.name}` }}
+              </div>
+            </div>
+          </div>
+          <div class="icons">
+            <van-icon
+              name="tv-o"
+              v-if="item.mv"
+              size="20"
+              @click.stop="
+                router.push({
+                  name: 'video',
+                  params: {
+                    id: item.mv,
+                  },
+                })
+              "
+              class="tv"
+            />
+            <van-icon name="ellipsis" size="20" />
+          </div>
+        </div>
+
+        <div class="van-hairline--bottom"></div>
+      </div>
+    </van-list>
+  </div>
+</template>

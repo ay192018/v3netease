@@ -1,156 +1,11 @@
-<template>
-  <div class="info">
-    <van-nav-bar
-      :border="false"
-      :fixed="true"
-      :title="
-        `${store.state.songlist[store.state.curret].name}-${
-          store.state.songlist[store.state.curret].ar[0].name
-        }`
-      "
-      @click-left="changeshow"
-      @click-right="onClickRight"
-    >
-      <template #left>
-        <van-icon name="arrow-down" color="#323233" size="25" />
-      </template>
-      <template #right>
-        <van-icon name="share-o" size="25" color="#323233" /> </template
-    ></van-nav-bar>
-    <van-image
-      width="100vw"
-      height="100vh"
-      fit="cover"
-      class="bgimg"
-      :src="store.state.songlist[store.state.curret].al.picUrl"
-    />
-    <van-image
-      width="180px"
-      height="180px"
-      round
-      fit="cover"
-      class="rotateimg"
-      :class="
-        store.state.isplay &&
-        store.state.audio.played &&
-        store.state.audio.readyState == 4
-          ? 'active'
-          : ''
-      "
-      :src="store.state.songlist[store.state.curret].al.picUrl"
-      v-show="!lyricsshow"
-      @click="lyricsshow = !lyricsshow"
-    >
-      <template v-slot:loading>
-        <van-loading type="spinner" size="20" color="#000" /> </template
-    ></van-image>
-    <div class="lyrics" v-show="lyricsshow" @click="lyricsshow = !lyricsshow">
-      <p
-        v-for="(item, index) in lyric.value"
-        :key="index"
-        :class="
-          attrs.currentTime >= lyric.key[index] &&
-          attrs.currentTime < lyric.key[index + 1]
-            ? 'actives'
-            : ''
-        "
-      >
-        {{ item[1] }}
-      </p>
-    </div>
-    <ul class="components">
-      <li>
-        <van-icon name="like-o" size="28" color="rgb(50,50,51)" /><van-icon
-          name="down"
-          size="28"
-          color="rgb(50,50,51)"
-        /><van-icon
-          name="chat-o"
-          size="28"
-          color="rgb(50,50,51)"
-          @click="tocommnts"
-        /><van-icon name="ellipsis" size="28" color="rgb(50,50,51)" />
-      </li>
-      <li>
-        <div class="time">{{ realFormatSecond(attrs.currentTime) }}</div>
-        <van-slider
-          class="time"
-          v-model="value"
-          @change="onChange"
-          active-color="red"
-          button-size="12"
-          :min="0"
-          :max="attrs.duration"
-          @update:model-value="modelvalue"
-        />
-        <div class="time">{{ realFormatSecond(attrs.duration) }}</div>
-      </li>
-      <li>
-        <van-icon
-          name="replay"
-          size="28"
-          color="rgb(50,50,51)"
-          v-if="store.state.playmodel === 0"
-          @click="playstyle"
-        />
-        <van-icon
-          name="circle"
-          size="28"
-          color="rgb(50,50,51)"
-          v-else-if="store.state.playmodel === 1"
-          @click="playstyle"
-        />
-        <van-icon
-          name="exchange"
-          size="28"
-          color="rgb(50,50,51)"
-          v-else-if="store.state.playmodel === 2"
-          @click="playstyle"
-        />
-        <van-icon
-          name="like-o"
-          size="28"
-          color="rgb(50,50,51)"
-          v-else
-          @click="playstyle"
-        />
-        <van-icon
-          name="arrow-left"
-          size="28"
-          color="rgb(50,50,51)"
-          @click="switchsong(-1)"
-        />
-        <van-icon
-          :name="store.state.isplay ? 'pause-circle-o' : 'play-circle-o'"
-          size="32"
-          color="rgb(50,50,51)"
-          @click="attrs.play()"
-        />
-        <van-icon
-          name="arrow"
-          size="28"
-          color="rgb(50,50,51)"
-          @click="switchsong(1)"
-        />
-        <van-icon
-          name="bars"
-          size="28"
-          color="rgb(50,50,51)"
-          @click.stop="emit('playstate')"
-        />
-      </li>
-    </ul>
-  </div>
-</template>
-
 <script>
-import { getsonglyric } from "@/api/songsheet.js";
-import { realFormatSecond, debounce, lyrics } from "@/Util/fltter.js";
-import { nextTick, ref, watch, reactive } from "vue";
-import { Toast, Notify } from "vant";
+import { getsonglyric } from '@/api/songsheet.js';
+import { realFormatSecond, debounce, lyrics } from '@/Util/fltter.js';
+import { nextTick, ref, watch, reactive, computed } from 'vue';
+import { Toast, Notify } from 'vant';
 
-import { useStore } from "vuex";
-import { useRouter } from "vue-router";
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 export default {
   setup(props, { attrs, emit }) {
     const store = useStore();
@@ -160,11 +15,14 @@ export default {
       key: [],
     });
     const router = useRouter();
+    const playId = computed(() => {
+      return store.state.songlist[store.state.curret].id;
+    });
     const lyricsshow = ref(false);
     const tocommnts = () => {
-      store.dispatch("setflag", 0);
+      store.dispatch('setflag', 0);
       router.push({
-        name: "comments",
+        name: 'comments',
         params: {
           id: store.state.songlist[store.state.curret].id,
         },
@@ -172,18 +30,17 @@ export default {
     };
     const changeshow = () => {
       //传递给父组件的弹出层状态
-      emit("changeshow", !attrs.show);
+      emit('changeshow', !attrs.show);
     };
     watch(
       //监听接收过来的当前播放时间来给绑定进度条的值进行赋值
       () => attrs.currentTime,
       () => {
         value.value = Number(attrs.currentTime);
-        if (document.querySelector(".actives")) {
-          document.querySelector(".lyrics").scrollTop =
-            document.querySelector(".actives").offsetTop - 150;
+        if (document.querySelector('.actives')) {
+          document.querySelector('.lyrics').scrollTop = document.querySelector('.actives').offsetTop - 150;
         }
-      }
+      },
     );
     watch(
       /**
@@ -191,10 +48,10 @@ export default {
        * @return {Promise} 数据
        */
 
-      () => store.state.curret,
+      () => playId.value,
       async (val) => {
         const { data } = await getsonglyric({
-          id: store.state.songlist[val].id,
+          id: val,
         });
 
         const result = lyrics(data);
@@ -202,7 +59,7 @@ export default {
         lyric.value = result.result;
         lyric.key = result.key;
       },
-      { immediate: true }
+      { immediate: true },
     );
     /**
      * @param {Number} 传入1||-1来决定上下首
@@ -211,54 +68,54 @@ export default {
     const switchsong = (index) => {
       if (store.state.songlist.length === store.state.curret + index) {
         Notify({
-          background: "#7232dd",
-          message: "没有下一首咯",
+          background: '#7232dd',
+          message: '没有下一首咯',
         });
         return;
       } else if (0 > store.state.curret + index) {
         Notify({
-          background: "#7232dd",
-          message: "没有上一首咯",
+          background: '#7232dd',
+          message: '没有上一首咯',
         });
         documenM;
         return;
       }
-      store.dispatch("setsetcurret", store.state.curret + index);
+      store.dispatch('setsetcurret', store.state.curret + index);
       nextTick(() => {
         store.state.audio.play();
       });
     };
     const playstyle = () => {
       if (store.state.playmodel === 0) {
-        store.dispatch("setplaymodel", 1);
+        store.dispatch('setplaymodel', 1);
         Notify({
-          background: "pink",
-          message: "随机播放",
+          background: 'pink',
+          message: '随机播放',
         });
       } else if (store.state.playmodel === 1) {
-        store.dispatch("setplaymodel", 2);
+        store.dispatch('setplaymodel', 2);
         store.state.audio.loop = true;
         Notify({
-          background: "#ff6700",
-          message: "循环播放",
+          background: '#ff6700',
+          message: '循环播放',
         });
       } else if (store.state.playmodel === 2) {
         store.state.audio.loop = false;
-        store.dispatch("setplaymodel", 3);
+        store.dispatch('setplaymodel', 3);
         Notify({
-          background: "#ff6700",
-          message: "心动模式",
+          background: '#ff6700',
+          message: '心动模式',
         });
       } else {
-        store.dispatch("setplaymodel", 0);
+        store.dispatch('setplaymodel', 0);
         Notify({
-          background: "#ff6700",
-          message: "列表循环",
+          background: '#ff6700',
+          message: '列表循环',
         });
       }
     };
     const onClickRight = () => {
-      Toast("分享事件");
+      Toast('分享事件');
     };
     const modelvalue = (val) => {
       //拖动实时更新进度条的start
@@ -286,6 +143,7 @@ export default {
       debounce,
       tocommnts,
       emit,
+      playId,
     };
   },
 };
@@ -387,3 +245,103 @@ export default {
   }
 }
 </style>
+
+<template>
+  <div class="info">
+    <van-nav-bar
+      :border="false"
+      :fixed="true"
+      :title="`${store.state.songlist[store.state.curret].name}-${store.state.songlist[store.state.curret].ar[0].name}`"
+      @click-left="changeshow"
+      @click-right="onClickRight"
+    >
+      <template #left>
+        <van-icon name="arrow-down" color="#323233" size="25" />
+      </template>
+      <template #right> <van-icon name="share-o" size="25" color="#323233" /> </template
+    ></van-nav-bar>
+    <van-image
+      width="100vw"
+      height="100vh"
+      fit="cover"
+      class="bgimg"
+      :src="store.state.songlist[store.state.curret].al.picUrl"
+    />
+    <van-image
+      width="180px"
+      height="180px"
+      round
+      fit="cover"
+      class="rotateimg"
+      :class="store.state.isplay && store.state.audio.played && store.state.audio.readyState == 4 ? 'active' : ''"
+      :src="store.state.songlist[store.state.curret].al.picUrl"
+      v-show="!lyricsshow"
+      @click="lyricsshow = !lyricsshow"
+    >
+      <template v-slot:loading> <van-loading type="spinner" size="20" color="#000" /> </template
+    ></van-image>
+    <div class="lyrics" v-show="lyricsshow" @click="lyricsshow = !lyricsshow">
+      <p
+        v-for="(item, index) in lyric.value"
+        :key="index"
+        :class="attrs.currentTime >= lyric.key[index] && attrs.currentTime < lyric.key[index + 1] ? 'actives' : ''"
+      >
+        {{ item[1] }}
+      </p>
+    </div>
+    <ul class="components">
+      <li>
+        <van-icon name="like-o" size="28" color="rgb(50,50,51)" /><van-icon
+          name="down"
+          size="28"
+          color="rgb(50,50,51)"
+        /><van-icon name="chat-o" size="28" color="rgb(50,50,51)" @click="tocommnts" /><van-icon
+          name="ellipsis"
+          size="28"
+          color="rgb(50,50,51)"
+        />
+      </li>
+      <li>
+        <div class="time">{{ realFormatSecond(attrs.currentTime) }}</div>
+        <van-slider
+          class="time"
+          v-model="value"
+          @change="onChange"
+          active-color="red"
+          button-size="12"
+          :min="0"
+          :max="attrs.duration"
+          @update:model-value="modelvalue"
+        />
+        <div class="time">{{ realFormatSecond(attrs.duration) }}</div>
+      </li>
+      <li>
+        <van-icon name="replay" size="28" color="rgb(50,50,51)" v-if="store.state.playmodel === 0" @click="playstyle" />
+        <van-icon
+          name="circle"
+          size="28"
+          color="rgb(50,50,51)"
+          v-else-if="store.state.playmodel === 1"
+          @click="playstyle"
+        />
+        <van-icon
+          name="exchange"
+          size="28"
+          color="rgb(50,50,51)"
+          v-else-if="store.state.playmodel === 2"
+          @click="playstyle"
+        />
+        <van-icon name="like-o" size="28" color="rgb(50,50,51)" v-else @click="playstyle" />
+        <van-icon name="arrow-left" size="28" color="rgb(50,50,51)" @click="switchsong(-1)" />
+        <van-icon
+          :name="store.state.isplay ? 'pause-circle-o' : 'play-circle-o'"
+          size="32"
+          color="rgb(50,50,51)"
+          @click="attrs.play()"
+        />
+        <van-icon name="arrow" size="28" color="rgb(50,50,51)" @click="switchsong(1)" />
+        <van-icon name="bars" size="28" color="rgb(50,50,51)" @click.stop="emit('playstate')" />
+      </li>
+    </ul>
+  </div>
+</template>

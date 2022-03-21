@@ -1,56 +1,8 @@
-<template>
-  <div class="playlist">
-    <van-list
-      v-model:loading="loading"
-      :finished="finished"
-      finished-text="没有更多了"
-      @load="onLoad"
-    >
-      <van-cell
-        v-for="(item, index) in album"
-        :key="index"
-        clickable
-        @click="
-          router.push({
-            name: 'songsdetails',
-            params: {
-              id: item.id,
-            },
-          })
-        "
-      >
-        <template #icon>
-          <div>
-            <van-image
-              width="50"
-              height="50"
-              radius="15"
-              :src="item.coverImgUrl"
-            />
-          </div>
-        </template>
-        <template #title>
-          <div class="content">
-            <div class="title" style="overflow: hidden">{{ item.name }}</div>
-            <div class="describe">
-              {{
-                `${item.trackCount}首音乐  by${
-                  item.creator.nickname
-                } 播放${playCount(item.playCount)}次`
-              }}
-            </div>
-          </div>
-        </template>
-      </van-cell>
-    </van-list>
-  </div>
-</template>
-
 <script>
-import { getcloudsearch } from "@/api/search.js";
-import { playCount } from "@/Util/fltter.js";
-import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { getcloudsearch } from '@/api/search.js';
+import { playCount } from '@/Util/fltter.js';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default {
   setup(props, { attrs }) {
@@ -112,3 +64,37 @@ export default {
   }
 }
 </style>
+
+<template>
+  <div class="playlist">
+    <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+      <van-cell
+        v-for="(item, index) in album"
+        :key="index"
+        clickable
+        @click="
+          router.push({
+            name: 'songsdetails',
+            params: {
+              id: item.id,
+            },
+          })
+        "
+      >
+        <template #icon>
+          <div>
+            <van-image width="50" height="50" radius="15" :src="item.coverImgUrl" />
+          </div>
+        </template>
+        <template #title>
+          <div class="content">
+            <div class="title" style="overflow: hidden">{{ item.name }}</div>
+            <div class="describe">
+              {{ `${item.trackCount}首音乐  by${item.creator.nickname} 播放${playCount(item.playCount)}次` }}
+            </div>
+          </div>
+        </template>
+      </van-cell>
+    </van-list>
+  </div>
+</template>

@@ -1,66 +1,7 @@
-<template>
-  <div class="user">
-    <van-list
-      v-model:loading="loading"
-      :finished="finished"
-      finished-text="没有更多了"
-      @load="onLoad"
-    >
-      <van-cell
-        v-for="(item, index) in artists"
-        :key="index"
-        clickable
-        border
-        @click="
-          router.push({
-            name: 'user',
-            params: {
-              id: item.userId,
-            },
-          })
-        "
-      >
-        <template #icon>
-          <div>
-            <van-image
-              width="50"
-              height="50"
-              radius="15"
-              :src="item.avatarUrl"
-            />
-          </div>
-        </template>
-        <template #title>
-          <div class="content">
-            <span class="title van-ellipsis" style="overflow: hidden">
-              {{ item.nickname }}
-            </span>
-
-            <span class="title van-ellipsis" style="overflow: hidden">{{
-              item.signature
-            }}</span>
-          </div>
-        </template>
-        <template #right-icon>
-          <van-button
-            type="primary"
-            :color="item.subscribed ? '#ccc' : 'red'"
-            size="mini"
-            :disabled="item.subscribed ? true : false"
-            :icon="item.subscribed ? 'success' : 'add-o'"
-            round
-            >{{ item.subscribed ? "已关注" : "关注" }}</van-button
-          >
-        </template>
-      </van-cell>
-    </van-list>
-  </div>
-</template>
-
 <script>
-import { getcloudsearch } from "@/api/search.js";
-import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { getcloudsearch } from '@/api/search.js';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default {
   setup(props, { attrs }) {
@@ -126,3 +67,50 @@ export default {
   }
 }
 </style>
+
+<template>
+  <div class="user">
+    <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+      <van-cell
+        v-for="(item, index) in artists"
+        :key="index"
+        clickable
+        border
+        @click="
+          router.push({
+            name: 'user',
+            params: {
+              id: item.userId,
+            },
+          })
+        "
+      >
+        <template #icon>
+          <div>
+            <van-image width="50" height="50" radius="15" :src="item.avatarUrl" />
+          </div>
+        </template>
+        <template #title>
+          <div class="content">
+            <span class="title van-ellipsis" style="overflow: hidden">
+              {{ item.nickname }}
+            </span>
+
+            <span class="title van-ellipsis" style="overflow: hidden">{{ item.signature }}</span>
+          </div>
+        </template>
+        <template #right-icon>
+          <van-button
+            type="primary"
+            :color="item.subscribed ? '#ccc' : 'red'"
+            size="mini"
+            :disabled="item.subscribed ? true : false"
+            :icon="item.subscribed ? 'success' : 'add-o'"
+            round
+            >{{ item.subscribed ? '已关注' : '关注' }}</van-button
+          >
+        </template>
+      </van-cell>
+    </van-list>
+  </div>
+</template>

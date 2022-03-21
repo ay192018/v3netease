@@ -1,33 +1,3 @@
-<template>
-  <div class="search">
-    <van-nav-bar :border="false" fixed>
-      <template #title>
-        <van-button
-          size="small"
-          color="#ccc"
-          round
-          type="primary"
-          to="/search"
-          icon="search"
-          >搜索</van-button
-        >
-      </template>
-      <template #left>
-        <van-icon name="bars" size="25" />
-      </template>
-      <template #right>
-        <a href="https://github.com/ay192018/v3netease">
-          <van-image
-            width="30"
-            height="30"
-            fit="cover"
-            src="https://b.yzcdn.cn/vant/logo/github.svg"
-        /></a>
-      </template>
-    </van-nav-bar>
-  </div>
-</template>
-
 <script>
 export default {};
 </script>
@@ -46,3 +16,21 @@ export default {};
   }
 }
 </style>
+
+<template>
+  <div class="search">
+    <van-nav-bar :border="false" fixed>
+      <template #title>
+        <van-button size="small" color="#ccc" round type="primary" to="/search" icon="search">搜索</van-button>
+      </template>
+      <template #left>
+        <van-icon name="bars" size="25" />
+      </template>
+      <template #right>
+        <a href="https://github.com/ay192018/v3netease">
+          <van-image width="30" height="30" fit="cover" src="https://b.yzcdn.cn/vant/logo/github.svg"
+        /></a>
+      </template>
+    </van-nav-bar>
+  </div>
+</template>

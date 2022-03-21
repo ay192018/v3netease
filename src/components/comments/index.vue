@@ -1,125 +1,20 @@
-<template>
-  <div class="comments">
-    <div class="fiexd">
-      <van-nav-bar
-        :title="`评论(${comments.total})`"
-        @click-left="onClickLeft"
-        :border="false"
-      >
-        <template #left>
-          <van-icon name="arrow-left" color="#ccc" size="25" />
-        </template>
-        <template #right>
-          <van-icon
-            name="share-o"
-            color="#ccc"
-            size="25"
-            @click="onClickright"
-          />
-        </template>
-      </van-nav-bar>
-
-      <div class="void"></div>
-      <div class="title">评论区</div>
-    </div>
-    <div class="conaim">
-      <van-list
-        v-model:loading="loading"
-        :finished="finished"
-        finished-text="没有更多了"
-        @load="onLoad"
-      >
-        <div
-          class="item"
-          v-for="(item, index) in comments.comment"
-          :key="index"
-        >
-          <van-image
-            width="30px"
-            height="30px"
-            round
-            fit="cover"
-            :src="item.user.avatarUrl"
-          >
-            <template v-slot:loading>
-              <van-loading type="spinner" size="10" color="#000" /> </template
-          ></van-image>
-          <div class="content">
-            <div class="top">
-              <div class="left">
-                <div
-                  class="name"
-                  @click="
-                    router.push({
-                      name: 'user',
-                      params: {
-                        id: item.user.userId,
-                      },
-                    })
-                  "
-                >
-                  {{ item.user.nickname }}
-                </div>
-                <div class="time">{{ data(item.time) }}</div>
-              </div>
-              <div class="right">
-                {{ playCount(item.likedCount) }}
-                <van-icon
-                  :name="item.liked ? 'good-job' : 'good-job-o'"
-                  size="25"
-                  @click="islike(item)"
-                />
-              </div>
-            </div>
-            <div class="bottom" @click="ahplay(item.user.nickname)">
-              {{ item.content }}
-            </div>
-          </div>
-          <div class="van-hairline--bottom"></div>
-        </div>
-      </van-list>
-    </div>
-    <van-popup v-model:show="show" position="bottom" :style="{ height: '10%' }"
-      ><van-cell-group inset>
-        <van-field
-          v-model="message"
-          rows="1"
-          autosize
-          clickable
-          type="textarea"
-          @click-right-icon="sendcommit"
-          :placeholder="placeholder"
-          ><template #right-icon>
-            <van-button size="small" type="primary" round>评论</van-button>
-          </template></van-field
-        >
-      </van-cell-group></van-popup
-    >
-    <div class="btn">
-      <van-button type="primary" size="large" round @click="commentdata"
-        >听说爱评论的粉丝很多</van-button
-      >
-    </div>
-  </div>
-</template>
-
 <script>
-import { comment, sendcomment, sendcommentlike } from "@/api/commnts.js";
-import { data } from "@/Util/dayjs.js";
-import { Toast, Dialog } from "vant";
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-import { reactive } from "@vue/runtime-core";
-import { useStore } from "vuex";
-import { playCount } from "@/Util/fltter.js";
+import { comment, sendcomment, sendcommentlike } from '@/api/commnts.js';
+import { data } from '@/Util/dayjs.js';
+import { Toast, Dialog } from 'vant';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { reactive } from '@vue/runtime-core';
+import { useStore } from 'vuex';
+import { playCount } from '@/Util/fltter.js';
 
 export default {
   setup(props, { attrs }) {
-    const placeholder = ref("听说爱评论的粉丝很多~");
+    const placeholder = ref('听说爱评论的粉丝很多~');
     const router = useRouter();
     const loading = ref(false);
     const finished = ref(false);
-    const message = ref("");
+    const message = ref('');
     const store = useStore();
     const show = ref(false);
 
@@ -141,8 +36,8 @@ export default {
       placeholder.value = `说点好听的把~`;
     };
     const sendcommit = async () => {
-      if (!JSON.parse(localStorage.getItem("cookie"))) {
-        return router.push("/login");
+      if (!JSON.parse(localStorage.getItem('cookie'))) {
+        return router.push('/login');
       }
       const { data } = await sendcomment({
         t: 1,
@@ -152,12 +47,12 @@ export default {
       });
       if (data.code === 200) {
         show.value = !show.value;
-        message.value = "";
+        message.value = '';
         comments.comment.unshift(data.comment);
-        Toast("评论成功");
+        Toast('评论成功');
       } else {
         show.value = !show.value;
-        message.value = "";
+        message.value = '';
         Dialog.alert({
           title: data.data.dialog.title,
           message: data.data.dialog.subtitle,
@@ -169,11 +64,11 @@ export default {
       console.log(data);
     };
     const onClickright = () => {
-      Toast("分享事件");
+      Toast('分享事件');
     };
     const islike = async (item) => {
-      if (!JSON.parse(localStorage.getItem("cookie"))) {
-        return router.push("/login");
+      if (!JSON.parse(localStorage.getItem('cookie'))) {
+        return router.push('/login');
       }
       const { data } = await sendcommentlike({
         id: item.user.userId,
@@ -298,3 +193,77 @@ export default {
   }
 }
 </style>
+
+<template>
+  <div class="comments">
+    <div class="fiexd">
+      <van-nav-bar :title="`评论(${comments.total})`" @click-left="onClickLeft" :border="false">
+        <template #left>
+          <van-icon name="arrow-left" color="#ccc" size="25" />
+        </template>
+        <template #right>
+          <van-icon name="share-o" color="#ccc" size="25" @click="onClickright" />
+        </template>
+      </van-nav-bar>
+
+      <div class="void"></div>
+      <div class="title">评论区</div>
+    </div>
+    <div class="conaim">
+      <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+        <div class="item" v-for="(item, index) in comments.comment" :key="index">
+          <van-image width="30px" height="30px" round fit="cover" :src="item.user.avatarUrl">
+            <template v-slot:loading> <van-loading type="spinner" size="10" color="#000" /> </template
+          ></van-image>
+          <div class="content">
+            <div class="top">
+              <div class="left">
+                <div
+                  class="name"
+                  @click="
+                    router.push({
+                      name: 'user',
+                      params: {
+                        id: item.user.userId,
+                      },
+                    })
+                  "
+                >
+                  {{ item.user.nickname }}
+                </div>
+                <div class="time">{{ data(item.time) }}</div>
+              </div>
+              <div class="right">
+                {{ playCount(item.likedCount) }}
+                <van-icon :name="item.liked ? 'good-job' : 'good-job-o'" size="25" @click="islike(item)" />
+              </div>
+            </div>
+            <div class="bottom" @click="ahplay(item.user.nickname)">
+              {{ item.content }}
+            </div>
+          </div>
+          <div class="van-hairline--bottom"></div>
+        </div>
+      </van-list>
+    </div>
+    <van-popup v-model:show="show" position="bottom" :style="{ height: '10%' }"
+      ><van-cell-group inset>
+        <van-field
+          v-model="message"
+          rows="1"
+          autosize
+          clickable
+          type="textarea"
+          @click-right-icon="sendcommit"
+          :placeholder="placeholder"
+          ><template #right-icon>
+            <van-button size="small" type="primary" round>评论</van-button>
+          </template></van-field
+        >
+      </van-cell-group></van-popup
+    >
+    <div class="btn">
+      <van-button type="primary" size="large" round @click="commentdata">听说爱评论的粉丝很多</van-button>
+    </div>
+  </div>
+</template>

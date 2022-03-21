@@ -51,3 +51,18 @@ export const getevent = (params) => {
     params,
   });
 };
+
+export const gettopic = (params) => {
+  return http({
+    method: "GET",
+    url: "/topic/detail/event/hot",
+    params,
+  });
+};
+export const getuserupdate = (params) => {
+  return http({
+    method: "GET",
+    url: "/user/update",
+    params,
+  });
+};

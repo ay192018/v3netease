@@ -1,48 +1,7 @@
-<template>
-  <div class="singer">
-    <van-list
-      v-model:loading="loading"
-      :finished="finished"
-      finished-text="没有更多了"
-      @load="onLoad"
-    >
-      <van-cell v-for="(item, index) in artists" :key="index" clickable>
-        <template #icon>
-          <van-image width="50" height="50" radius="15" :src="item.img1v1Url" />
-        </template>
-        <template #title>
-          <div class="content">
-            <span class="title" style="overflow: hidden">{{ item.name }}</span>
-
-            <span
-              class="title"
-              style="overflow: hidden"
-              v-for="(item, index) in item.alias"
-              :key="index"
-              >{{ item }}</span
-            >
-          </div>
-        </template>
-        <template #right-icon>
-          <van-button
-            type="primary"
-            :color="item.followed ? '#ccc' : 'red'"
-            size="mini"
-            :disabled="item.followed ? true : false"
-            :icon="item.followed ? 'success' : 'add-o'"
-            round
-            >{{ item.followed ? "已关注" : "关注" }}</van-button
-          >
-        </template>
-      </van-cell>
-    </van-list>
-  </div>
-</template>
-
 <script>
-import { getcloudsearch } from "@/api/search.js";
-import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { getcloudsearch } from '@/api/search.js';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default {
   setup(props, { attrs }) {
@@ -104,3 +63,35 @@ export default {
   }
 }
 </style>
+
+<template>
+  <div class="singer">
+    <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+      <van-cell v-for="(item, index) in artists" :key="index" clickable>
+        <template #icon>
+          <van-image width="50" height="50" radius="15" :src="item.img1v1Url" />
+        </template>
+        <template #title>
+          <div class="content">
+            <span class="title" style="overflow: hidden">{{ item.name }}</span>
+
+            <span class="title" style="overflow: hidden" v-for="(item, index) in item.alias" :key="index">{{
+              item
+            }}</span>
+          </div>
+        </template>
+        <template #right-icon>
+          <van-button
+            type="primary"
+            :color="item.followed ? '#ccc' : 'red'"
+            size="mini"
+            :disabled="item.followed ? true : false"
+            :icon="item.followed ? 'success' : 'add-o'"
+            round
+            >{{ item.followed ? '已关注' : '关注' }}</van-button
+          >
+        </template>
+      </van-cell>
+    </van-list>
+  </div>
+</template>

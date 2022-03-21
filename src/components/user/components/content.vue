@@ -108,9 +108,7 @@
         </div>
         <nut-backtop :bottom="150" :right="50" :duration="3000"></nut-backtop>
       </nut-tabpane>
-      <nut-tabpane title="动态">
-        Tab 2
-      </nut-tabpane>
+      <nut-tabpane title="动态"> <UserResuse :id="attrs.user.id"/></nut-tabpane>
       <nut-tabpane title="视频">
         Tab 2
       </nut-tabpane>
@@ -121,9 +119,13 @@
 <script>
 import { createTime, datalbum } from "@/Util/dayjs.js";
 import { getuserplaylist, getuserevent } from "@/api/user.js";
-import { onMounted, reactive, toRefs } from "vue";
+import { onMounted, reactive, toRefs, provide } from "vue";
 import { useRouter } from "vue-router";
+import UserResuse from "./userReuse.vue";
 export default {
+  components: {
+    UserResuse,
+  },
   setup(props, { attrs }) {
     const state = reactive({
       tab11value: "0",
@@ -133,6 +135,7 @@ export default {
       collection: [],
       like: [],
     });
+    provide("id", attrs.user.id);
     const router = useRouter();
     onMounted(async () => {
       const { data } = await getuserplaylist({

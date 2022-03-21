@@ -1,69 +1,9 @@
-<template>
-  <div class="item">
-    <van-list
-      v-model:loading="loading"
-      :finished="finished"
-      finished-text="没有更多了"
-      @load="onLoad"
-    >
-      <div
-        class="videoitem"
-        v-for="(item, index) in videolist.datas"
-        :key="index"
-      >
-        <div>
-          <van-image
-            width="100%"
-            fit="cover"
-            radius="15"
-            :src="item.data.coverUrl"
-            @click="
-              router.push({
-                name: 'video',
-                params: {
-                  id: item.data.vid,
-                },
-              })
-            "
-          >
-            <template v-slot:loading>
-              <van-loading type="spinner" size="20" color="#000" /> </template
-          ></van-image>
-        </div>
-        <div class="title van-multi-ellipsis--l2">
-          {{ item.data.title }}
-        </div>
-        <div class="user">
-          <div>
-            <van-image
-              width="30"
-              height="30"
-              fit="cover"
-              round
-              :src="item.data.creator.avatarUrl"
-            />
-          </div>
-          <div class="title van-ellipsis">
-            {{ item.data.creator.nickname }}
-          </div>
-          <div class="job">
-            <van-icon name="good-job-o" /><span>{{
-              playCount(item.data.playTime)
-            }}</span>
-          </div>
-        </div>
-      </div>
-        <nut-backtop :bottom="150" :right="50" ></nut-backtop>
-    </van-list>
-  </div>
-</template>
-
 <script>
-import { getgroup } from "@/api/video.js";
+import { getgroup } from '@/api/video.js';
 
-import { ref, reactive } from "vue";
-import { playCount } from "@/Util/fltter.js";
-import { useRouter } from "vue-router";
+import { ref, reactive } from 'vue';
+import { playCount } from '@/Util/fltter.js';
+import { useRouter } from 'vue-router';
 
 export default {
   setup(props, { attrs }) {
@@ -148,3 +88,45 @@ export default {
   }
 }
 </style>
+
+<template>
+  <div class="item">
+    <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+      <div class="videoitem" v-for="(item, index) in videolist.datas" :key="index">
+        <div>
+          <van-image
+            width="100%"
+            fit="cover"
+            radius="15"
+            :src="item.data.coverUrl"
+            @click="
+              router.push({
+                name: 'video',
+                params: {
+                  id: item.data.vid,
+                },
+              })
+            "
+          >
+            <template v-slot:loading> <van-loading type="spinner" size="20" color="#000" /> </template
+          ></van-image>
+        </div>
+        <div class="title van-multi-ellipsis--l2">
+          {{ item.data.title }}
+        </div>
+        <div class="user">
+          <div>
+            <van-image width="30" height="30" fit="cover" round :src="item.data.creator.avatarUrl" />
+          </div>
+          <div class="title van-ellipsis">
+            {{ item.data.creator.nickname }}
+          </div>
+          <div class="job">
+            <van-icon name="good-job-o" /><span>{{ playCount(item.data.playTime) }}</span>
+          </div>
+        </div>
+      </div>
+      <nut-backtop :bottom="150" :right="50"></nut-backtop>
+    </van-list>
+  </div>
+</template>

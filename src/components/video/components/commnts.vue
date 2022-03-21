@@ -1,99 +1,17 @@
-<template>
-  <div class="commnts">
-    <div class="title">评论({{ comments.total }})</div>
-    <div class="conaim">
-      <van-list
-        v-model:loading="loading"
-        :finished="finished"
-        finished-text="没有更多了"
-        @load="onLoad"
-      >
-        <div
-          class="item"
-          v-for="(item, index) in comments.comment"
-          :key="index"
-        >
-          <van-image
-            width="30px"
-            height="30px"
-            round
-            fit="cover"
-            :src="item.user.avatarUrl"
-          >
-            <template v-slot:loading>
-              <van-loading type="spinner" size="10" color="#000" /> </template
-          ></van-image>
-          <div class="content">
-            <div class="top">
-              <div class="left">
-                <div
-                  class="name"
-                  @click="
-                    router.push({
-                      name: 'user',
-                      params: {
-                        id: item.user.userId,
-                      },
-                    })
-                  "
-                >
-                  {{ item.user.nickname }}
-                </div>
-                <div class="time">{{ data(item.time) }}</div>
-              </div>
-              <div class="right">
-                {{ playCount(item.likedCount) }}
-                <van-icon
-                  size="25"
-                  :name="item.liked ? 'good-job' : 'good-job-o'"
-                  @click="islike(item)"
-                />
-              </div>
-            </div>
-            <div class="bottom" @click="show = !show">{{ item.content }}</div>
-          </div>
-          <div class="van-hairline--bottom"></div>
-        </div>
-      </van-list>
-    </div>
-    <van-popup v-model:show="shows" position="bottom" :style="{ height: '10%' }"
-      ><van-cell-group inset>
-        <van-field
-          v-model="message"
-          rows="1"
-          autosize
-          clickable
-          type="textarea"
-          @click-right-icon="sendcommit"
-          placeholder="听说爱评论的粉丝很多"
-          ><template #right-icon>
-            <van-button size="small" type="primary" round>评论</van-button>
-          </template></van-field
-        >
-      </van-cell-group></van-popup
-    >
-    <div class="btn">
-      <van-button type="primary" size="large" round @click="shows = !shows"
-        >听说爱评论的粉丝很多</van-button
-      >
-    </div>
-  </div>
-</template>
-
 <script>
-import { getvideocomment, getmvcomment } from "@/api/video.js";
-import { sendcomment, sendcommentlike } from "@/api/commnts.js";
-import { data } from "@/Util/dayjs.js";
-import { ref, reactive } from "vue";
-import { useStore } from "vuex";
-import { useRouter } from "vue-router";
-import { Toast } from "vant";
-import { playCount } from "@/Util/fltter.js";
+import { getvideocomment, getmvcomment } from '@/api/video.js';
+import { sendcomment, sendcommentlike } from '@/api/commnts.js';
+import { data } from '@/Util/dayjs.js';
+import { ref, reactive } from 'vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
+import { Toast } from 'vant';
+import { playCount } from '@/Util/fltter.js';
 export default {
   setup(props, { attrs }) {
     const loading = ref(false);
     const finished = ref(false);
-    const message = ref("");
+    const message = ref('');
     const store = useStore();
     const shows = ref(false);
     const router = useRouter();
@@ -103,8 +21,8 @@ export default {
       offset: 1,
     });
     const sendcommit = async () => {
-      if (!JSON.parse(localStorage.getItem("cookie"))) {
-        return router.push("/login");
+      if (!JSON.parse(localStorage.getItem('cookie'))) {
+        return router.push('/login');
       }
       const { data } = await sendcomment({
         t: 1,
@@ -115,12 +33,12 @@ export default {
       console.log(data);
       if (data.code === 200) {
         shows.value = !shows.value;
-        message.value = "";
+        message.value = '';
         comments.comment.unshift(data.comment);
-        Toast("评论成功");
+        Toast('评论成功');
       } else {
         shows.value = !shows.value;
-        message.value = "";
+        message.value = '';
         Dialog.alert({
           title: data.data.dialog.title,
           message: data.data.dialog.subtitle,
@@ -131,8 +49,8 @@ export default {
       }
     };
     const islike = async (item) => {
-      if (!JSON.parse(localStorage.getItem("cookie"))) {
-        return router.push("/login");
+      if (!JSON.parse(localStorage.getItem('cookie'))) {
+        return router.push('/login');
       }
       const { data } = await sendcommentlike({
         id: attrs.attrs.attrs,
@@ -255,3 +173,63 @@ export default {
   }
 }
 </style>
+
+<template>
+  <div class="commnts">
+    <div class="title">评论({{ comments.total }})</div>
+    <div class="conaim">
+      <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+        <div class="item" v-for="(item, index) in comments.comment" :key="index">
+          <van-image width="30px" height="30px" round fit="cover" :src="item.user.avatarUrl">
+            <template v-slot:loading> <van-loading type="spinner" size="10" color="#000" /> </template
+          ></van-image>
+          <div class="content">
+            <div class="top">
+              <div class="left">
+                <div
+                  class="name"
+                  @click="
+                    router.push({
+                      name: 'user',
+                      params: {
+                        id: item.user.userId,
+                      },
+                    })
+                  "
+                >
+                  {{ item.user.nickname }}
+                </div>
+                <div class="time">{{ data(item.time) }}</div>
+              </div>
+              <div class="right">
+                {{ playCount(item.likedCount) }}
+                <van-icon size="25" :name="item.liked ? 'good-job' : 'good-job-o'" @click="islike(item)" />
+              </div>
+            </div>
+            <div class="bottom" @click="show = !show">{{ item.content }}</div>
+          </div>
+          <div class="van-hairline--bottom"></div>
+        </div>
+      </van-list>
+    </div>
+    <van-popup v-model:show="shows" position="bottom" :style="{ height: '10%' }"
+      ><van-cell-group inset>
+        <van-field
+          v-model="message"
+          rows="1"
+          autosize
+          clickable
+          type="textarea"
+          @click-right-icon="sendcommit"
+          placeholder="听说爱评论的粉丝很多"
+          ><template #right-icon>
+            <van-button size="small" type="primary" round>评论</van-button>
+          </template></van-field
+        >
+      </van-cell-group></van-popup
+    >
+    <div class="btn">
+      <van-button type="primary" size="large" round @click="shows = !shows">听说爱评论的粉丝很多</van-button>
+    </div>
+  </div>
+</template>

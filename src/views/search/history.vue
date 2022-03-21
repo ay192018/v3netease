@@ -1,35 +1,18 @@
-<template>
-  <div class="history" v-if="historylist">
-    <div class="left">历史</div>
-    <div class="content">
-      <div
-        class="item"
-        v-for="(item, index) in historylist"
-        :key="index"
-        @click="attrs.onSearch(item)"
-      >
-        <span class="style"> {{ item }}</span>
-      </div>
-    </div>
-    <van-icon name="delete-o" size="20" @click="reset" />
-  </div>
-</template>
-
 <script>
-import { computed } from "vue";
-import { Dialog } from "vant";
+import { computed } from 'vue';
+import { Dialog } from 'vant';
 export default {
   setup(props, { attrs, emit }) {
     const historylist = computed(() => {
-      return JSON.parse(localStorage.getItem("historylist"));
+      return JSON.parse(localStorage.getItem('historylist'));
     });
     const reset = () => {
       Dialog.confirm({
-        message: "确定要清空历史内容吗",
+        message: '确定要清空历史内容吗',
       })
         .then(() => {
-          emit("reset");
-          localStorage.removeItem("historylist");
+          emit('reset');
+          localStorage.removeItem('historylist');
         })
         .catch(() => {
           // on cancel
@@ -77,3 +60,15 @@ export default {
   }
 }
 </style>
+
+<template>
+  <div class="history" v-if="historylist">
+    <div class="left">历史</div>
+    <div class="content">
+      <div class="item" v-for="(item, index) in historylist" :key="index" @click="attrs.onSearch(item)">
+        <span class="style"> {{ item }}</span>
+      </div>
+    </div>
+    <van-icon name="delete-o" size="20" @click="reset" />
+  </div>
+</template>

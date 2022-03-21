@@ -1,27 +1,12 @@
-<template>
-  <router-view v-slot="{ Component }">
-    <transition name="slide-fade">
-      <keep-alive v-if="route.meta.keepAlive" :max="20">
-        <component class="child-view" :is="Component"> </component>
-      </keep-alive>
-
-      <component v-else class="child-view" :is="Component"> </component>
-    </transition>
-    <keep-alive v-if="route.path !== '/login'">
-      <component is="Audio"> </component>
-    </keep-alive>
-  </router-view>
-</template>
-
 <script>
-import Layout from "./views/layout/";
-import Audio from "@/components/audio/";
-import { nextTick, watch } from "vue";
-import { useRoute } from "vue-router";
-import { useWindowSize } from "@vant/use";
-import { Toast } from "vant";
-import { changeaudio, initaudio, debounce } from "@/Util/fltter.js";
-import { useStore } from "vuex";
+import Layout from './views/layout/';
+import Audio from '@/components/audio/';
+import { nextTick, watch } from 'vue';
+import { useRoute } from 'vue-router';
+import { useWindowSize } from '@vant/use';
+import { Toast } from 'vant';
+import { changeaudio, initaudio, debounce } from '@/Util/fltter.js';
+import { useStore } from 'vuex';
 export default {
   components: { Audio, Layout },
   setup() {
@@ -30,7 +15,7 @@ export default {
     const store = useStore();
     const { width } = useWindowSize();
     const fail = () => {
-      Toast.fail("请切换手机模式浏览！！！");
+      Toast.fail('请切换手机模式浏览！！！');
     };
 
     watch(
@@ -42,36 +27,36 @@ export default {
       },
       {
         immediate: true,
-      }
+      },
     );
     watch(route, (val) => {
       if (store.state.isplay) {
-        if (val.path.at(1) === "v" && val.path.at(5) === "o") {
-          store.dispatch("setisplay", !store.state.isplay);
+        if (val.path.at(1) === 'v' && val.path.at(5) === 'o') {
+          store.dispatch('setisplay', !store.state.isplay);
           store.state.audio.pause();
         }
       }
 
       switch (val.path) {
-        case "/":
+        case '/':
           nextTick(() => {
             changeaudio();
           });
           break;
-        case "/login":
+        case '/login':
           break;
 
-        case "/my":
+        case '/my':
           nextTick(() => {
             changeaudio();
           });
 
           break;
-        case "/follow":
+        case '/follow':
           changeaudio();
 
           break;
-        case "/Videosquare":
+        case '/Videosquare':
           changeaudio();
 
           break;
@@ -95,3 +80,17 @@ export default {
   bottom: 0;
 }
 </style>
+<template>
+  <router-view v-slot="{ Component }">
+    <transition name="slide-fade">
+      <keep-alive v-if="route.meta.keepAlive" :max="20">
+        <component class="child-view" :is="Component"> </component>
+      </keep-alive>
+
+      <component v-else class="child-view" :is="Component"> </component>
+    </transition>
+    <keep-alive v-if="route.path !== '/login'">
+      <component is="Audio"> </component>
+    </keep-alive>
+  </router-view>
+</template>

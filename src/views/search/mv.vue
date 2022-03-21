@@ -1,47 +1,8 @@
-<template>
-  <div class="video">
-    <van-list
-      v-model:loading="loading"
-      :finished="finished"
-      finished-text="没有更多了"
-      @load="onLoad"
-    >
-      <van-cell
-        v-for="(item, index) in artists"
-        :key="index"
-        clickable
-        @click="tovideo(item.vid)"
-      >
-        <template #icon>
-          <div class="pic">
-            <span class="count">{{ playCount(item.playTime) }}</span>
-            <van-image
-              width="30vw"
-              height="10vh"
-              radius="15"
-              :src="item.coverUrl"
-            />
-          </div>
-        </template>
-        <template #title>
-          <div class="content">
-            <div class="title van-multi-ellipsis--l2" style="overflow: hidden">
-              {{ item.title }}
-            </div>
-            <span class="user">{{ item.creator[0].userName }}</span>
-            <span class="user"> {{ playCount(item.playTime) }}播放</span>
-          </div>
-        </template>
-      </van-cell>
-    </van-list>
-  </div>
-</template>
-
 <script>
-import { getcloudsearch } from "@/api/search.js";
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-import { playCount } from "@/Util/fltter.js";
+import { getcloudsearch } from '@/api/search.js';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { playCount } from '@/Util/fltter.js';
 export default {
   setup(props, { attrs }) {
     const artists = ref([]);
@@ -70,7 +31,7 @@ export default {
     };
     const tovideo = (vid) => {
       router.push({
-        name: "video",
+        name: 'video',
         params: {
           id: vid,
         },
@@ -123,3 +84,27 @@ export default {
   }
 }
 </style>
+
+<template>
+  <div class="video">
+    <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+      <van-cell v-for="(item, index) in artists" :key="index" clickable @click="tovideo(item.vid)">
+        <template #icon>
+          <div class="pic">
+            <span class="count">{{ playCount(item.playTime) }}</span>
+            <van-image width="30vw" height="10vh" radius="15" :src="item.coverUrl" />
+          </div>
+        </template>
+        <template #title>
+          <div class="content">
+            <div class="title van-multi-ellipsis--l2" style="overflow: hidden">
+              {{ item.title }}
+            </div>
+            <span class="user">{{ item.creator[0].userName }}</span>
+            <span class="user"> {{ playCount(item.playTime) }}播放</span>
+          </div>
+        </template>
+      </van-cell>
+    </van-list>
+  </div>
+</template>

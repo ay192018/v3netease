@@ -1,0 +1,21 @@
+<template>
+  <div class="ranking">ranking</div>
+</template>
+
+<script>
+import { onMounted } from '@vue/runtime-core';
+import { ranking, top } from '@/api/qq/ranking.js';
+export default {
+  setup() {
+    onMounted(async () => {
+      const { data } = await ranking();
+      const res = await top({
+        id: 62,
+      });
+      console.log(data, res);
+    });
+  },
+};
+</script>
+
+<style></style>

@@ -1,20 +1,3 @@
-<template>
-  <div class="hotsearch">
-    <div
-      class="item"
-      v-for="(item, index) in attrs.hotsearch"
-      :key="index"
-      @click="attrs.onSearch(item.searchWord)"
-    >
-      <span class="name" :class="{ active: index < 3 }"
-        ><span :class="{ actives: index < 3 }">{{ index + 1 }}</span
-        >&nbsp;{{ item.searchWord }}</span
-      >
-      <van-icon name="fire" color="red" size="10" v-if="index === 0" />
-    </div>
-  </div>
-</template>
-
 <script>
 export default {
   setup(propm, { attrs }) {
@@ -49,3 +32,15 @@ export default {
   }
 }
 </style>
+
+<template>
+  <div class="hotsearch">
+    <div class="item" v-for="(item, index) in attrs.hotsearch" :key="index" @click="attrs.onSearch(item.searchWord)">
+      <span class="name" :class="{ active: index < 3 }"
+        ><span :class="{ actives: index < 3 }">{{ index + 1 }}</span
+        >&nbsp;{{ item.searchWord }}</span
+      >
+      <van-icon name="fire" color="red" size="10" v-if="index === 0" />
+    </div>
+  </div>
+</template>

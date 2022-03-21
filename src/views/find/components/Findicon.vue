@@ -1,37 +1,30 @@
-<template>
-  <div class="icons auto">
-    <div
-      class="item"
-      v-for="(item, index) in icons.icon"
-      :key="item.id"
-      @click="Notify({ type: 'warning', message: '功能暂未开发' })"
-    >
-      <img :src="item.iconUrl" alt="" />
-      <span class="title">{{ item.name }}</span>
-      <div v-if="index === 0" class="data">
-        {{ week(Date.parse(new Date())) }}
-      </div>
-    </div>
-  </div>
-</template>
-
 <script>
-import { getindexFind } from "@/api/indexFind.js";
-import { Notify } from "vant";
-import { onMounted, reactive, markRaw } from "vue";
-import { week } from "@/Util/dayjs.js";
+import { getindexFind } from '@/api/indexFind.js';
+import { Notify } from 'vant';
+import { onMounted, reactive, markRaw } from 'vue';
+import { useRouter } from 'vue-router';
+import { week } from '@/Util/dayjs.js';
 export default {
   setup() {
     const icons = reactive({ icon: [] });
+    const router = useRouter();
     onMounted(async () => {
       const { data } = await getindexFind();
       // console.log(data.data);
       icons.icon = markRaw(data.data);
     });
+    const torouter = (index) => {
+      if (index === 3) {
+        return router.push('/ranking');
+      }
+      Notify({ type: 'warning', message: '功能暂未开发' });
+    };
     return {
       icons,
       week,
       Notify,
+      torouter,
+      router,
     };
   },
 };
@@ -65,3 +58,15 @@ export default {
   }
 }
 </style>
+
+<template>
+  <div class="icons auto">
+    <div class="item" v-for="(item, index) in icons.icon" :key="item.id" @click="torouter(index)">
+      <img :src="item.iconUrl" alt="" />
+      <span class="title">{{ item.name }}</span>
+      <div v-if="index === 0" class="data">
+        {{ week(Date.parse(new Date())) }}
+      </div>
+    </div>
+  </div>
+</template>

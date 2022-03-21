@@ -1,103 +1,109 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import { createRouter, createWebHashHistory } from 'vue-router';
 
 const routes = [
   {
-    path: "/",
-    name: "layoue",
+    path: '/',
+    name: 'layoue',
     meta: { keepAlive: true },
-    component: () => import("@/views/layout/"),
+    component: () => import('@/views/layout/'),
     children: [
       {
-        path: "/",
-        name: "find",
-        component: () => import("@/views/find/"),
+        path: '/',
+        name: 'find',
+        component: () => import('@/views/find/'),
         meta: { keepAlive: true },
       },
       {
-        path: "/my",
-        name: "my",
-        component: () => import("@/views/my/"),
+        path: '/my',
+        name: 'my',
+        component: () => import('@/views/my/'),
         meta: { keepAlive: true },
       },
       {
-        path: "/Videosquare",
-        name: "Videosquare",
-        component: () => import("@/views/Videosquare/"),
+        path: '/Videosquare',
+        name: 'Videosquare',
+        component: () => import('@/views/Videosquare/'),
         props: true,
         meta: {
-          transition: "slide-fade",
+          transition: 'slide-fade',
           keepAlive: true,
         },
       },
       {
-        path: "/follow",
-        name: "follow",
-        component: () => import("@/views/follow/"),
-        meta: { transition: "slide-fade", keepAlive: true },
+        path: '/follow',
+        name: 'follow',
+        component: () => import('@/views/follow/'),
+        meta: { transition: 'slide-fade', keepAlive: true },
       },
     ],
   },
   {
-    path: "/albumlist:id",
-    name: "albumlist",
-    component: () => import("@/components/songsdetails/albumlist.vue"),
+    path: '/albumlist:id',
+    name: 'albumlist',
+    component: () => import('@/components/songsdetails/albumlist.vue'),
     props: true,
-    meta: { transition: "slide-fade" },
+    meta: { transition: 'slide-fade' },
   },
   {
-    path: "/songsdetails:id",
-    name: "songsdetails",
-    component: () => import("@/components/songsdetails/"),
+    path: '/songsdetails:id',
+    name: 'songsdetails',
+    component: () => import('@/components/songsdetails/'),
     props: true,
-    meta: { transition: "slide-fade" },
+    meta: { transition: 'slide-fade' },
   },
   {
-    path: "/comments:id",
-    name: "comments",
-    component: () => import("@/components/comments/"),
+    path: '/comments:id',
+    name: 'comments',
+    component: () => import('@/components/comments/'),
     props: true,
   },
   {
-    path: "/login",
-    name: "login",
-    component: () => import("@/views/login/login.vue"),
-    meta: { transition: "slide-fade" },
+    path: '/login',
+    name: 'login',
+    component: () => import('@/views/login/login.vue'),
+    meta: { transition: 'slide-fade' },
   },
   {
-    path: "/search",
-    name: "search",
-    component: () => import("@/views/search/index.vue"),
-    meta: { transition: "slide-fade", keepAlive: true },
+    path: '/search',
+    name: 'search',
+    component: () => import('@/views/search/index.vue'),
+    meta: { transition: 'slide-fade', keepAlive: true },
   },
   {
-    path: "/video:id",
-    name: "video",
-    component: () => import("@/components/video/"),
+    path: '/video:id',
+    name: 'video',
+    component: () => import('@/components/video/'),
     props: true,
-    meta: { transition: "slide-fade" },
+    meta: { transition: 'slide-fade' },
   },
   {
-    path: "/user:id",
-    name: "user",
-    component: () => import("@/components/user/"),
+    path: '/user:id',
+    name: 'user',
+    component: () => import('@/components/user/'),
     props: true,
-    meta: { transition: "slide-fade" },
+    meta: { transition: 'slide-fade' },
+  },
+  {
+    path: '/ranking',
+    name: 'ranking',
+    component: () => import('@/components/ranking/'),
+    meta: { transition: 'slide-fade', keepAlive: true },
   },
 ];
 
 const router = createRouter({
-  mode: "history",
+  mode: 'history',
   history: createWebHashHistory(),
   routes,
 });
 router.afterEach((to, from) => {
-  const toDepth = to.path.split("/").length;
-  const fromDepth = from.path.split("/").length;
-  to.meta.transitionName = toDepth < fromDepth ? "slide-right" : "slide-left";
+  const toDepth = to.path.split('/').length;
+  const fromDepth = from.path.split('/').length;
+  to.meta.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left';
 });
 router.beforeEach((to, from, next) => {
-  if (to.path === "/login") {
-    if (JSON.parse(localStorage.getItem("cookie")) === null) {
+  if (to.path === '/login') {
+    if (JSON.parse(localStorage.getItem('cookie')) === null) {
       next();
     } else {
       return false;

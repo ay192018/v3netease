@@ -1,45 +1,8 @@
-<template>
-  <div class="album">
-    <van-list
-      v-model:loading="loading"
-      :finished="finished"
-      finished-text="没有更多了"
-      @load="onLoad"
-    >
-      <van-cell
-        v-for="(item, index) in album"
-        :key="index"
-        clickable
-        @click="
-          router.push({
-            name: 'albumlist',
-            params: {
-              id: item.id,
-            },
-          })
-        "
-      >
-        <template #icon>
-          <van-image width="50" height="50" radius="15" :src="item.picUrl" />
-        </template>
-        <template #title>
-          <div class="content">
-            <span class="title" style="overflow: hidden">{{ item.name }}</span>
-            <span class="describe">{{
-              `${item.artist.name} ${datalbum(item.publishTime)}`
-            }}</span>
-          </div>
-        </template>
-      </van-cell>
-    </van-list>
-  </div>
-</template>
-
 <script>
-import { getcloudsearch } from "@/api/search.js";
-import { datalbum } from "@/Util/dayjs.js";
-import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { getcloudsearch } from '@/api/search.js';
+import { datalbum } from '@/Util/dayjs.js';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default {
   setup(props, { attrs }) {
@@ -107,3 +70,33 @@ export default {
   }
 }
 </style>
+
+<template>
+  <div class="album">
+    <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+      <van-cell
+        v-for="(item, index) in album"
+        :key="index"
+        clickable
+        @click="
+          router.push({
+            name: 'albumlist',
+            params: {
+              id: item.id,
+            },
+          })
+        "
+      >
+        <template #icon>
+          <van-image width="50" height="50" radius="15" :src="item.picUrl" />
+        </template>
+        <template #title>
+          <div class="content">
+            <span class="title" style="overflow: hidden">{{ item.name }}</span>
+            <span class="describe">{{ `${item.artist.name} ${datalbum(item.publishTime)}` }}</span>
+          </div>
+        </template>
+      </van-cell>
+    </van-list>
+  </div>
+</template>
