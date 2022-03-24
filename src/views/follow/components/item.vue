@@ -4,9 +4,11 @@ import Item from './item.vue';
 import { Dynamiclists } from '@/Util/dayjs.js';
 import { switchtype } from '@/Util/fltter.js';
 import { onMounted } from '@vue/runtime-core';
+import { getMlogtovideo } from '@/api/video.js';
 import { ImagePreview } from 'vant';
 import { useRouter } from 'vue-router';
 import { ref, computed } from 'vue';
+
 export default {
   setup(props, { attrs }) {
     const router = useRouter();
@@ -24,6 +26,18 @@ export default {
         images: [item.originUrl],
       });
     };
+    const send = async (id) => {
+      const { data } = await getMlogtovideo({
+        id: id,
+      });
+      router.push({
+        name: 'video',
+        params: {
+          id: data.data,
+        },
+      });
+    };
+
     return {
       attrs,
       switchtype,
@@ -32,6 +46,8 @@ export default {
       router,
       item,
       json,
+      send,
+      getMlogtovideo,
     };
   },
 };
