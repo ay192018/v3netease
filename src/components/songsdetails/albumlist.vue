@@ -9,19 +9,10 @@
           <van-icon name="ellipsis" size="23" color="#ccc" />
         </template>
       </van-nav-bar>
-      <div
-        class="songdata"
-        :style="`background-image: url(${songsdata.album.picUrl})`"
-      >
+      <div class="songdata" :style="`background-image: url(${songsdata.album.picUrl})`">
         <div class="content">
           <div class="left">
-            <van-image
-              width="130"
-              height="130"
-              radius="15"
-              :src="songsdata.album.picUrl"
-              @click="show = true"
-            >
+            <van-image width="130" height="130" radius="15" :src="songsdata.album.picUrl" @click="show = true">
               <template v-slot:loading>
                 <van-loading type="spinner" size="20" color="#000" />
               </template>
@@ -43,10 +34,7 @@
       </div>
       <div class="item">
         <div>
-          <van-icon
-            :name="songsdata.info.liked ? 'success' : 'add-o'"
-            size="20"
-          />
+          <van-icon :name="songsdata.info.liked ? 'success' : 'add-o'" size="20" />
           <div>{{ playCount(songsdata.info.subscribedCount) }}</div>
         </div>
         <div @click="tocommnts">
@@ -61,9 +49,38 @@
       <div class="title">
         <van-icon name="play-circle-o" size="20" color="red" />
         <div>播放全部</div>
-        <div>({{ playCount(songsdata.length) }}首)</div>
+        <div>({{ playCount(songlist.length) }}首)</div>
       </div>
-      <van-overlay :show="show" @click="show = false" z-index="9999">
+      <div class="songlist">
+        <div class="items" v-for="(item, index) in songlist" :key="index" @click="play(index)">
+          <div class="left">
+            <div class="index">{{ index + 1 }}</div>
+            <!-- <van-image width="40" height="40" radius="15" :src="item.al.picUrl" /> -->
+            <div class="data">
+              <div class="songname van-ellipsis">{{ item.name }}</div>
+              <div class="songtitle van-ellipsis">{{ item.ar[0].name }}</div>
+            </div>
+          </div>
+          <div class="icons">
+            <van-icon
+              name="tv-o"
+              size="20"
+              class="tv"
+              v-if="item.mv"
+              @click.stop="
+                router.push({
+                  name: 'video',
+                  params: {
+                    id: item.mv,
+                  },
+                })
+              "
+            />
+            <van-icon name="ellipsis" size="20" />
+          </div>
+        </div>
+      </div>
+      <van-overlay :show="show" @click="show = false" z-index="9999" :lock-scroll="false">
         <div class="wrapper">
           <div class="block">
             <div style="text-align: center">
@@ -106,40 +123,32 @@
                 margin-bottom: 20px;
                 color: #dfdfdf;
               "
-            >
-              标签:
-              <span
-                class="label"
-                v-for="(item, index) in songsdata.descr"
-                :key="index"
-                >{{ item.resource }}</span
-              >
-            </div>
+            ></div>
             <p
-              v-for="(item, index) in songsdata.description"
+              v-for="(item, index) in songsdata.descr"
               :key="index"
               style="color: #dfdfdf; margin-left: 10px"
-            >
-              {{ item }}
-            </p>
+              v-html="item.resource"
+            ></p>
           </div>
         </div>
       </van-overlay>
-      <Playall :songsdata="songsdata.songs" @length="length" />
     </div>
   </transition>
 </template>
 
 <script>
-import Playall from "./components/playall.vue";
-import { getsongsdetail, getalbum, getalbumdetail } from "@/api/songsheet.js";
+import Playall from './components/playall.vue';
+import { getsongsdetail, getalbum, getalbumdetail } from '@/api/songsheet.js';
 
-import { onMounted, reactive, ref, watchEffect } from "vue";
-import { useStore } from "vuex";
-import { playCount } from "@/Util/fltter.js";
-import { datalbum } from "@/Util/dayjs.js";
-import { useRouter, useRoute } from "vue-router";
-import { Toast } from "vant";
+import { onMounted, reactive, ref, watchEffect, nextTick } from 'vue';
+import { useStore } from 'vuex';
+import { playCount, playaudiorule } from '@/Util/fltter.js';
+import { datalbum } from '@/Util/dayjs.js';
+import { useRouter, useRoute } from 'vue-router';
+
+import { Toast } from 'vant';
+
 export default {
   components: { Playall },
   setup(props, { attrs }) {
@@ -151,21 +160,25 @@ export default {
       length: 0,
       descr: [],
     });
+    const songlist = ref([]);
     const show = ref(false);
     const router = useRouter();
     const route = useRoute();
     const store = useStore();
-    const cookie = JSON.parse(localStorage.getItem("profile"));
+    const cookie = JSON.parse(localStorage.getItem('profile'));
     const tocommnts = async () => {
-      store.dispatch("setflag", 2);
+      store.dispatch('setflag', 6);
+
       router.push({
-        name: "comments",
+        name: 'comments',
         params: {
           id: attrs.id,
         },
       });
     };
-
+    const play = (index) => {
+      playaudiorule(index, songlist.value, store, show, nextTick, Toast);
+    };
     const onClickLeft = () => {
       router.back();
     };
@@ -177,27 +190,36 @@ export default {
         id: attrs.id,
         offset: 1,
       });
+
       const res = await getalbum({
         id: attrs.id,
       });
+
       songsdata.album = res.data.album;
       songsdata.artist = res.data.album.artist;
       songsdata.info = res.data.album.info;
-      console.log(res);
+      songlist.value = res.data.songs;
+
       try {
         songsdata.songs = data.playlist;
         songsdata.tags = data.playlist.tags;
-        songsdata.description = data.playlist.description.split("\n");
+        songsdata.description = data.playlist.description.split('\n');
       } catch (error) {
-        Toast.fail("加载失败,歌曲也许太多了");
+        Toast.fail('加载失败,歌曲也许太多了');
       }
     });
     watchEffect(async () => {
       const { data } = await getalbumdetail({
         id: attrs.id,
       });
-      songsdata.descr = data.product.descr;
-      console.log(songsdata.descr);
+      let arr = [];
+      data.product.descr.forEach((item, index) => {
+        if (item.resource !== '<br>') {
+          arr.push(item);
+        }
+      });
+
+      songsdata.descr = arr;
     });
 
     return {
@@ -206,7 +228,7 @@ export default {
       playCount,
       router,
       route,
-
+      songlist,
       store,
       length,
       attrs,
@@ -214,6 +236,7 @@ export default {
       show,
       cookie,
       datalbum,
+      play,
     };
   },
 };
@@ -317,6 +340,7 @@ export default {
   color: #f0f0f0;
 }
 .wrapper {
+  overflow-y: auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -329,5 +353,45 @@ export default {
 }
 .label {
   margin-left: 5px;
+}
+.songlist {
+  padding: 5px;
+  height: auto;
+  width: 100%;
+  box-sizing: border-box;
+  .items {
+    margin-top: 10px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .data {
+      max-width: 40vw;
+      margin-left: 10px;
+      .songname {
+        color: #5b5b5b;
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 14px;
+      }
+      .songtitle {
+        font-size: 10px;
+        color: #c4c4c4;
+      }
+    }
+  }
+  .icons {
+    .tv {
+      margin-right: 15px;
+    }
+  }
+}
+.left {
+  display: flex;
+  .index {
+    line-height: 47.02px;
+    margin-right: 8px;
+    font-size: 12px;
+  }
 }
 </style>

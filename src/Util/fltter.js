@@ -34,15 +34,15 @@ export const jobCount = (num) => {
 
 export const realFormatSecond = (second) => {
   const secondType = typeof second;
-  if (secondType === "number" || secondType === "string") {
+  if (secondType === 'number' || secondType === 'string') {
     second = parseInt(second);
     const hours = Math.floor(second / 3600);
     second = second - hours * 3600;
     const mimute = Math.floor(second / 60);
     second = second - mimute * 60;
-    return `${("0" + mimute).slice(-2)}:${("0" + second).slice(-2)}`;
+    return `${('0' + mimute).slice(-2)}:${('0' + second).slice(-2)}`;
   } else {
-    return "00:00";
+    return '00:00';
   }
 };
 /**
@@ -73,10 +73,10 @@ export const debounce = (fn, delay) => {
  *
  */
 export const changeaudio = () => {
-  document.querySelector(".audio").style.bottom = "51px";
+  document.querySelector('.audio').style.bottom = '51px';
 };
 export const initaudio = () => {
-  document.querySelector(".audio").style.bottom = 0;
+  document.querySelector('.audio').style.bottom = 0;
 };
 
 /**
@@ -86,22 +86,22 @@ export const initaudio = () => {
 export const lyrics = (lyric) => {
   let lyrics = lyric.lrc.lyric;
 
-  let arr = lyrics.split("\n");
+  let arr = lyrics.split('\n');
   let array = [];
-  let time = "";
-  let value = "";
+  let time = '';
+  let value = '';
   let result = [];
   let key = [];
   arr.forEach((item) => {
-    if (item != "") {
+    if (item != '') {
       array.push(item);
     }
   });
   arr = array;
   arr.forEach((item) => {
-    time = item.split("]")[0];
-    value = item.split("]")[1];
-    let t = time.slice(1).split(":");
+    time = item.split(']')[0];
+    value = item.split(']')[1];
+    let t = time.slice(1).split(':');
     result.push([parseInt(t[0], 10) * 60 + parseFloat(t[1]), value]);
     key.push(parseInt(t[0], 10) * 60 + parseFloat(t[1]));
   });
@@ -117,11 +117,13 @@ export const lyrics = (lyric) => {
  */
 export const tocommnts = (val) => {
   if (val === 0) {
-    return "/comment/music";
+    return '/comment/music';
   } else if (val === 2) {
-    return "/comment/playlist";
+    return '/comment/playlist';
   } else if (val === 5) {
-    return "/comment/video";
+    return '/comment/video';
+  } else if (val === 6) {
+    return '/comment/ablmu';
   }
 };
 /**
@@ -131,20 +133,78 @@ export const tocommnts = (val) => {
 
 export const switchtype = (val) => {
   if (val === 18) {
-    return "分享单曲";
+    return '分享单曲';
   } else if (val === 19) {
-    return "分享专辑";
-  } else if (val === 17 || 28) {
-    return "分享电台节目";
+    return '分享专辑';
+  } else if (val === 17) {
+    return '分享电台节目';
+  } else if (val === 28) {
+    return '分享电台节目';
   } else if (val === 22) {
-    return "转发";
+    return '转发';
   } else if (val === 39) {
-    return "发布视频";
-  } else if (val === 35 || 13) {
-    return "分享歌单";
+    return '发布视频';
+  } else if (val === 35) {
+    return '分享歌单';
+  } else if (val === 13) {
+    return '分享歌单';
   } else if (val === 24) {
-    return "分享专栏文章";
+    return '分享专栏文章';
+  } else if (val === 57) {
+    return '发布Mlog';
   } else {
-    return "分享视频";
+    return '分享视频';
+  }
+};
+
+/**
+ * @param {index,Number} 播放歌曲的索引
+ * @param {songlist,Array} 传入仓库的歌曲列表
+ * @param {store,Object} 仓库本身
+ * @param {show Boolean} 组件弹窗
+ * @param {nextTick Function} 等待dom挂载
+ * @param {Toast Function}  弹出信息
+ * @returns {无}
+ *  */
+
+export const playaudiorule = (index, songlist, store, show, nextTick, Toast) => {
+  if (store.state.songlist.length && store.state.audio.played && index === store.state.curret && show.value) {
+    return;
+  }
+
+  Toast.loading({
+    message: '加载中...',
+    forbidClick: true,
+    loadingType: 'spinner',
+  });
+  if (store.state.audio.paused) {
+    store.dispatch('setsonglist', songlist);
+    store.dispatch('setsetcurret', index);
+    show.value = !show.value;
+    nextTick(() => {
+      store.state.audio.play();
+      store.dispatch('setisplay');
+      if (store.state.isplay && store.state.audio.readyState == 4) {
+        Toast.clear({
+          clearAll: true,
+        });
+      }
+    });
+  } else {
+    nextTick(() => {
+      store.dispatch('setisplay');
+      store.state.audio.pause();
+    });
+    store.dispatch('setsonglist', songlist);
+    store.dispatch('setsetcurret', index);
+    nextTick(() => {
+      store.state.audio.play();
+      if (store.state.audio.played) {
+        store.dispatch('setisplay');
+        Toast.clear({
+          clearAll: true,
+        });
+      }
+    });
   }
 };

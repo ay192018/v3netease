@@ -14,36 +14,20 @@
       "
     >
       <div class="left">
-        <van-image
-          width="40"
-          height="40"
-          radius="15"
-          :src="playlist.like.coverImgUrl"
-        />
+        <van-image width="40" height="40" radius="15" :src="playlist.like.coverImgUrl" />
         <div class="describe">
           <span class="name">{{ playlist.like.name }}</span
           ><br />
-          <span class="trackCount"
-            >{{ cookie ? playlist.like.trackCount : 0 }} 首</span
-          >
+          <span class="trackCount">{{ cookie ? playlist.like.trackCount : 0 }} 首</span>
         </div>
       </div>
-      <van-button
-        round
-        size="mini"
-        icon="like-o"
-        class="btn"
-        @click.stop="Cardiac"
-        >心动模式</van-button
-      >
+      <van-button round size="mini" icon="like-o" class="btn" @click.stop="Cardiac">心动模式</van-button>
     </div>
 
     <van-tabs v-model:active="active" scrollspy sticky>
       <van-tab :title="playlist.user ? '创建歌单' : ''">
         <div class="ceated ceateds" v-if="cookie">
-          <div class="trackCount gedan">
-            创建歌单({{ playlist.user.length }}个)
-          </div>
+          <div class="trackCount gedan">创建歌单({{ playlist.user.length }}个)</div>
           <div
             class="item"
             v-for="(item, index) in playlist.user"
@@ -57,19 +41,11 @@
               })
             "
           >
-            <van-image
-              class="itemimg"
-              width="40"
-              height="40"
-              radius="15"
-              :src="item.coverImgUrl"
-            />
+            <van-image class="itemimg" width="40" height="40" radius="15" :src="item.coverImgUrl" />
             <div class="describe">
               <span class="name names">{{ item.name }}</span
               ><br />
-              <span class="trackCount"
-                >{{ item.trackCount }} 首 {{ item.creator.nickname }}
-              </span>
+              <span class="trackCount">{{ item.trackCount }} 首 {{ item.creator.nickname }} </span>
               <div class="van-hairline--bottom"></div>
             </div>
           </div>
@@ -79,9 +55,7 @@
 
       <van-tab :title="playlist.collection ? '收藏歌单' : ''">
         <div class="ceated ceateds padding" v-if="cookie">
-          <div class="trackCount gedan">
-            收藏歌单 ({{ playlist.collection.length }}个)
-          </div>
+          <div class="trackCount gedan">收藏歌单 ({{ playlist.collection.length }}个)</div>
           <div
             class="item"
             v-for="(item, index) in playlist.collection"
@@ -95,19 +69,11 @@
               })
             "
           >
-            <van-image
-              class="itemimg"
-              width="40"
-              height="40"
-              radius="15"
-              :src="item.coverImgUrl"
-            />
+            <van-image class="itemimg" width="40" height="40" radius="15" :src="item.coverImgUrl" />
             <div class="describe">
               <span class="name names">{{ item.name }}</span
               ><br />
-              <span class="trackCount"
-                >{{ item.trackCount }} 首 {{ item.creator.nickname }}</span
-              >
+              <span class="trackCount">{{ item.trackCount }} 首 {{ item.creator.nickname }}</span>
             </div>
           </div>
         </div>
@@ -118,13 +84,14 @@
 </template>
 
 <script>
-import { getuserplaylist } from "@/api/user.js";
-import { getCardiac } from "@/api/songsheet.js";
-import { onMounted, reactive, ref } from "vue";
-import { useRouter } from "vue-router";
-import { useStore } from "vuex";
-import { Toast } from "vant";
-import { nextTick } from "vue";
+import { getuserplaylist } from '@/api/user.js';
+import { getCardiac } from '@/api/songsheet.js';
+import { onMounted, reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
+import { Toast } from 'vant';
+import { nextTick } from 'vue';
+import { show } from '@/hooks/status.js';
 export default {
   setup() {
     const active = ref(0);
@@ -138,12 +105,12 @@ export default {
   ^心动模式
   */
     const Cardiac = async () => {
-      store.dispatch("setplaymodel", 3);
+      store.dispatch('setplaymodel', 3);
       Toast({
-        message: "心动模式",
-        icon: "like-o",
+        message: '心动模式',
+        icon: 'like-o',
       });
-      if (store.state.songlist.length === 0) return Toast.fail("歌单是空的！");
+      if (store.state.songlist.length === 0) return Toast.fail('歌单是空的！');
 
       const { data } = await getCardiac({
         id: store.state.songlist[store.state.curret].id,
@@ -153,25 +120,25 @@ export default {
       data.data.forEach((item) => {
         arr.push(item.songInfo);
       });
-      store.dispatch("setsonglist", arr);
+      const length = store.state.songlist.length;
+      store.dispatch('pushsonglist', arr);
+      store.dispatch('setsetcurret', length);
       nextTick(() => {
+        show.value = !show.value;
         store.state.audio.play();
       });
     };
-    const cookie = JSON.parse(localStorage.getItem("cookie"));
+    const cookie = JSON.parse(localStorage.getItem('cookie'));
     const router = useRouter();
     onMounted(async () => {
       if (cookie) {
         const { data } = await getuserplaylist({
-          uid: JSON.parse(localStorage.getItem("profile")).userId,
+          uid: JSON.parse(localStorage.getItem('profile')).userId,
         });
 
         playlist.like = data.playlist[0];
         data.playlist.filter((item) => {
-          if (
-            item.creator.nickname ===
-            JSON.parse(localStorage.getItem("profile")).nickname
-          ) {
+          if (item.creator.nickname === JSON.parse(localStorage.getItem('profile')).nickname) {
             playlist.user.push(item);
           } else {
             playlist.collection.push(item);

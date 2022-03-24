@@ -67,7 +67,19 @@ export default {
 <template>
   <div class="singer">
     <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-      <van-cell v-for="(item, index) in artists" :key="index" clickable>
+      <van-cell
+        v-for="(item, index) in artists"
+        :key="index"
+        clickable
+        @click="
+          router.push({
+            name: 'user',
+            params: {
+              id: item.id,
+            },
+          })
+        "
+      >
         <template #icon>
           <van-image width="50" height="50" radius="15" :src="item.img1v1Url" />
         </template>

@@ -1,4 +1,4 @@
-import http from "@/Util/http.js";
+import http from '@/Util/http.js';
 /**
  *
  *
@@ -10,59 +10,79 @@ import http from "@/Util/http.js";
 
 export const getlogin = (params) => {
   return http({
-    method: "GET",
-    url: "/login/cellphone",
+    method: 'GET',
+    url: '/login/cellphone',
     params,
   });
 };
 export const getuserdata = (params) => {
   return http({
-    method: "GET",
-    url: "/user/detail",
+    method: 'GET',
+    url: '/user/detail',
     params,
   });
 };
 export const getuserplaylist = (params) => {
   return http({
-    method: "GET",
-    url: "/user/playlist",
+    method: 'GET',
+    url: '/user/playlist',
     params,
   });
 };
 export const getusersubcounts = (params) => {
   return http({
-    method: "GET",
-    url: "/artist/video",
+    method: 'GET',
+    url: '/artist/video',
     params,
   });
 };
 export const getuserevent = (params) => {
   return http({
-    method: "GET",
-    url: "/user/event",
+    method: 'GET',
+    url: '/user/event',
     params,
   });
 };
 export const getevent = (params) => {
-  console.log(params);
   return http({
-    method: "GET",
-    url: "/event",
+    method: 'GET',
+    url: '/event',
     params,
   });
 };
 
 export const gettopic = (params) => {
   return http({
-    method: "GET",
-    url: "/topic/detail/event/hot",
+    method: 'GET',
+    url: '/topic/detail/event/hot',
     params,
   });
 };
 export const getuserupdate = (params) => {
   return http({
-    method: "GET",
-    url: "/user/update",
+    method: 'GET',
+    url: '/user/update',
+    params,
+  });
+};
+export const gettopics = (params) => {
+  return http({
+    method: 'GET',
+    url: '/hot/topic',
+    params,
+  });
+};
+export const getfollow = (params) => {
+  return http({
+    method: 'GET',
+    url: '/follow',
+    params,
+  });
+};
+export const getusercommit = (params) => {
+  return http({
+    method: 'GET',
+    url: '/comment/event',
     params,
   });
 };

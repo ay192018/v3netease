@@ -53,6 +53,9 @@ export default createStore({
     setremove(state, data) {
       state.songlist.splice(data, 1);
     },
+    pushsonglist(state, data) {
+      state.songlist.push(...data);
+    },
   },
   actions: {
     setisplay(mutation) {
@@ -89,6 +92,9 @@ export default createStore({
     },
     setremove({ commit }, data) {
       commit('setremove', data);
+    },
+    pushsonglist({ commit }, data) {
+      commit('pushsonglist', data);
     },
   },
 

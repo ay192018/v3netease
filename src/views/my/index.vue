@@ -5,12 +5,7 @@
         <van-icon name="bars" size="25" color="#646566" />
       </template>
       <template #right>
-        <van-icon
-          name="search"
-          size="25"
-          color="#646566"
-          @click="router.push('/search')"
-        />
+        <van-icon name="search" size="25" color="#646566" @click="router.push('/search')" />
       </template>
     </van-nav-bar>
     <van-pull-refresh loosing-text=" " loading-text=" " @refresh="onRefresh">
@@ -22,18 +17,12 @@
           fit="cover"
           class="img animate__animated animate__zoomInUp"
           @click="!cookie ? router.push('/login') : (show = true)"
-          :src="
-            cookie
-              ? users.avatarUrl
-              : 'http://p3.music.126.net/tBTNafgjNnTL1KlZMt7lVA==/18885211718935735.jpg'
-          "
+          :src="cookie ? users.avatarUrl : 'http://p3.music.126.net/tBTNafgjNnTL1KlZMt7lVA==/18885211718935735.jpg'"
         />
         <br />
-        <span
-          class="name"
-          style="font-size: 16px; font-weight: bold; font-size: 16px"
-          :class="!cookie ? 'temp' : ''"
-          >{{ cookie ? users.nickname : "立即登录" }}</span
+        <span class="name" style="font-size: 16px; font-weight: bold; font-size: 16px" :class="!cookie ? 'temp' : ''">{{
+          cookie ? users.nickname : '立即登录'
+        }}</span
         ><van-icon
           class="name"
           name="vip-card-o"
@@ -68,21 +57,21 @@
 </template>
 
 <script>
-import Grid from "./grid.vue";
-import { useStore } from "vuex";
-import { ref } from "vue";
-import { getuserdata } from "@/api/user.js";
-import { onMounted } from "@vue/runtime-core";
-import { reactive, computed } from "vue";
-import { useRouter } from "vue-router";
-import Userplaylist from "./Userplaylist.vue";
-import { Toast } from "vant";
+import Grid from './grid.vue';
+import { useStore } from 'vuex';
+import { ref } from 'vue';
+import { getuserdata } from '@/api/user.js';
+import { onMounted } from '@vue/runtime-core';
+import { reactive, computed } from 'vue';
+import { useRouter } from 'vue-router';
+import Userplaylist from './Userplaylist.vue';
+import { Toast } from 'vant';
 export default {
   components: {
     Grid,
     Userplaylist,
   },
-  name: "my",
+  name: 'my',
   setup() {
     const store = useStore();
 
@@ -92,42 +81,39 @@ export default {
       level: null,
     });
     const show = ref(false);
-    const actions = [
-      { name: "个人资料" },
-      { name: "查看好友" },
-      { name: "退出登录", color: "#ee0a24" },
-    ];
+    const actions = [{ name: '个人资料' }, { name: '查看好友' }, { name: '退出登录', color: '#ee0a24' }];
     const select = (index) => {
-      if (index.name === "个人资料") {
+      if (index.name === '个人资料') {
         router.push({
-          name: "user",
+          name: 'user',
           params: {
             id: store.state.profile.userId,
           },
         });
-      } else if (index.name === "查看好友") {
+      } else if (index.name === '查看好友') {
         return;
       } else {
         localStorage.clear();
-        store.dispatch("setprofile", {});
-        router.push("/");
-        Toast.success("退出成功");
+        store.dispatch('setprofile', {});
+        router.push('/');
+        Toast.success('退出成功');
       }
     };
-    const cookie = JSON.parse(localStorage.getItem("cookie"));
+    const cookie = JSON.parse(localStorage.getItem('cookie'));
     const loading = ref(false);
     const onRefresh = () => {
+     
       cookie !== null
         ? router.push({
-            name: "user",
+            name: 'user',
             params: {
               id: store.state.profile.userId,
             },
           })
-        : router.push("/login");
+        : router.push('/login');
     };
     const users = computed(() => {
-      return JSON.parse(localStorage.getItem("profile"));
+      return JSON.parse(localStorage.getItem('profile'));
     });
     onMounted(async () => {
       const { data } = await getuserdata({
@@ -137,7 +123,7 @@ export default {
         user.profile = data.profile;
         user.level = data.level;
 
-        store.dispatch("setprofile", data.profile);
+        store.dispatch('setprofile', data.profile);
         // console.log(data);
       }
     });

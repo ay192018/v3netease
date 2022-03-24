@@ -5,7 +5,7 @@ import { useStore } from 'vuex';
 import { Toast } from 'vant';
 import Playlist from '../playlist/';
 import { random } from '@/Util/fltter.js';
-
+import { show } from '@/hooks/status.js';
 export default {
   name: 'Audio',
   components: {
@@ -17,7 +17,6 @@ export default {
     let currentTime = ref(0); //当前播放时间
     let duration = ref(0); //当前歌曲长度
     const store = useStore();
-    const show = ref(false);
     const playlist = ref(false);
     const showPopup = () => {
       if (store.state.songlist.length) {

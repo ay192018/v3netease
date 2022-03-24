@@ -1,11 +1,6 @@
 <template>
   <div class="content">
-    <van-list
-      v-model:loading="loading"
-      :finished="finished"
-      finished-text="没有更多了"
-      @load="onLoad"
-    >
+    <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
       <div class="items " v-for="(item, index) in Dynamiclist" :key="index">
         <van-image
           width="40"
@@ -40,23 +35,24 @@
             ><br />
             <span class="time">{{ Dynamiclists(item.eventTime) }} </span>
           </div>
-          <div class="text">
-            {{ JSON.parse(item.json).msg }}
-          </div>
+          <div class="text" v-html="JSON.parse(item.json).msg.replace(/[\r\n]/g, '<br />')"></div>
 
-          <div class="imgcollection">
+          <!-- Mlog -->
+
+          <div v-if="item.type === 57">
+            <van-image
+              width="280"
+              height="140"
+              radius="15"
+              fit="cover"
+              :src="Mlog[index].resource.mlogBaseData.coverUrl"
+              @click="send(Mlog[index].resource.mlogBaseData.id)"
+            />
+          </div>
+          <div class="imgcollection" v-if="item.pics">
             <van-grid :column-num="3" :gutter="1" square :border="false">
-              <van-grid-item
-                v-for="(item, index) in item.pics"
-                :key="index"
-                class="item"
-              >
-                <van-image
-                  @click="Preview(item)"
-                  width="100%"
-                  height="100%"
-                  fit="cover"
-                  :src="item.originUrl"
+              <van-grid-item v-for="(item, index) in item.pics" :key="index" class="item">
+                <van-image @click="Preview(item)" width="100%" height="100%" fit="cover" :src="item.originUrl"
               /></van-grid-item>
             </van-grid>
           </div>
@@ -81,67 +77,87 @@
             </div> -->
           </div>
           <div class="ziliao">
+            <div class="bottomitem"><van-icon size="15" class="icon" name="revoke" />转发</div>
             <div class="bottomitem">
-              <van-icon size="15" class="icon" name="revoke" />转发
+              <van-icon size="18" class="icon" name="chat-o" @click="activeItem(item)" />{{ item.info.commentCount }}
             </div>
             <div class="bottomitem">
-              <van-icon size="18" class="icon" name="chat-o" />{{
-                item.info.commentCount
-              }}
+              <van-icon size="18" class="icon" name="good-job-o" />{{ item.info.likedCount }}
             </div>
-            <div class="bottomitem">
-              <van-icon size="18" class="icon" name="good-job-o" />{{
-                item.info.likedCount
-              }}
-            </div>
-            <van-icon
-              name="ellipsis"
-              size="20"
-              @click.stop="showShare = !showShare"
-            />
+            <van-icon name="ellipsis" size="20" @click.stop="showShare = !showShare" />
           </div>
         </div>
       </div>
     </van-list>
-
-    <van-share-sheet
-      v-model:show="showShare"
-      title="立即分享给好友"
-      :options="options"
+    <van-popup
+      v-model:show="show"
+      position="right"
+      safe-area-inset-top
+      :style="{ height: '100%', width: '100%' }"
       teleport="body"
-    />
+      ><ItemDynamic @changeshow="changeshow" :item="itemActive"
+    /></van-popup>
+    <van-share-sheet v-model:show="showShare" title="立即分享给好友" :options="option" teleport="body" />
   </div>
 </template>
 
 <script>
-import { getuserevent } from "@/api/user.js";
-import { Dynamiclists } from "@/Util/dayjs.js";
-import { switchtype } from "@/Util/fltter.js";
-import { onMounted } from "@vue/runtime-core";
-import { ImagePreview } from "vant";
-import { useRouter } from "vue-router";
-import { ref, inject } from "vue";
+import ItemDynamic from '@/views/follow/components/itemDynamic.vue';
+import { getuserevent } from '@/api/user.js';
+import { getMlogtovideo } from '@/api/video.js';
+import { Dynamiclists } from '@/Util/dayjs.js';
+import { switchtype } from '@/Util/fltter.js';
+import { onMounted } from '@vue/runtime-core';
+import { ImagePreview } from 'vant';
+import { useRouter } from 'vue-router';
+import { ref, inject, reactive, toRefs } from 'vue';
 export default {
+  components: { ItemDynamic },
   setup(props, { attrs }) {
     const loading = ref(false);
     const finished = ref(false);
-    const Dynamiclist = ref([]);
+    const Dynamiclist = reactive({
+      Dynamiclist: [],
+    });
+
     const showShare = ref(false);
     const lasttime = ref(-1);
     const router = useRouter();
-    const options = [
-      { name: "微信", icon: "wechat" },
-      { name: "微博", icon: "weibo" },
-      { name: "复制链接", icon: "link" },
-      { name: "分享海报", icon: "poster" },
-      { name: "二维码", icon: "qrcode" },
+    const show = ref(false);
+    const itemActive = ref(null);
+    const Mlog = ref([]);
+    const option = [
+      { name: '微信', icon: 'wechat' },
+      { name: '微博', icon: 'weibo' },
+      { name: '复制链接', icon: 'link' },
+      { name: '分享海报', icon: 'poster' },
+      { name: '二维码', icon: 'qrcode' },
     ];
+    const changeshow = () => {
+      show.value = !show.value;
+    };
+    const id = inject('id');
+    const activeItem = (item) => {
+  
+      itemActive.value = item;
+      show.value = !show.value;
+    };
+    const send = async (id) => {
+      const { data } = await getMlogtovideo({
+        id: id,
+      });
+      router.push({
+        name: 'video',
+        params: {
+          id: data.data,
+        },
+      });
+    };
 
-    const id = inject("id");
     const onLoad = async () => {
       const { data } = await getuserevent({
-        limit: 5,
         lasttime: lasttime.value,
+        limit: 5,
         uid: id,
       });
 
@@ -149,9 +165,18 @@ export default {
         return (finished.value = true);
       } */
 
-      Dynamiclist.value.push(...data.events);
+      data.events.forEach((item) => {
+        if (item.type === 57) {
+          Mlog.value.push(JSON.parse(item.json));
+        } else {
+          Mlog.value.push(null);
+        }
+      });
+
+      Dynamiclist.Dynamiclist.push(...data.events);
+
       loading.value = false;
-      if (data.events.length) {
+      if (data.more) {
         lasttime.value = data.lasttime;
       } else {
         finished.value = true;
@@ -164,11 +189,12 @@ export default {
     };
 
     return {
-      Dynamiclist,
+      ...toRefs(Dynamiclist),
+
       Dynamiclists,
       switchtype,
       Preview,
-      options,
+      option,
       showShare,
       attrs,
       onLoad,
@@ -176,6 +202,13 @@ export default {
       finished,
       lasttime,
       router,
+      activeItem,
+      show,
+      itemActive,
+      changeshow,
+      Mlog,
+      getMlogtovideo,
+      send,
     };
   },
 };

@@ -31,7 +31,7 @@ export default {
     );
     watch(route, (val) => {
       if (store.state.isplay) {
-        if (val.path.at(1) === 'v' && val.path.at(5) === 'o') {
+        if ((val.path.at(1) === 'v' && val.path.at(5) === 'o') || val.path === '/login') {
           store.dispatch('setisplay', !store.state.isplay);
           store.state.audio.pause();
         }

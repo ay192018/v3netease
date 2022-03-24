@@ -1,4 +1,4 @@
-import http from "@/Util/http.js";
+import http from '@/Util/http.js';
 /**
  *
  *
@@ -9,73 +9,80 @@ import http from "@/Util/http.js";
  */
 
 export const getvideo = (params) => {
- 
   return http({
-    method: "GET",
-    url: "/video/timeline/recommend",
+    method: 'GET',
+    url: '/video/timeline/recommend',
     params,
   });
 };
 export const getvideodetail = (params) => {
   return http({
-    method: "GET",
-    url: "/video/detail",
+    method: 'GET',
+    url: '/video/detail',
     params,
   });
 };
 export const getmvdetail = (params) => {
   return http({
-    method: "GET",
-    url: "/mv/detail",
+    method: 'GET',
+    url: '/mv/detail',
     params,
   });
 };
 export const getvideourl = (params) => {
+  console.log(params);
   return http({
-    method: "GET",
-    url: "/video/url",
+    method: 'GET',
+    url: '/video/url',
     params,
   });
 };
 export const getmvurl = (params) => {
   return http({
-    method: "GET",
-    url: "/mv/url",
+    method: 'GET',
+    url: '/mv/url',
     params,
   });
 };
 export const getvideocomment = (params) => {
   return http({
-    method: "GET",
-    url: "/comment/video",
+    method: 'GET',
+    url: '/comment/video',
     params,
   });
 };
 export const getmvcomment = (params) => {
   return http({
-    method: "GET",
-    url: "/comment/mv",
+    method: 'GET',
+    url: '/comment/mv',
     params,
   });
 };
 export const getvideogroup = (params) => {
   return http({
-    method: "GET",
-    url: "/video/group/list",
+    method: 'GET',
+    url: '/video/group/list',
     params,
   });
 };
 export const getvideocategory = (params) => {
   return http({
-    method: "GET",
-    url: "/video/category/list",
+    method: 'GET',
+    url: '/video/category/list',
     params,
   });
 };
 export const getgroup = (params) => {
   return http({
-    method: "GET",
-    url: "/video/group",
+    method: 'GET',
+    url: '/video/group',
+    params,
+  });
+};
+export const getMlogtovideo= (params) => {
+  return http({
+    method: 'GET',
+    url: '/mlog/to/video',
     params,
   });
 };

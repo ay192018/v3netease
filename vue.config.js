@@ -1,7 +1,7 @@
 //配置选项;
 module.exports = {
   publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
-  outputDir: '打包文件',
+  outputDir: 'html',
   configureWebpack: {
     resolve: {
       alias: {

@@ -51,7 +51,7 @@ export default {
           t: songsdata.songs.subscribed ? 2 : 1,
           id: songsdata.creator.userId,
         });
-        console.log(data);
+
         songsdata.songs.subscribed = !songsdata.songs.subscribed;
         if (songsdata.songs.subscribed) {
           Toast('歌单已收藏');
@@ -98,9 +98,7 @@ export default {
         Toast.fail('加载失败,歌曲也许太多了');
       }
     });
-    const scroll = (e) => {
-      console.log(e);
-    };
+    const scroll = (e) => {};
 
     return {
       onClickLeft,

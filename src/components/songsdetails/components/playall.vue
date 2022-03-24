@@ -1,12 +1,12 @@
 <script>
 import { myMixin } from '@/mixin/index.js';
-import { playCount } from '@/Util/fltter.js';
+import { playCount, playaudiorule } from '@/Util/fltter.js';
 import { getallsongs } from '@/api/songsheet.js';
 import { ref, computed, watchEffect, nextTick } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import { Toast } from 'vant';
-
+import { show } from '@/hooks/status.js';
 export default {
   mixins: [myMixin],
   setup(props, { attrs, emit }) {
@@ -36,49 +36,11 @@ export default {
      * @param {Number}传入索引
      */
     const play = (index) => {
-      if (store.state.songlist.length && store.state.audio.played && index === store.state.curret) {
-        return;
-      }
-
-      Toast.loading({
-        message: '加载中...',
-        forbidClick: true,
-        loadingType: 'spinner',
-      });
-      if (store.state.audio.paused) {
-        store.dispatch('setsonglist', allsongs.value);
-        store.dispatch('setsetcurret', index);
-        nextTick(() => {
-          store.state.audio.play();
-          store.dispatch('setisplay');
-          if (store.state.isplay && store.state.audio.readyState == 4) {
-            Toast.clear({
-              clearAll: true,
-            });
-          }
-        });
-      } else {
-        nextTick(() => {
-          store.dispatch('setisplay');
-          store.state.audio.pause();
-        });
-        store.dispatch('setsonglist', allsongs.value);
-        store.dispatch('setsetcurret', index);
-        nextTick(() => {
-          store.state.audio.play();
-          if (store.state.audio.played) {
-            store.dispatch('setisplay');
-            Toast.clear({
-              clearAll: true,
-            });
-          }
-        });
-      }
+      playaudiorule(index, allsongs.value, store, show, nextTick, Toast);
     };
     const ids = computed(() => {
       return id.value;
     });
-
     return {
       allsongs,
       playCount,
@@ -86,6 +48,7 @@ export default {
       myMixin,
       load,
       router,
+      playaudiorule,
     };
   },
 };

@@ -1,10 +1,11 @@
 <script>
-import { getuserdata } from '@/api/user.js';
+import { getuserdata, getfollow } from '@/api/user.js';
 import { useStore } from 'vuex';
 import { useRouter, useRoute } from 'vue-router';
 import { reactive, onMounted, ref } from 'vue';
 import Content from './components/content.vue';
 import UserData from './components/userData.vue';
+import { Toast } from 'vant';
 export default {
   components: { Content, UserData },
   setup(props, { attrs }) {
@@ -25,7 +26,7 @@ export default {
       show.value = !show.value;
     };
     const store = useStore();
-    console.log(attrs.id == store.state.profile.userId);
+            
     onMounted(async () => {
       const { data } = await getuserdata({
         uid: attrs.id,
@@ -39,6 +40,17 @@ export default {
         user.listenSongs = data.listenSongs;
       }
     });
+    const usefollow = async () => {
+      const { data } = await getfollow({
+        id: attrs.id,
+        t: user.profile.followed ? 2 : 1,
+      });
+      if (data.code === 200) {
+        user.profile.followed = !user.profile.followed;
+
+        user.profile.followed ? Toast.success('关注成功') : Toast.fail('取消关注成功');
+      }
+    };
     return {
       router,
       route,
@@ -48,6 +60,8 @@ export default {
       store,
       show,
       changeShow,
+      getfollow,
+      usefollow,
     };
   },
 };
@@ -138,7 +152,15 @@ export default {
           >编辑资料</van-button
         >
         <div v-else>
-          <van-button type="primary" color="red" size="mini" icon="add-o" round>关注</van-button>
+          <van-button
+            type="primary"
+            :color="user.profile.followed ? '#07c160' : 'red'"
+            size="mini"
+            :icon="user.profile.followed ? '' : 'add-o'"
+            round
+            @click="usefollow"
+            >{{ user.profile.followed ? user.profile.followTime : '关注' }}</van-button
+          >
           <van-button type="primary" color="#323233" size="mini" round
             ><span style="padding:10px;">聊天</span></van-button
           >

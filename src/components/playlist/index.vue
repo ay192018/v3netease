@@ -1,5 +1,5 @@
 <script>
-import { computed, nextTick } from 'vue';
+import { computed, nextTick, watch } from 'vue';
 import { useStore } from 'vuex';
 import { install, Toast, Dialog } from 'vant';
 export default {
@@ -7,6 +7,9 @@ export default {
     const store = useStore();
     const playlist = computed(() => {
       return store.state.songlist;
+    });
+    const playId = computed(() => {
+      return store.state.songlist[store.state.curret].id;
     });
     const play = (index) => {
       if (store.state.songlist.length && store.state.audio.played && index === store.state.curret) {
@@ -70,6 +73,14 @@ export default {
         return '心动模式';
       }
     });
+    /*     watch(
+      //监听接收过来的当前播放时间来给绑定进度条的值进行赋值
+      () => playId.value,
+      (n) => {
+        console.log(document.querySelector('.content').scrollTop, document.querySelector('.active').offsetTop);
+        document.querySelector('.content').scrollTop = document.querySelector('.active').offsetTop - 150;
+      },
+    ); */
     const remove = (index) => {
       store.dispatch('setremove', index);
     };
@@ -80,6 +91,7 @@ export default {
       remove,
       playstyle,
       deletes,
+      playId,
     };
   },
 };

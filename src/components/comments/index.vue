@@ -45,6 +45,8 @@ export default {
         id: attrs.id,
         content: message.value,
       });
+
+      console.log(data);
       if (data.code === 200) {
         show.value = !show.value;
         message.value = '';
@@ -61,7 +63,6 @@ export default {
           window.location = data.data.dialog.buttonUrl;
         });
       }
-      console.log(data);
     };
     const onClickright = () => {
       Toast('分享事件');
@@ -90,7 +91,7 @@ export default {
         id: attrs.id,
         offset: (comments.offset - 1) * 20,
       });
-      console.log(data);
+
       comments.total = data.total;
       comments.comment.push(...data.comments);
 

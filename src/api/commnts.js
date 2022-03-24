@@ -1,6 +1,6 @@
-import http from "@/Util/http.js";
-import store from "../store";
-import { tocommnts } from "@/Util/fltter.js";
+import http from '@/Util/http.js';
+import store from '../store';
+import { tocommnts } from '@/Util/fltter.js';
 
 /**
  *
@@ -13,25 +13,25 @@ import { tocommnts } from "@/Util/fltter.js";
 
 export const comment = (params) => {
   return http({
-    method: "GET",
+    method: 'GET',
     url: tocommnts(store.state.flag),
     params,
   });
 };
 
 export const sendcomment = (params) => {
-  // console.log(params);
+  console.log(params);
   return http({
-    method: "GET",
-    url: "/comment",
+    method: 'GET',
+    url: '/comment',
     params,
   });
 };
 export const sendcommentlike = (params) => {
   // console.log(params);
   return http({
-    method: "GET",
-    url: "/comment/like",
+    method: 'GET',
+    url: '/comment/like',
     params,
   });
 };

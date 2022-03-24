@@ -12,6 +12,7 @@ export default {
     const onClickLeft = () => {
       router.back();
     };
+    const store = useStore();
     const onSubmit = async () => {
       Toast.loading({
         message: '加载中...',
@@ -23,6 +24,7 @@ export default {
       });
       console.log(data);
       if (data.code === 200) {
+        store.dispatch('setprofile', data.profile);
         localStorage.setItem('cookie', JSON.stringify(data.cookie));
         localStorage.setItem('profile', JSON.stringify(data.profile));
         Toast.clear();
@@ -40,6 +42,7 @@ export default {
       password,
       onClickLeft,
       onSubmit,
+      store,
     };
   },
 };

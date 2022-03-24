@@ -18,13 +18,14 @@ export default {
       });
 
       videolist.list = data.datas;
+      videolist.offset++;
     });
     const replist = async () => {
       const { data } = await getvideo({
         offset: videolist.offset++,
       });
       // console.log(data);
-      videolist.list = data.datas;
+      videolist.list.unshift(...data.datas);
     };
     return {
       videolist,

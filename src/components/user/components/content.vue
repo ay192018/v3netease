@@ -1,19 +1,13 @@
 <template>
   <div class="content">
-    <nut-tabs v-model="state.tab11value" type="smile">
-      <nut-tabpane title="主页">
+    <van-tabs v-model:active="active" animated>
+      <van-tab title="主页">
         <div class="user">
           <div class="data">
             <p class="basic">基本信息</p>
-            <div>
-              村岭:{{ parseInt(attrs.user.createDays / 365) }}年({{
-                createTime(attrs.user.createTime)
-              }}注册)
-            </div>
-            <div>性别:{{ attrs.user.profile.gender === 1 ? "男" : "女" }}</div>
-            <div>
-              年龄:{{ `${datalbum(attrs.user.profile.birthday).at(3)}0` }}后
-            </div>
+            <div>村岭:{{ parseInt(attrs.user.createDays / 365) }}年({{ createTime(attrs.user.createTime) }}注册)</div>
+            <div>性别:{{ attrs.user.profile.gender === 1 ? '男' : '女' }}</div>
+            <div>年龄:{{ `${datalbum(attrs.user.profile.birthday).at(3)}0` }}后</div>
             <div class="van-hairline--bottom"></div>
           </div>
           <div class="view">查看全部<van-icon name="arrow" /></div>
@@ -21,11 +15,7 @@
         <div class="Rank">
           <div class="data">
             <p class="basic">音乐品味</p>
-            <van-cell
-              title="听歌排行"
-              :label="`累计听歌${attrs.user.listenSongs}首`"
-              clickable
-            ></van-cell>
+            <van-cell title="听歌排行" :label="`累计听歌${attrs.user.listenSongs}首`" clickable></van-cell>
             <van-cell
               title="我喜欢的音乐"
               @click="
@@ -56,27 +46,17 @@
               })
             "
           >
-            <van-image
-              class="itemimg"
-              width="40"
-              height="40"
-              radius="15"
-              :src="item.coverImgUrl"
-            />
+            <van-image class="itemimg" width="40" height="40" radius="15" :src="item.coverImgUrl" />
             <div class="describe">
               <span class="name names">{{ item.name }}</span
               ><br />
-              <span class="trackCount"
-                >{{ item.trackCount }} 首 {{ item.creator.nickname }}
-              </span>
+              <span class="trackCount">{{ item.trackCount }} 首 {{ item.creator.nickname }} </span>
               <div class="van-hairline--bottom"></div>
             </div>
           </div>
         </div>
         <div class="ceated ceateds padding">
-          <div class="trackCount gedan">
-            收藏歌单 ({{ collection.length }}个)
-          </div>
+          <div class="trackCount gedan">收藏歌单 ({{ collection.length }}个)</div>
           <div
             class="item"
             v-for="(item, index) in collection"
@@ -90,52 +70,42 @@
               })
             "
           >
-            <van-image
-              class="itemimg"
-              width="40"
-              height="40"
-              radius="15"
-              :src="item.coverImgUrl"
-            />
+            <van-image class="itemimg" width="40" height="40" radius="15" :src="item.coverImgUrl" />
             <div class="describe">
               <span class="name names">{{ item.name }}</span
               ><br />
-              <span class="trackCount"
-                >{{ item.trackCount }} 首 {{ item.creator.nickname }}</span
-              >
+              <span class="trackCount">{{ item.trackCount }} 首 {{ item.creator.nickname }}</span>
             </div>
           </div>
         </div>
         <nut-backtop :bottom="150" :right="50" :duration="3000"></nut-backtop>
-      </nut-tabpane>
-      <nut-tabpane title="动态"> <UserResuse :id="attrs.user.id"/></nut-tabpane>
-      <nut-tabpane title="视频">
+      </van-tab>
+      <van-tab title="动态"> <UserResuse :id="attrs.user.id"/></van-tab>
+      <van-tab title="视频">
         Tab 2
-      </nut-tabpane>
-    </nut-tabs>
+      </van-tab>
+    </van-tabs>
   </div>
 </template>
 
 <script>
-import { createTime, datalbum } from "@/Util/dayjs.js";
-import { getuserplaylist, getuserevent } from "@/api/user.js";
-import { onMounted, reactive, toRefs, provide } from "vue";
-import { useRouter } from "vue-router";
-import UserResuse from "./userReuse.vue";
+import { createTime, datalbum } from '@/Util/dayjs.js';
+import { getuserplaylist, getuserevent } from '@/api/user.js';
+import { onMounted, reactive, toRefs, provide, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import UserResuse from './userReuse.vue';
 export default {
   components: {
     UserResuse,
   },
   setup(props, { attrs }) {
-    const state = reactive({
-      tab11value: "0",
-    });
+    const active = ref(0);
     const playlist = reactive({
       user: [],
       collection: [],
       like: [],
     });
-    provide("id", attrs.user.id);
+    provide('id', attrs.user.id);
     const router = useRouter();
     onMounted(async () => {
       const { data } = await getuserplaylist({
@@ -157,7 +127,7 @@ export default {
       console.log(res);
     });
     return {
-      state,
+      active,
       attrs,
       createTime,
       datalbum,
@@ -171,16 +141,14 @@ export default {
 
 <style lang="less" scoped>
 .content {
-  ::v-deep(.nut-tabpane) {
-    margin: 0 auto;
-    background: transparent;
-  }
+  padding: 10px;
   .user,
   .Rank {
-    width: 100%;
     border-radius: 15px;
     background: #fff;
     height: auto;
+    padding: 10px;
+    margin: 10px 0;
   }
 
   .user {

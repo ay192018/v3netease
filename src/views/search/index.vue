@@ -59,12 +59,7 @@ export default {
       });
       suggestlist.value = data.result.allMatch;
     };
-    onActivated(() => {
-      console.log(route.meta.keepAlive);
-    });
-    onDeactivated(() => {
-      console.log(route.meta.keepAlive);
-    });
+
     const onCancel = () => {
       router.back();
     };
@@ -96,7 +91,7 @@ export default {
     <form action="/">
       <van-search
         v-model="value"
-        show-action
+        :show-action="value ? false : true"
         :placeholder="placeholder"
         @update:model-value="values"
         @search="onSearch"

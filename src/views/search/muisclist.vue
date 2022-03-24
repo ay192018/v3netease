@@ -1,9 +1,11 @@
 <script>
 import { getcloudsearch } from '@/api/search.js';
 import { nextTick, ref } from 'vue';
+import { playaudiorule } from '@/Util/fltter.js';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import { Toast } from 'vant';
+import { show } from '@/hooks/status.js';
 export default {
   setup(props, { attrs }) {
     const list = ref([]);
@@ -31,44 +33,7 @@ export default {
       }
     };
     const play = (index) => {
-      if (store.state.songlist.length && store.state.audio.played && index === store.state.curret) {
-        return;
-      }
-
-      Toast.loading({
-        message: '加载中...',
-        forbidClick: true,
-        loadingType: 'spinner',
-      });
-      if (store.state.audio.paused) {
-        store.dispatch('setsonglist', results.value);
-        store.dispatch('setsetcurret', index);
-        nextTick(() => {
-          store.state.audio.play();
-          store.dispatch('setisplay');
-          if (store.state.isplay && store.state.audio.readyState == 4) {
-            Toast.clear({
-              clearAll: true,
-            });
-          }
-        });
-      } else {
-        nextTick(() => {
-          store.dispatch('setisplay');
-          store.state.audio.pause();
-        });
-        store.dispatch('setsonglist', results.value);
-        store.dispatch('setsetcurret', index);
-        nextTick(() => {
-          store.state.audio.play();
-          if (store.state.audio.played) {
-            store.dispatch('setisplay');
-            Toast.clear({
-              clearAll: true,
-            });
-          }
-        });
-      }
+      playaudiorule(index, results.value, store, show, nextTick, Toast);
     };
     return {
       attrs,
@@ -81,6 +46,7 @@ export default {
       store,
       play,
       router,
+      playaudiorule,
     };
   },
 };
