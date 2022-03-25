@@ -1,4 +1,4 @@
-import http from "@/Util/http.js";
+import http from '@/Util/http.js';
 /**
  *
  *
@@ -9,8 +9,15 @@ import http from "@/Util/http.js";
  */
 export const getbanner = (params) => {
   return http({
-    method: "GET",
-    url: "/banner",
+    method: 'GET',
+    url: '/banner',
+    params,
+  });
+};
+export const getfindinfo = (params) => {
+  return http({
+    method: 'GET',
+    url: '/homepage/block/page',
     params,
   });
 };

@@ -86,3 +86,10 @@ export const getusercommit = (params) => {
     params,
   });
 };
+export const getusermsg = (params) => {
+  return http({
+    method: 'GET',
+    url: '/msg/private',
+    params,
+  });
+};

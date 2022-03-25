@@ -73,7 +73,7 @@ export const debounce = (fn, delay) => {
  *
  */
 export const changeaudio = () => {
-  document.querySelector('.audio').style.bottom = '51px';
+  document.querySelector('.audio').style.bottom = '50px';
 };
 export const initaudio = () => {
   document.querySelector('.audio').style.bottom = 0;

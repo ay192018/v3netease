@@ -36,6 +36,7 @@ export default {
      * @param {Number}传入索引
      */
     const play = (index) => {
+      
       playaudiorule(index, allsongs.value, store, show, nextTick, Toast);
     };
     const ids = computed(() => {

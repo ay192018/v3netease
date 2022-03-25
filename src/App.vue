@@ -83,7 +83,7 @@ export default {
 <template>
   <router-view v-slot="{ Component }">
     <transition name="slide-fade">
-      <keep-alive v-if="route.meta.keepAlive" :max="20">
+      <keep-alive v-if="route.meta.keepAlive" :max="50">
         <component class="child-view" :is="Component"> </component>
       </keep-alive>
 

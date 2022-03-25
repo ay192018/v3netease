@@ -21,7 +21,6 @@ export default {
     });
 
     const Preview = (item) => {
-      console.log(json.value);
       ImagePreview({
         images: [item.originUrl],
       });
@@ -147,9 +146,8 @@ export default {
             })
           "
         >
-          {{ item.type }}
-          <span>{{ item.user.nickname }}</span>
-          <span class="type">{{ switchtype(item.type) }}</span
+          <span>{{ item.user.nickname }}</span
+          >&nbsp <span class="type">{{ switchtype(item.type) }}</span
           ><br />
           <span class="time">{{ Dynamiclists(item.eventTime) }} </span>
         </div>

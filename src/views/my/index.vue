@@ -35,9 +35,9 @@
         ><br />
 
         <div v-if="cookie">
-          <span class="title">{{ user.profile.followeds }} 关注</span>
-          <span class="title">{{ user.profile.follows }} 粉丝</span>
-          <span class="title">{{ user.level }} Lv</span>
+          <span class="title">{{ user.profile.follows }} 关注</span>
+          <span class="title">{{ user.profile.followeds }} 粉丝</span>
+          <span class="title">Lv. {{ user.level }} </span>
         </div>
       </div>
 
@@ -102,7 +102,6 @@ export default {
     const cookie = JSON.parse(localStorage.getItem('cookie'));
     const loading = ref(false);
     const onRefresh = () => {
-     
       cookie !== null
         ? router.push({
             name: 'user',

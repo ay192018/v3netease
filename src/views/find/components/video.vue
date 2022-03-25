@@ -1,39 +1,36 @@
 <script>
 import { playCount } from '@/Util/fltter.js';
-import { onMounted, reactive } from '@vue/runtime-core';
-import { getvideo } from '@/api/video.js';
+
+import { getMlogtovideo } from '@/api/video.js';
 import { useRouter } from 'vue-router';
+import { recentVideo, Videotext } from '@/hooks/reactive';
 import { ref } from 'vue';
 export default {
-  setup() {
+  setup(props, { attrs }) {
     const router = useRouter();
-    const videolist = reactive({
-      list: [],
-      offset: 0,
-    });
-    const cookie = ref(JSON.parse(window.localStorage.getItem('cookie')));
-    onMounted(async () => {
-      const { data } = await getvideo({
-        offset: videolist.offset,
-      });
 
-      videolist.list = data.datas;
-      videolist.offset++;
-    });
-    const replist = async () => {
-      const { data } = await getvideo({
-        offset: videolist.offset++,
+    const cookie = ref(JSON.parse(window.localStorage.getItem('cookie')));
+
+    const send = async (id) => {
+      const { data } = await getMlogtovideo({
+        id: id,
       });
-      // console.log(data);
-      videolist.list.unshift(...data.datas);
+      router.push({
+        name: 'video',
+        params: {
+          id: data.data,
+        },
+      });
     };
     return {
-      videolist,
       playCount,
-      replist,
       router,
       ref,
       cookie,
+      attrs,
+      send,
+      Videotext,
+      recentVideo,
     };
   },
 };
@@ -41,7 +38,6 @@ export default {
 
 <style lang="less" scoped>
 .video {
-  padding-bottom: 200px;
   height: auto;
 
   .title {
@@ -76,34 +72,27 @@ export default {
 <template>
   <div class="video auto">
     <div class="title">
-      <h3>精选音乐视频</h3>
-      <van-button type="primary" color="red" icon="revoke" round size="mini" @click="replist">换一批</van-button>
+      <h3>{{ recentVideo }}</h3>
+      <van-button type="primary" color="red" icon="revoke" round size="mini">{{ Videotext }}</van-button>
     </div>
     <div class="videolist">
-      <div class="item" v-for="(item, index) in videolist.list" :key="index">
+      <div class="item" v-for="(item, index) in attrs.video" :key="index">
         <van-image
           width="100"
           height="130"
           radius="15"
           fit="cover"
-          :src="item.data.coverUrl"
-          @click="
-            router.push({
-              name: 'video',
-              params: {
-                id: item.data.vid,
-              },
-            })
-          "
+          :src="item.resource.mlogBaseData.coverUrl"
+          @click="send(item.resource.mlogBaseData.id)"
         >
           <template v-slot:loading>
             <van-loading type="spinner" size="20" color="#000" />
           </template>
         </van-image>
         <div class="titles van-multi-ellipsis--l2">
-          {{ item.data.title }}
+          {{ item.resource.mlogBaseData.text }}
         </div>
-        <span class="count">{{ playCount(item.data.playTime) }}</span>
+        <span class="count">{{ playCount(item.resource.mlogExtVO.playCount) }}</span>
       </div>
     </div>
   </div>

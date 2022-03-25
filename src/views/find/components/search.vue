@@ -1,10 +1,15 @@
 <script>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
+import { getusermsg } from '@/api/user.js';
+import { sideShow } from '@/hooks/status.js';
 export default {
   setup() {
-    const show = ref(false);
+    onMounted(async () => {
+      const { data } = await getusermsg();
+      console.log(data);
+    });
     return {
-      show,
+      sideShow,
     };
   },
 };
@@ -32,7 +37,7 @@ export default {
         <van-button size="small" color="#ccc" round type="primary" to="/search" icon="search">搜索</van-button>
       </template>
       <template #left>
-        <van-icon name="bars" size="25" @click="show = true" />
+        <van-icon name="bars" size="25" @click="sideShow = true" />
       </template>
       <template #right>
         <a href="https://github.com/ay192018/v3netease">
@@ -40,6 +45,6 @@ export default {
         /></a>
       </template>
     </van-nav-bar>
-    <van-popup v-model:show="show" position="left" :style="{ height: '100%', width: '80%' }" teleport="body" />
+    <van-popup v-model:show="sideShow" position="left" :style="{ height: '100%', width: '80%' }" teleport="body" />
   </div>
 </template>

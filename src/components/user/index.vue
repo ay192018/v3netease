@@ -26,7 +26,7 @@ export default {
       show.value = !show.value;
     };
     const store = useStore();
-            
+
     onMounted(async () => {
       const { data } = await getuserdata({
         uid: attrs.id,
@@ -136,9 +136,9 @@ export default {
       ><br />
 
       <div>
-        <span class="title">{{ user.profile.followeds }} 关注</span>
-        <span class="title">{{ user.profile.follows }} 粉丝</span>
-        <span class="title">{{ user.level }} Lv</span>
+        <span class="title">{{ user.profile.follows }} 关注</span>
+        <span class="title">{{ user.profile.followeds }} 粉丝</span>
+        <span class="title"> Lv.{{ user.level }}</span>
       </div>
       <div class="editor">
         <van-button
