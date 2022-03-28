@@ -1,5 +1,6 @@
 <script>
 export default {
+  name: 'hotsearch',
   setup(propm, { attrs }) {
     return {
       attrs,
@@ -11,7 +12,7 @@ export default {
 <style lang="less" scoped>
 .hotsearch {
   width: 95vw;
-  background: #fff;
+
   margin: 15px auto;
   border-radius: 15px;
   height: 55vh;
@@ -21,7 +22,6 @@ export default {
     float: left;
     .name {
       font-size: 13px;
-      color: #000;
     }
   }
   .active {

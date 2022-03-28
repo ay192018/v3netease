@@ -6,6 +6,7 @@ import { useRouter } from 'vue-router';
 import { recentVideo, Videotext } from '@/hooks/reactive';
 import { ref } from 'vue';
 export default {
+  naem: 'video',
   setup(props, { attrs }) {
     const router = useRouter();
 
@@ -39,12 +40,9 @@ export default {
 <style lang="less" scoped>
 .video {
   height: auto;
+  background: #fff;
+  padding: 5px;
 
-  .title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
   .videolist {
     overflow-x: auto;
     overflow-y: hidden;
@@ -71,9 +69,12 @@ export default {
 
 <template>
   <div class="video auto">
-    <div class="title">
+    <div class="recommend">
       <h3>{{ recentVideo }}</h3>
-      <van-button type="primary" color="red" icon="revoke" round size="mini">{{ Videotext }}</van-button>
+
+      <van-button type="primary" class="btn" hairline round size="mini">
+        <template #icon> {{ Videotext }}<van-icon name="revoke" /> </template>
+      </van-button>
     </div>
     <div class="videolist">
       <div class="item" v-for="(item, index) in attrs.video" :key="index">

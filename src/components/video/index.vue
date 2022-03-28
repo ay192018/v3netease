@@ -15,6 +15,7 @@ import { ref, reactive, provide } from 'vue';
 import Data from './components/data.vue';
 
 export default {
+  name: 'videoid',
   components: { VueDanmaku, Data },
   setup(props, { attrs }) {
     const datas = reactive({
@@ -98,6 +99,7 @@ export default {
         datas.creator = data.data.creator;
         datas.vid = data.data.vid;
         url.value = res.data.urls[0].url;
+        console.log(url);
       } else {
         const data = await getmvdetail({
           //mv
@@ -153,7 +155,7 @@ export default {
 
 <style lang="less" scoped>
 .video {
-  background: #000;
+  background: #000 !important;
   position: absolute;
   left: 0;
   right: 0;

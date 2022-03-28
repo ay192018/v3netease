@@ -98,6 +98,7 @@ import { useRouter } from 'vue-router';
 import { Toast } from 'vant';
 export default {
   components: { Item },
+  name: 'itemDynamic',
   setup(props, { emit, attrs }) {
     const comments = ref([]);
     const active = ref(0);
@@ -105,13 +106,12 @@ export default {
     const changeplshow = ref(false);
     const value = ref('');
     const router = useRouter();
-  
+
     watchEffect(async () => {
       const { data } = await getusercommit({
         threadId: attrs.item.info.threadId,
       });
       comments.value = data.comments;
-     
     });
     const ahplay = (name) => {
       changeplshow.value = !changeplshow.value;

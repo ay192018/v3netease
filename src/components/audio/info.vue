@@ -1,5 +1,5 @@
 <script>
-import { getsonglyric } from '@/api/songsheet.js';
+import { getsonglyric, getcheck } from '@/api/songsheet.js';
 import { realFormatSecond, debounce, lyrics } from '@/Util/fltter.js';
 import { nextTick, ref, watch, reactive, computed } from 'vue';
 import { Toast, Notify } from 'vant';
@@ -28,6 +28,22 @@ export default {
         },
       });
     };
+
+    watch(
+      () => playId,
+      async (newval, oldval) => {
+        console.log(newval, oldval);
+        const { data } = await getcheck({
+          id: newval.value,
+        });
+        try {
+          console.log(data);
+        } catch (error) {
+          console.log(error);
+        }
+      },
+      { deep: true },
+    );
     const changeshow = () => {
       //传递给父组件的弹出层状态
       emit('changeshow', !attrs.show);
@@ -307,7 +323,6 @@ export default {
           class="time"
           v-model="value"
           @change="onChange"
-          active-color="red"
           button-size="12"
           :min="0"
           :max="attrs.duration"

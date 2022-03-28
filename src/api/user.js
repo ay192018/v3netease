@@ -93,3 +93,10 @@ export const getusermsg = (params) => {
     params,
   });
 };
+/* export const getusermsg = (params) => {
+  return http({
+    method: 'GET',
+    url: '/inner/version',
+    params,
+  });
+}; */

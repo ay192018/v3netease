@@ -5,6 +5,7 @@ import Songlist from './songlist.vue';
 import { useRouter } from 'vue-router';
 import { text, listtitle } from '@/hooks/reactive';
 export default {
+  name: 'recommendlist',
   components: { Songlist },
   setup(props, { attrs }) {
     return {
@@ -18,19 +19,19 @@ export default {
 
 <style lang="less" scoped>
 .recommend {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   .btn {
     width: 50px;
+
   }
 }
 </style>
 
 <template>
-  <div class="recommend auto">
+  <div class="recommend ">
     <h3>{{ listtitle }}</h3>
-    <van-button type="primary" color="red" class="btn" round size="mini">{{ text }}</van-button>
+    <van-button type="primary" hairline class="btn" round size="mini">
+      <template #icon> {{ text }}<van-icon name="arrow" /> </template>
+    </van-button>
   </div>
   <Songlist :playlist="attrs.playlist" />
 </template>

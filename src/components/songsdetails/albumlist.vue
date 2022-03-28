@@ -46,11 +46,13 @@
           <div>{{ playCount(songsdata.info.shareCount) }}</div>
         </div>
       </div>
+
       <div class="title">
         <van-icon name="play-circle-o" size="20" color="red" />
         <div>播放全部</div>
         <div>({{ playCount(songlist.length) }}首)</div>
       </div>
+
       <div class="songlist">
         <div class="items" v-for="(item, index) in songlist" :key="index" @click="play(index)">
           <div class="left">
@@ -150,6 +152,7 @@ import { useRouter, useRoute } from 'vue-router';
 import { Toast } from 'vant';
 
 export default {
+  name: 'playlistid',
   components: { Playall },
   setup(props, { attrs }) {
     const songsdata = reactive({
@@ -369,7 +372,6 @@ export default {
       max-width: 40vw;
       margin-left: 10px;
       .songname {
-        color: #5b5b5b;
         font-size: 14px;
         font-weight: bold;
         margin-bottom: 14px;

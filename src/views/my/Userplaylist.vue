@@ -21,7 +21,7 @@
           <span class="trackCount">{{ cookie ? playlist.like.trackCount : 0 }} 首</span>
         </div>
       </div>
-      <van-button round size="mini" icon="like-o" class="btn" @click.stop="Cardiac">心动模式</van-button>
+      <van-button round size="mini" type="primary" icon="like-o" class="btn" @click.stop="Cardiac">心动模式</van-button>
     </div>
 
     <van-tabs v-model:active="active" scrollspy sticky>
@@ -93,6 +93,7 @@ import { Toast } from 'vant';
 import { nextTick } from 'vue';
 import { show } from '@/hooks/status.js';
 export default {
+  name: 'Userplaylist',
   setup() {
     const active = ref(0);
     const store = useStore();
@@ -170,7 +171,7 @@ export default {
     width: 100%;
     height: 10vh;
     margin: 20px auto;
-    background: #fefefe;
+
     border-radius: 15px;
     display: flex;
     justify-content: space-around;
@@ -196,7 +197,7 @@ export default {
     margin: 0 auto;
     height: auto;
     border-radius: 15px;
-    background: #fefefe;
+
     .item {
       width: 100%;
       display: flex;
@@ -218,7 +219,6 @@ export default {
   .ceateds {
     margin-top: 15px;
     width: 95vw;
-    background: #fefefe;
 
     height: auto;
   }

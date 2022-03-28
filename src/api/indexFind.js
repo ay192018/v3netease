@@ -1,4 +1,4 @@
-import http from "@/Util/http.js";
+import http from '@/Util/http.js';
 /**
  *
  *
@@ -9,8 +9,15 @@ import http from "@/Util/http.js";
  */
 export const getindexFind = (params) => {
   return http({
-    method: "GET",
-    url: "/homepage/dragon/ball",
+    method: 'GET',
+    url: '/homepage/dragon/ball',
+    params,
+  });
+};
+export const geDM = (params) => {
+  return http({
+    method: 'GET',
+    url: '/personal_fm',
     params,
   });
 };

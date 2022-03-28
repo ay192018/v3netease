@@ -6,14 +6,8 @@
           <span class="title">{{ item.title }}</span>
         </template>
         <template #icon>
-          <van-image
-            width="40"
-            height="40"
-            radius="15px"
-            fit="cover"
-            :src="item.url"
-            ><template v-slot:loading>
-              <van-loading type="spinner" size="10" color="#000" /> </template
+          <van-image width="40" height="40" radius="15px" fit="cover" :src="item.url"
+            ><template v-slot:loading> <van-loading type="spinner" size="10" color="#000" /> </template
           ></van-image>
         </template>
       </van-grid-item>
@@ -22,42 +16,43 @@
 </template>
 
 <script>
-import { reactive } from "vue";
+import { reactive } from 'vue';
 export default {
+  name: 'grid',
   setup() {
     const application = reactive({
       app: [
         {
-          url: require("../../assets/1.png"),
-          title: "最近播放",
+          url: require('../../assets/1.png'),
+          title: '最近播放',
         },
         {
-          url: require("../../assets/2.png"),
-          title: "本地下载",
+          url: require('../../assets/2.png'),
+          title: '本地下载',
         },
         {
-          url: require("../../assets/3.png"),
-          title: "云盘",
+          url: require('../../assets/3.png'),
+          title: '云盘',
         },
         {
-          url: require("../../assets/4.png"),
-          title: "已购",
+          url: require('../../assets/4.png'),
+          title: '已购',
         },
         {
-          url: require("../../assets/5.png"),
-          title: "我的好友",
+          url: require('../../assets/5.png'),
+          title: '我的好友',
         },
         {
-          url: require("../../assets/6.png"),
-          title: "收藏和赞",
+          url: require('../../assets/6.png'),
+          title: '收藏和赞',
         },
         {
-          url: require("../../assets/7.png"),
-          title: "我的播客",
+          url: require('../../assets/7.png'),
+          title: '我的播客',
         },
         {
-          url: require("../../assets/8.png"),
-          title: "音乐罐子",
+          url: require('../../assets/8.png'),
+          title: '音乐罐子',
         },
       ],
     });
@@ -76,7 +71,7 @@ export default {
   box-sizing: b;
   border-radius: 15px;
   margin: 20px auto;
-  background: #fefefe;
+
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;

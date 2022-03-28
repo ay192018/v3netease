@@ -85,3 +85,10 @@ export const getCardiac = (params) => {
     params,
   });
 };
+export const getcheck = (params) => {
+  return http({
+    method: "GET",
+    url: "/check/music",
+    params,
+  });
+};

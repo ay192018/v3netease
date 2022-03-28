@@ -167,7 +167,7 @@ export const switchtype = (val) => {
  * @returns {无}
  *  */
 
-export const playaudiorule = (index, songlist, store, show, nextTick, Toast) => {
+export const playaudiorule = (index, store, nextTick, Toast, songlist, show) => {
   if (store.state.songlist.length && store.state.audio.played && index === store.state.curret && show.value) {
     return;
   }
@@ -208,3 +208,12 @@ export const playaudiorule = (index, songlist, store, show, nextTick, Toast) => 
     });
   }
 };
+export class Songs {
+  /* ^抽离每一项歌曲的数据 */
+  constructor(al, name, ar, id) {
+    this.al = al;
+    this.name = name;
+    this.ar = ar;
+    this.id = id;
+  }
+}

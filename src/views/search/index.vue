@@ -8,6 +8,7 @@ import Results from './results.vue';
 import { useRouter, useRoute } from 'vue-router';
 import { getcloudsearch, getsearchdefault, gethotsearch, getsuggest } from '@/api/search.js';
 export default {
+  index: 'index',
   components: {
     History,
     Results,

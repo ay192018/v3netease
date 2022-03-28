@@ -2,7 +2,9 @@
 import { computed, nextTick, watch } from 'vue';
 import { useStore } from 'vuex';
 import { install, Toast, Dialog } from 'vant';
+import { playaudiorule } from '@/Util/fltter.js';
 export default {
+  name: 'playist',
   setup() {
     const store = useStore();
     const playlist = computed(() => {
@@ -12,7 +14,7 @@ export default {
       return store.state.songlist[store.state.curret].id;
     });
     const play = (index) => {
-      if (store.state.songlist.length && store.state.audio.played && index === store.state.curret) {
+      if (store.state.songlist.length && store.state.audio.played && index === store.state.curret && show.value) {
         return;
       }
 
@@ -23,6 +25,7 @@ export default {
       });
       if (store.state.audio.paused) {
         store.dispatch('setsetcurret', index);
+        show.value = !show.value;
         nextTick(() => {
           store.state.audio.play();
           store.dispatch('setisplay');
@@ -92,6 +95,7 @@ export default {
       playstyle,
       deletes,
       playId,
+      playaudiorule,
     };
   },
 };
@@ -140,7 +144,6 @@ export default {
           margin-left: 5px;
         }
         .singer {
-          color: #bfbfbf;
         }
       }
     }

@@ -1,5 +1,5 @@
 <template>
-  <div class="Recommendlist auto">
+  <div class="Recommendlist ">
     <div class="item" v-for="item in attrs.playlist" :key="item.creativeId">
       <van-image
         width="100"
@@ -26,6 +26,7 @@ import { playCount } from '@/Util/fltter.js';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 export default {
+  naem: 'songlist',
   setup(props, { attrs }) {
     const DynamicRouter = useRouter();
     const list = ref([]);
@@ -51,13 +52,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.Recommendlist {
-  overflow-x: auto;
-  height: 150px;
 
-  display: flex;
   .item {
-    width: 110px;
     position: relative;
     margin-right: 15px;
     .title {
@@ -65,5 +61,4 @@ export default {
       width: 100%;
     }
   }
-}
 </style>

@@ -5,6 +5,7 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 export default {
+  name: 'playlist',
   setup(props, { attrs }) {
     const album = ref([]);
     const loading = ref(false);

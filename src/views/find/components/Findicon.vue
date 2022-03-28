@@ -1,21 +1,36 @@
 <script>
-import { getindexFind } from '@/api/indexFind.js';
-import { Notify } from 'vant';
-import { onMounted, reactive, markRaw } from 'vue';
+import { getindexFind, geDM } from '@/api/indexFind.js';
+
+import { Notify, Toast } from 'vant';
+import { playaudiorule, Songs } from '@/Util/fltter.js';
+import { onMounted, reactive, markRaw, nextTick } from 'vue';
 import { useRouter } from 'vue-router';
 import { week } from '@/Util/dayjs.js';
+import { useStore } from 'vuex';
+import { show } from '@/hooks/status.js';
 export default {
+  name: 'Findicon',
   setup() {
     const icons = reactive({ icon: [] });
     const router = useRouter();
+    const store = useStore();
     onMounted(async () => {
       const { data } = await getindexFind();
       // console.log(data.data);
       icons.icon = markRaw(data.data);
     });
-    const torouter = (index) => {
+    const torouter = async (index) => {
       if (index === 3) {
         return router.push('/ranking');
+      } else if (index === 1) {
+        let list = [];
+        const { data } = await geDM();
+        console.log(data.data);
+        data.data.forEach((item) => {
+          list.push(new Songs({ picUrl: item.album.picUrl }, item.name, [{ name: item.artists[0].name }], item.id));
+        });
+        playaudiorule(index, store, nextTick, Toast, list, show);
+        return;
       }
       Notify({ type: 'warning', message: '功能暂未开发' });
     };

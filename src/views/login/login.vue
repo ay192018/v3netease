@@ -5,6 +5,7 @@ import { Toast } from 'vant';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 export default {
+  name: 'login',
   setup() {
     const phone = ref('15949665034');
     const password = ref('wjy0.0.0');

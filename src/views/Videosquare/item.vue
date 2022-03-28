@@ -6,6 +6,7 @@ import { playCount } from '@/Util/fltter.js';
 import { useRouter } from 'vue-router';
 
 export default {
+  name: 'itemvideo',
   setup(props, { attrs }) {
     const loading = ref(false);
     const finished = ref(false);
@@ -54,12 +55,11 @@ export default {
   .videoitem {
     width: 47%;
     height: auto;
-    background: #fff;
+
     border-radius: 15px;
     margin: 5px;
     .title {
       margin: 5px;
-      color: #323233;
     }
     .user {
       width: 95%;
@@ -68,7 +68,6 @@ export default {
       display: flex;
       align-items: center;
       & div {
-        color: #323233;
       }
       .title {
         width: 35%;

@@ -112,6 +112,7 @@ import { ImagePreview } from 'vant';
 import { useRouter } from 'vue-router';
 import { ref, inject, reactive, toRefs } from 'vue';
 export default {
+  name: 'userid',
   components: { ItemDynamic },
   setup(props, { attrs }) {
     const loading = ref(false);
@@ -138,7 +139,6 @@ export default {
     };
     const id = inject('id');
     const activeItem = (item) => {
-  
       itemActive.value = item;
       show.value = !show.value;
     };

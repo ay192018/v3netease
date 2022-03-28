@@ -4,6 +4,8 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { playCount } from '@/Util/fltter.js';
 export default {
+  name: 'video',
+
   setup(props, { attrs }) {
     const artists = ref([]);
     const loading = ref(false);

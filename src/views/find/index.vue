@@ -59,7 +59,7 @@ export default {
     const cursor = ref('');
 
     const Dynamic = ref([]);
-    provide('extInfo', extInfo);
+    const cookie = JSON.parse(localStorage.getItem('cookie'));
     provide('Dynamic', Dynamic);
     const onLoad = async () => {
       const { data } = await getfindinfo({
@@ -74,7 +74,9 @@ export default {
           playlist.value = item.creatives;
           text.value = item.uiElement.button.text;
           listtitle.value = item.uiElement.subTitle.title;
-
+          return new Promise((resolve) => {
+            resolve(playlist);
+          });
           // ^推荐歌单
         } else if (item.blockCode === 'HOMEPAGE_BLOCK_LISTEN_LIVE') {
           extInfo.value = item.extInfo;
@@ -161,6 +163,8 @@ export default {
       Radar,
       banner,
       scenario,
+      extInfo,
+      cookie,
     };
   },
 };
@@ -169,7 +173,7 @@ export default {
 <style lang="less" scoped>
 .findconent {
   scroll-behavior: hidden;
-  width: 95vw;
+
   margin: 0 auto;
   overflow-y: auto;
   margin-top: 46px;
@@ -183,13 +187,29 @@ export default {
     <Search />
     <div class="findconent">
       <van-pull-refresh v-model="refreshing" @refresh="onRefresh" success-text="刷新成功" :animation-duration="1000">
-        <van-list v-model:loading="loading" :finished="finished" :offset="800" finished-text="没有更多了" @load="onLoad"
-          ><Banner :banner="banner"/><Findicon /><Recommendlist :playlist="playlist"/><Look /><RandomPlaylist /><Video
-            v-if="video.length"
-            :video="video"/><Ranking :ranking="ranking" v-if="ranking.length"/><Radar
-            :playlist="Radar"
-            v-if="Radar.length"/><Scenario :playlist="scenario" v-if="scenario.length"/></van-list
-      ></van-pull-refresh>
+        <van-list
+          v-model:loading="loading"
+          :finished="finished"
+          :offset="800"
+          finished-text="没有更多了"
+          @load="onLoad"
+        >
+          <div class="indexTop">
+            <Banner :banner="banner" />
+            <Findicon />
+            <div class="van-hairline--bottom auto"></div>
+            <Recommendlist :playlist="playlist" />
+          </div>
+
+          <Look :extInfo="extInfo" v-if="cookie && extInfo.length" />
+
+          <RandomPlaylist />
+          <Video v-if="video.length" :video="video" />
+          <Ranking v-if="cookie && ranking.length" :ranking="ranking" />
+          <Radar :playlist="Radar" v-if="Radar.length" />
+          <Scenario :playlist="scenario" v-if="scenario.length" />
+        </van-list>
+      </van-pull-refresh>
     </div>
   </div>
 </template>

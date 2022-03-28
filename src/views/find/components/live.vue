@@ -1,13 +1,12 @@
 <script>
-import { getrecommendlist } from '@/api/songsheet.js';
 import { playCount } from '@/Util/fltter.js';
-import { reactive, inject, markRaw } from 'vue';
+
 import { useRouter } from 'vue-router';
 import { lookbtn, looktitle } from '@/hooks/reactive';
 export default {
+  name: 'live',
   setup(props, { attrs }) {
     const DynamicRouter = useRouter();
-    const extInfo = markRaw(inject('extInfo'));
 
     const router = (id) => {
       DynamicRouter.push({
@@ -20,43 +19,34 @@ export default {
       playCount,
       router,
       DynamicRouter,
-      extInfo,
+
       looktitle,
       lookbtn,
+      attrs,
     };
   },
 };
 </script>
 
 <style lang="less" scoped>
-.recommend {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  .btn {
-    width: 50px;
-  }
+.btn {
+  width: 50px;
 }
-.Recommendlist {
-  overflow-x: auto;
-  height: 150px;
 
-  display: flex;
-  .item {
-    width: 110px;
-    position: relative;
-    margin-right: 15px;
-    .title {
-      height: auto;
-      width: 100%;
-    }
-    .count {
-      background: rgba(200, 30, 22, 0.3);
+.item {
+  width: 110px;
+  position: relative;
+  margin-right: 15px;
+  .title {
+    height: auto;
+    width: 100%;
+  }
+  .count {
+    background: rgba(200, 30, 22, 0.3);
 
-      border-radius: 15px;
-      padding: 3px;
-      box-sizing: border-box;
-    }
+    border-radius: 15px;
+    padding: 3px;
+    box-sizing: border-box;
   }
 }
 </style>
@@ -64,10 +54,13 @@ export default {
 <template>
   <div class="recommend auto">
     <h3>{{ looktitle }}</h3>
-    <van-button type="primary" color="red" class="btn" round size="mini">{{ lookbtn }}</van-button>
+    <van-button type="primary" class="btn" hairline round size="mini">
+      <template #icon> {{ lookbtn }}<van-icon name="arrow" /> </template>
+    </van-button>
   </div>
-  <div class="Recommendlist auto">
-    <div class="item" v-for="item in extInfo" :key="item.coverId">
+
+  <div class="Recommendlist ">
+    <div class="item" v-for="item in attrs.extInfo" :key="item.coverId">
       <van-image width="100" height="100" radius="15" fit="cover" :src="item.cover">
         <template v-slot:loading>
           <van-loading type="spinner" size="20" color="#000" />

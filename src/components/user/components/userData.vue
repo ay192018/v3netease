@@ -5,36 +5,17 @@
       <van-cell title="头像" is-link value="内容">
         <template #value>
           <van-uploader :after-read="afterRead">
-            <van-image
-              width="40"
-              height="40"
-              fit="cover"
-              round
-              :src="store.state.profile.avatarUrl"
-            />
+            <van-image width="40" height="40" fit="cover" round :src="store.state.profile.avatarUrl" />
           </van-uploader>
         </template>
       </van-cell>
 
-      <van-cell
-        title="昵称"
-        is-link
-        value="宇over"
-        @click="changename = !changename"
-      />
-      <van-cell
-        title="性别"
-        is-link
-        :value="gender"
-        @click="changeshow = !changeshow"
-      />
+      <van-cell title="昵称" is-link value="宇over" @click="changename = !changename" />
+      <van-cell title="性别" is-link :value="gender" @click="changeshow = !changeshow" />
       <van-cell title="生日" is-link value="内容" />
       <van-cell title="地区" is-link value="内容" />
     </div>
-    <van-popup
-      v-model:show="changeshow"
-      position="bottom"
-      :style="{ height: '50%', width: '100%' }"
+    <van-popup v-model:show="changeshow" position="bottom" :style="{ height: '50%', width: '100%' }"
       ><van-picker
         :columns="columns"
         @confirm="onConfirm"
@@ -42,11 +23,7 @@
         :default-index="store.state.profile.gender"
       />
     </van-popup>
-    <van-popup
-      v-model:show="changename"
-      position="bottom"
-      :style="{ height: '100%', width: '100%' }"
-    >
+    <van-popup v-model:show="changename" position="bottom" :style="{ height: '100%', width: '100%' }">
       <van-nav-bar
         title="修改昵称"
         left-text="取消"
@@ -64,17 +41,18 @@
 </template>
 
 <script>
-import { useRouter } from "vue-router";
-import { ref, computed } from "vue";
-import { useStore } from "vuex";
-import { getuserupdate } from "@/api/user.js";
+import { useRouter } from 'vue-router';
+import { ref, computed } from 'vue';
+import { useStore } from 'vuex';
+import { getuserupdate } from '@/api/user.js';
 export default {
+  name: 'userid',
   setup(props, { emit }) {
     const router = useRouter();
-    const value = ref("");
+    const value = ref('');
 
     const store = useStore();
-    const columns = ["保密", "男", "女"];
+    const columns = ['保密', '男', '女'];
     const onConfirm = async (value, index) => {
       userupdate.value.gender = index;
       const { data } = await getuserupdate();
@@ -83,11 +61,11 @@ export default {
     };
     const gender = computed(() => {
       if (store.state.profile.gender === 0) {
-        return "保密";
+        return '保密';
       } else if (store.state.profile.gender === 1) {
-        return "男";
+        return '男';
       } else {
-        return "女";
+        return '女';
       }
     });
     const userupdate = computed(() => {
@@ -110,11 +88,11 @@ export default {
       changename.value = !changename.value;
     };
     const onClickLeft = () => {
-      emit("changeShow");
+      emit('changeShow');
     };
 
     const onClickRight = () => {
-      console.log("提交");
+      console.log('提交');
     };
 
     const afterRead = (file) => {

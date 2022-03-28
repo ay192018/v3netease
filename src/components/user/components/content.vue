@@ -2,12 +2,14 @@
   <div class="content">
     <van-tabs v-model:active="active" animated>
       <van-tab title="主页">
-        <div class="user">
-          <div class="data">
+        <div class="grid">
+          <div class="like">
             <p class="basic">基本信息</p>
-            <div>村岭:{{ parseInt(attrs.user.createDays / 365) }}年({{ createTime(attrs.user.createTime) }}注册)</div>
-            <div>性别:{{ attrs.user.profile.gender === 1 ? '男' : '女' }}</div>
-            <div>年龄:{{ `${datalbum(attrs.user.profile.birthday).at(3)}0` }}后</div>
+            <div class="item">
+              村岭:{{ parseInt(attrs.user.createDays / 365) }}年({{ createTime(attrs.user.createTime) }}注册)
+            </div>
+            <div class="item">性别:{{ attrs.user.profile.gender === 1 ? '男' : '女' }}</div>
+            <div class="item">年龄:{{ `${datalbum(attrs.user.profile.birthday).at(3)}0` }}后</div>
             <div class="van-hairline--bottom"></div>
           </div>
           <div class="view">查看全部<van-icon name="arrow" /></div>
@@ -98,6 +100,7 @@ export default {
   components: {
     UserResuse,
   },
+  name: 'userid',
   setup(props, { attrs }) {
     const active = ref(0);
     const playlist = reactive({
@@ -142,30 +145,30 @@ export default {
 <style lang="less" scoped>
 .content {
   padding: 10px;
-  .user,
+  .grid,
   .Rank {
     border-radius: 15px;
-    background: #fff;
+
     height: auto;
     padding: 10px;
     margin: 10px 0;
   }
 
   .user {
-    .data {
-      & div {
+    .like {
+      .item {
         margin-top: 5px;
-        color: #323233;
+
         font-size: 13px;
       }
     }
-    .view {
-      text-align: center;
-      color: #323233;
-    }
   }
-  .Rank {
-    height: auto;
+  .like {
+    .item {
+      margin-top: 10px;
+   
+      font-size: 13px;
+    }
   }
   .basic {
     margin: 10px auto;
@@ -179,7 +182,7 @@ export default {
     margin: 10px auto;
     height: auto;
     border-radius: 15px;
-    background: #fefefe;
+
     .item {
       width: 100%;
       display: flex;
@@ -190,13 +193,10 @@ export default {
     }
   }
   .ceateds {
-    background: #fefefe;
-
     height: auto;
   }
   .trackCount {
     font-size: 8px;
-    color: #bfbfbf;
   }
   .gedan {
     margin: 5px auto;
@@ -219,6 +219,10 @@ export default {
   }
   .padding {
     padding-bottom: 200px;
+  }
+  .view {
+    line-height: 20px;
+    text-align: center;
   }
 }
 </style>

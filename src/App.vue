@@ -1,7 +1,7 @@
 <script>
 import Layout from './views/layout/';
 import Audio from '@/components/audio/';
-import { nextTick, watch } from 'vue';
+import { nextTick, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useWindowSize } from '@vant/use';
 import { Toast } from 'vant';
@@ -9,6 +9,7 @@ import { changeaudio, initaudio, debounce } from '@/Util/fltter.js';
 import { useStore } from 'vuex';
 export default {
   components: { Audio, Layout },
+  name: 'App',
   setup() {
     const route = useRoute();
 
@@ -83,7 +84,7 @@ export default {
 <template>
   <router-view v-slot="{ Component }">
     <transition name="slide-fade">
-      <keep-alive v-if="route.meta.keepAlive" :max="50">
+      <keep-alive v-if="route.meta.keepAlive" :max="5" include="">
         <component class="child-view" :is="Component"> </component>
       </keep-alive>
 

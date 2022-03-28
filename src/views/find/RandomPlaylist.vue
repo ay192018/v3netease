@@ -1,13 +1,16 @@
 <template>
-  <div class="Random">
+  <div class="Random auto">
     <div class="recommend ">
       <h3><van-icon name="replay" size="20" color="#b0b0b0" />{{ Dynamictitle }}</h3>
-      <van-button type="primary" color="red" class="btn" round size="mini">{{ Dynamicbtn }}</van-button>
+
+      <van-button type="primary" class="btn" hairline round size="mini">
+        <template #icon> {{ Dynamicbtn }}<van-icon name="arrow" /> </template>
+      </van-button>
     </div>
     <div class="content">
       <van-swipe class="my-swipe" indicator-color="white" :show-indicators="false" :width="325" :loop="false">
         <van-swipe-item v-for="(item, index) in Dynamic" :key="index">
-          <div class="item" v-for="(items, indexs) in item.resources" :key="indexs" @click="play(item, indexs)">
+          <div class="item" v-for="(items, indexs) in item.resources" :key="indexs" @click="play(items)">
             <div class="left">
               <div class="img">
                 <van-icon
@@ -30,7 +33,7 @@
               </div>
 
               <div class="songdata">
-                <div class="van-ellipsis">
+                <div class="name van-ellipsis">
                   {{ items.resourceExtInfo.songData.name }}
                   <span class="singer van-ellipsis">-{{ items.resourceExtInfo.songData.artists[0].name }}</span>
                 </div>
@@ -49,40 +52,39 @@
 
 <script>
 import { Dynamicbtn, Dynamictitle } from '@/hooks/reactive';
-import { playaudiorule } from '@/Util/fltter.js';
+import { playaudiorule, Songs } from '@/Util/fltter.js';
 import { inject, markRaw, nextTick, ref } from 'vue';
 import { useStore } from 'vuex';
 import { Toast } from 'vant';
 import { show } from '@/hooks/status.js';
 export default {
+  name: 'RandomPlaylist',
   setup() {
     const Dynamic = markRaw(inject('Dynamic'));
     const store = useStore();
     const list = ref([]);
-    const play = (item, index) => {
-      let list = [];
-      for (let i = 0; i < item.resources.length; i++) {
-        let obj = {
-          al: {
-            picUrl: '',
-          },
-          name: '',
-          ar: [
-            {
-              name: '',
-            },
-          ],
-          id: 0,
-        };
-        const ie = item.resources[i];
-        obj.al.picUrl = ie.resourceExtInfo.songData.album.picUrl;
-        obj.name = ie.resourceExtInfo.songData.name;
-        obj.ar[0].name = ie.resourceExtInfo.songData.artists[0].name;
-        obj.id = ie.resourceExtInfo.songData.id;
-        list.push(obj);
-      }
-      list.value = list;
-      playaudiorule(index, list.value, store, show, nextTick, Toast);
+    const play = (items) => {
+      let i = null;
+      Dynamic.value
+        .map((item) => {
+          return item.resources;
+        })
+        .flat()
+        .forEach((item, index) => {
+          if (item.resourceExtInfo.songData.id === items.resourceExtInfo.songData.id) {
+            i = index;
+          }
+          list.value.push(
+            new Songs(
+              { picUrl: item.resourceExtInfo.songData.album.picUrl },
+              item.resourceExtInfo.songData.name,
+              [{ name: item.resourceExtInfo.songData.artists[0].name }],
+              item.resourceExtInfo.songData.id,
+            ),
+          );
+        });
+
+      playaudiorule(i, store, nextTick, Toast, list.value, show);
     };
     return {
       Dynamicbtn,
@@ -98,9 +100,6 @@ export default {
 
 <style lang="less" scoped>
 .Random {
-  background: #fff;
-  border-radius: 15px;
-  padding: 3px;
   .recommend {
     display: flex;
     justify-content: space-between;
@@ -113,37 +112,40 @@ export default {
     width: auto;
     height: auto;
     padding: 5px;
-    .my-swipe .van-swipe-item {
-      color: #000;
-      .item {
+    .item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 5px 0;
+      .left {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin: 5px 0;
-        .left {
+        align-items: left;
+        .img {
+          margin-right: 5px;
+          position: relative;
+          .icon {
+            position: absolute;
+            left: 27%;
+            top: 27%;
+            z-index: 1;
+          }
+        }
+        .songdata {
           display: flex;
-          .img {
-            margin-right: 5px;
-            position: relative;
-            .icon {
-              position: absolute;
-              left: 27%;
-              top: 27%;
-              z-index: 1;
-            }
+          flex-direction: column;
+          justify-content: space-around;
+          width: 250px;
+          .name {
+            text-align: left !important;
           }
-          .songdata {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            .singer {
-              color: #c4c4c4;
-            }
+          .singer {
+            color: #c8c9cc;
+            text-align: left !important;
           }
         }
-        .play {
-          margin-right: 15px;
-        }
+      }
+      .play {
+        margin-right: 15px;
       }
     }
   }

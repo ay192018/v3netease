@@ -2,6 +2,7 @@
 import { computed } from 'vue';
 import { Dialog } from 'vant';
 export default {
+  name: 'history',
   setup(props, { attrs, emit }) {
     const historylist = computed(() => {
       return JSON.parse(localStorage.getItem('historylist'));
@@ -46,7 +47,7 @@ export default {
     align-items: center;
     overflow-x: auto;
     .item {
-      background: #ccc;
+      
       border-radius: 15px;
       margin-left: 5px;
       width: auto;

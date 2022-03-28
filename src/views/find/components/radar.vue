@@ -3,6 +3,7 @@ import Songlist from './songlist.vue';
 
 import { radartitle, radarbtn } from '@/hooks/reactive';
 export default {
+  name: 'radar',
   components: { Songlist },
   setup(props, { attrs }) {
     return {
@@ -19,6 +20,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 5px;
   .btn {
     width: 50px;
   }
@@ -28,7 +30,10 @@ export default {
 <template>
   <div class="recommend auto">
     <h3>{{ radartitle }}</h3>
-    <van-button type="primary" color="red" class="btn" round size="mini">{{ radarbtn }}</van-button>
+
+    <van-button type="primary" class="btn" hairline round size="mini">
+      <template #icon> {{ radarbtn }}<van-icon name="arrow" /> </template>
+    </van-button>
   </div>
   <Songlist :playlist="attrs.playlist" />
 </template>

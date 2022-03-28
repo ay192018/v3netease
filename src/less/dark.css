@@ -1,0 +1,139 @@
+.dark {
+  --van-nav-bar-text-color: #ff6700;
+  --van-nav-bar-icon-color: #fff;
+  --van-nav-bar-background-color: #f6f7f8;
+  --van-button-primary-background-color: #171717;
+  --van-button-primary-border-color: none;
+  --van-button-primary-color: #c8c9cc;
+  --van-button-icon-color: #323233;
+  --van-tabbar-background-color: #0a0a0a;
+  --van-tabbar-item-active-background-color: #646566;
+  --van-nav-bar-background-color: #0a0a0a;
+  --van-grid-item-content-background-color: #101010;
+  --van-tabs-nav-background-color: #0a0a0a;
+  --van-tab-active-text-color: #fff;
+  --van-popup-background-color: #0a0a0a;
+  --van-cell-background-color: #0a0a0a;
+  --van-cell-group-title-color: #fff;
+  --van-cell-label-color: #646566;
+  --van-search-background-color: #0a0a0a;
+  --van-search-action-text-color: #fff;
+  --van-search-content-background-color: #171717;
+  --van-slider-active-background-color: #969799;
+  --van-image-placeholder-text-color: #ff6700;
+  --van-image-placeholder-font-size: 1000px;
+  --van-loading-text-color: #fff;
+  --van-image-error-icon-color: #0a0a0a;
+  --van-nav-bar-title-text-color: #fff;
+  --van-image-placeholder-background-color: linear-gradient(#191919, #101010);
+  --van-image-error-icon-color: #323233;
+  --van-image-loading-icon-color: #fff;
+  --van-image-error-icon-color: #fff;
+  --van-loading-spinner-color: #fff;
+  --van-cell-border-color: #fff;
+  --van-cell-active-color: #969799;
+  --van-cell-text-color: #fff;
+  --van-picker-background-color: linear-gradient(#191919, #101010);
+  --van-picker-option-text-color: #f7f8fa;
+  --van-picker-mask-color: #fff;
+  --van-picker-confirm-action-color: #fff;
+  --van-field-input-text-color: #fff;
+}
+.dark .indexTop {
+  background: #0a0a0a;
+  padding: 5px;
+  color: #fff;
+}
+.dark .recommend {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  background: #0a0a0a;
+  color: #fff;
+}
+.dark .Recommendlist {
+  overflow-x: auto;
+  height: 150px;
+  padding: 5px;
+  display: flex;
+  background: #0a0a0a;
+  color: #fff;
+}
+.dark .my-swipe .van-swipe-item {
+  color: #000;
+  background: #0a0a0a;
+  width: 80%;
+  margin-right: 5px;
+  box-sizing: border-box;
+  border-radius: 15px;
+  text-align: left;
+}
+.dark .content {
+  background: #0a0a0a;
+  color: #fff;
+}
+.dark .video {
+  background: #0a0a0a !important;
+  color: #fff;
+}
+.dark .audio {
+  background: #0a0a0a;
+  color: #fff;
+}
+.dark .videoitem {
+  background: #0a0a0a;
+  color: #fff;
+}
+.dark .my {
+  background: #0a0a0a;
+  color: #fff;
+}
+.dark .userdata,
+.dark .hotsearch {
+  background-image: linear-gradient(#191919, #101010);
+  color: #fff;
+}
+.dark .grid,
+.dark .like,
+.dark .ceated,
+.dark .ceateds,
+.dark .trackCount,
+.dark .messageCenter,
+.dark .siders,
+.dark .comments,
+.dark .viod,
+.dark .model,
+.dark .icons,
+.dark .playall {
+  background: #101010 !important;
+  color: #fff;
+}
+.dark .item .style {
+  border: 1px solid #f6f7f8;
+  border-radius: 16px;
+}
+.dark .data .songname {
+  color: #fff;
+}
+.dark .item .index {
+  color: #fff;
+}
+.dark .describe .trackCount {
+  color: #b0b0b0;
+}
+.dark .content .item {
+  background-image: linear-gradient(#191919, #101010);
+  color: #fff;
+}
+.dark .params {
+  background-image: linear-gradient(#27241b, #1c1c1d);
+  color: #fff;
+}
+.dark ::v-deep(.nut-backtop) {
+  background: #000;
+}
+/* html {
+  background: rgb(7, 7, 7);
+}
+ */

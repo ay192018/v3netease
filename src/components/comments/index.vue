@@ -9,6 +9,7 @@ import { useStore } from 'vuex';
 import { playCount } from '@/Util/fltter.js';
 
 export default {
+  name: 'commentsid',
   setup(props, { attrs }) {
     const placeholder = ref('听说爱评论的粉丝很多~');
     const router = useRouter();
@@ -131,7 +132,6 @@ export default {
   overflow-y: auto;
   width: 100vw;
   height: 100vh;
-  background: #fff;
   z-index: 3000;
   position: absolute;
   .fiexd {
@@ -185,7 +185,7 @@ export default {
   .btn {
     width: 100%;
     height: 8%;
-    background: #fff;
+
     position: fixed;
     left: 0;
     right: 0;

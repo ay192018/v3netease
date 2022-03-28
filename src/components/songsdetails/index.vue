@@ -9,6 +9,7 @@ import { useRouter, useRoute } from 'vue-router';
 import { Toast, Dialog } from 'vant';
 
 export default {
+  name: 'playlistid',
   components: { Playall },
   setup(props, { attrs }) {
     const songsdata = reactive({
@@ -137,7 +138,7 @@ export default {
   height: 33vh;
   background-size: cover;
 
-  .content {
+  .Songcontent {
     width: 95vw;
     margin: 0 auto;
     display: flex;
@@ -156,7 +157,7 @@ export default {
     .info {
       width: 200px;
       height: 130px;
-      .userdata {
+      .userdatas {
         display: flex;
         align-items: center;
         .username {
@@ -174,10 +175,9 @@ export default {
     }
   }
 }
-.item {
+.params {
   width: 270px;
   height: 40px;
-  background-color: #e8e8e8;
   border-radius: 25px;
   position: absolute;
   top: 30vh;
@@ -244,7 +244,7 @@ export default {
         </template>
       </van-nav-bar>
       <div class="songdata" :style="`background-image: url(${songsdata.songs.coverImgUrl})`">
-        <div class="content">
+        <div class="Songcontent">
           <div class="left">
             <van-image width="130" height="130" radius="15" :src="songsdata.songs.coverImgUrl" @click="show = true">
               <template v-slot:loading>
@@ -257,7 +257,7 @@ export default {
             <div class="titless" @click="show = true">
               {{ songsdata.songs.name }}
             </div>
-            <div class="userdata">
+            <div class="userdatas">
               <van-image width="25" height="25" fit="cover" radius="50%" :src="songsdata.creator.avatarUrl">
                 <template v-slot:loading> <van-loading type="spinner" size="10" color="#000" /> </template
               ></van-image>
@@ -290,10 +290,10 @@ export default {
           </div>
         </div>
       </div>
-      <div class="item">
+      <div class="params">
         <div>
           <van-button
-            color="#e8e8e8"
+            type="primary"
             :disabled="songsdata.creator.userId === store.state.profile.userId ? true : false"
             size="mini"
           >
@@ -303,6 +303,7 @@ export default {
                   ? 'success'
                   : 'add-o'
               "
+              type="primary"
               @click="issubscrib"
               color="#323233"
               size="20"

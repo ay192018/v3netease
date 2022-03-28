@@ -6,6 +6,7 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 export default {
   components: { Item },
+  name: 'videoindex',
   setup() {
     const tab = ref([]);
     const active = ref(0);

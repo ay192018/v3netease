@@ -4,6 +4,7 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 export default {
+  name: 'singer',
   setup(props, { attrs }) {
     const artists = ref([]);
     const loading = ref(false);

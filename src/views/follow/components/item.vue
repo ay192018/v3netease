@@ -10,16 +10,19 @@ import { useRouter } from 'vue-router';
 import { ref, computed } from 'vue';
 
 export default {
+  name: 'item',
   setup(props, { attrs }) {
     const router = useRouter();
-
+    const loading = ref(true);
     const item = computed(() => {
       return attrs.item;
     });
     const json = computed(() => {
       return JSON.parse(attrs.item.json);
     });
-
+    onMounted(() => {
+      loading.value = false;
+    });
     const Preview = (item) => {
       ImagePreview({
         images: [item.originUrl],
@@ -47,6 +50,7 @@ export default {
       json,
       send,
       getMlogtovideo,
+      loading,
     };
   },
 };
@@ -116,7 +120,7 @@ export default {
 }
 </style>
 <template>
-  <div class="item">
+  <div class="item" v-if="item">
     <div class="items">
       <van-image
         width="40"
@@ -165,7 +169,13 @@ export default {
         <div class="imgcollection">
           <van-grid :column-num="3" :gutter="1" square :border="false">
             <van-grid-item v-for="(item, index) in item.pics" :key="index" class="item">
-              <van-image @click="Preview(item)" width="100" height="100" fit="cover" :src="item.originUrl"
+              <van-image
+                @click="Preview(item)"
+                width="100"
+                height="100"
+                fit="cover"
+                v-lazy="item.originUrl"
+                :src="item.originUrl"
             /></van-grid-item>
           </van-grid>
         </div>
@@ -181,4 +191,5 @@ export default {
       </div>
     </div>
   </div>
+  <van-skeleton title :row="3" v-else />
 </template>

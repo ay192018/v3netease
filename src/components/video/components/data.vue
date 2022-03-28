@@ -4,6 +4,7 @@ import { playCount, jobCount } from '@/Util/fltter.js';
 import { ref, watchEffect, reactive, inject } from 'vue';
 import MyHooks from '@/hooks/index.js';
 export default {
+  name: 'videoid',
   components: {
     Commnts,
   },

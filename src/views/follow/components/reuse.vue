@@ -7,6 +7,7 @@ import ItemDynamic from './itemDynamic.vue';
 import { ref } from 'vue';
 export default {
   components: { Item, ItemDynamic },
+  name:"reuse",
   setup() {
     const loading = ref(false);
     const finished = ref(false);

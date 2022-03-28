@@ -5,6 +5,7 @@ export default {
   components: {
     Audio,
   },
+  name: 'layout',
   setup() {
     const route = useRoute();
     const active = ref();

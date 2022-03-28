@@ -9,6 +9,7 @@ import { Toast } from 'vant';
 import { show } from '@/hooks/status.js';
 export default {
   mixins: [myMixin],
+  name: 'playlistid',
   setup(props, { attrs, emit }) {
     const id = ref([]);
     const allsongs = ref([]);
@@ -36,8 +37,7 @@ export default {
      * @param {Number}传入索引
      */
     const play = (index) => {
-      
-      playaudiorule(index, allsongs.value, store, show, nextTick, Toast);
+      playaudiorule(index, store, nextTick, Toast, allsongs.value, show);
     };
     const ids = computed(() => {
       return id.value;
@@ -73,7 +73,6 @@ export default {
         max-width: 40vw;
         margin-left: 10px;
         .songname {
-          color: #5b5b5b;
           font-size: 14px;
           font-weight: bold;
           margin-bottom: 14px;

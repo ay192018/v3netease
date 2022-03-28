@@ -2,7 +2,7 @@
   <div class="my animate__fadeIn animate__animated">
     <van-nav-bar :border="false" fixed>
       <template #left>
-        <van-icon name="bars" size="25" color="#646566" />
+        <van-icon name="bars" size="25" color="#646566" @click="sideShow = !sideShow" />
       </template>
       <template #right>
         <van-icon name="search" size="25" color="#646566" @click="router.push('/search')" />
@@ -54,22 +54,33 @@
       teleport="body"
     />
   </div>
+  <van-popup
+    v-model:show="sideShow"
+    class="popup"
+    position="left"
+    :style="{ height: '100%', width: '80%' }"
+    teleport="body"
+    ><Sider />
+  </van-popup>
 </template>
 
 <script>
 import Grid from './grid.vue';
 import { useStore } from 'vuex';
 import { ref } from 'vue';
+import { sideShow } from '@/hooks/status.js';
 import { getuserdata } from '@/api/user.js';
 import { onMounted } from '@vue/runtime-core';
 import { reactive, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import Userplaylist from './Userplaylist.vue';
 import { Toast } from 'vant';
+import Sider from '../find/components/sider.vue';
 export default {
   components: {
     Grid,
     Userplaylist,
+    Sider,
   },
   name: 'my',
   setup() {
@@ -137,6 +148,7 @@ export default {
       show,
       actions,
       select,
+      sideShow,
     };
   },
 };
@@ -146,14 +158,13 @@ export default {
 .my {
   width: 100%;
   height: 87vh;
-  background: #f0f0f0;
 
   .userdata {
     position: relative;
     width: 95vw;
     height: 15vh;
     border-radius: 15px;
-    background: #fefefe;
+    /*   background: #fefefe; */
     margin: 50px auto 0 auto;
     z-index: 1;
     border-radius: 15px;

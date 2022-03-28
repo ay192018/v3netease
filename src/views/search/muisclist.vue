@@ -7,6 +7,7 @@ import { useRouter } from 'vue-router';
 import { Toast } from 'vant';
 import { show } from '@/hooks/status.js';
 export default {
+  name: 'muisclist',
   setup(props, { attrs }) {
     const list = ref([]);
     const loading = ref(false);
@@ -33,7 +34,7 @@ export default {
       }
     };
     const play = (index) => {
-      playaudiorule(index, results.value, store, show, nextTick, Toast);
+      playaudiorule(index, store, nextTick, Toast, results.value, show);
     };
     return {
       attrs,
@@ -54,7 +55,6 @@ export default {
 
 <style lang="less" scoped>
 .list {
-  background: #fff;
   padding-bottom: 20px;
   height: 80vh;
   overflow-y: auto;
@@ -76,7 +76,6 @@ export default {
         max-width: 40vw;
         margin-left: 10px;
         .songname {
-          color: #5b5b5b;
           font-size: 14px;
           font-weight: bold;
           margin-bottom: 10px;

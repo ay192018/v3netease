@@ -8,6 +8,7 @@ import UserData from './components/userData.vue';
 import { Toast } from 'vant';
 export default {
   components: { Content, UserData },
+  name: 'userid',
   setup(props, { attrs }) {
     const user = reactive({
       profile: {},
@@ -70,7 +71,7 @@ export default {
 <style lang="less" scoped>
 .user {
   width: 100%;
-  background: #f0f0f0;
+
   ::v-deep(.van-nav-bar) {
     background: transparent;
   }
@@ -80,7 +81,7 @@ export default {
     width: 95vw;
     height: auto;
     border-radius: 15px;
-    background: #fefefe;
+
     margin: 0 auto;
     z-index: 1;
     border-radius: 15px;
@@ -109,6 +110,12 @@ export default {
       }
     }
   }
+}
+:root {
+  --van-white: #fff;
+  --van-blue: #1989fa;
+
+  --van-button-primary-border-color: pink;
 }
 </style>
 
@@ -147,7 +154,6 @@ export default {
           size="mini"
           round
           hairline
-          color="#ccc"
           @click="show = !show"
           >编辑资料</van-button
         >

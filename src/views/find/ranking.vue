@@ -1,15 +1,18 @@
 <template>
-  <div class="Random">
+  <div class="Random auto">
     <div class="recommend ">
       <h3>{{ rankingtitle }}</h3>
-      <van-button type="primary" color="red" class="btn" round size="mini">{{ rankingbtn }}</van-button>
+
+      <van-button type="primary" class="btn" hairline round size="mini">
+        <template #icon> {{ rankingbtn }}<van-icon name="arrow" /> </template>
+      </van-button>
     </div>
     <div class="content">
       <van-swipe class="my-swipe" indicator-color="white" :show-indicators="false" :width="325" :loop="false">
         <van-swipe-item v-for="(item, index) in attrs.ranking" :key="index"
-          ><span class="title">{{ item.uiElement.mainTitle.title }}<van-icon name="arrow"/></span>
+          ><span class="title" @click="send(item)">{{ item.uiElement.mainTitle.title }}<van-icon name="arrow"/></span>
           <div class="item" v-for="(items, indexs) in item.resources" :key="indexs" @click="play(item, indexs)">
-            <div class="content">
+            <div class="contents">
               <div class="left">
                 <div class="img">
                   <van-icon
@@ -30,7 +33,7 @@
                     :src="items.resourceExtInfo.songData.album.picUrl"
                   />
                 </div>
-                <span class="index">1</span>
+                <span class="index">{{ indexs + 1 }}</span>
                 <div class="songdata">
                   <div class="van-ellipsis">
                     {{ items.resourceExtInfo.songData.name }}
@@ -52,42 +55,40 @@
 
 <script>
 import { rankingtitle, rankingbtn } from '@/hooks/reactive';
-import { playaudiorule } from '@/Util/fltter.js';
-import { inject, markRaw, ref, nextTick } from 'vue';
+import { playaudiorule, Songs } from '@/Util/fltter.js';
+import { inject, markRaw, ref, nextTick, computed } from 'vue';
 import { useStore } from 'vuex';
 import { Toast } from 'vant';
+import { useRouter } from 'vue-router';
 import { show } from '@/hooks/status.js';
+import { getallsongs } from '@/api/songsheet.js';
+
 export default {
+  name: 'ranking',
   setup(props, { attrs }) {
     const Dynamic = markRaw(inject('Dynamic'));
     const store = useStore();
-    const list = ref([]);
+    const router = useRouter();
     console.log(attrs.ranking);
-
-    const play = (item, index) => {
-      let list = [];
-      for (let i = 0; i < item.resources.length; i++) {
-        let obj = {
-          al: {
-            picUrl: '',
-          },
-          name: '',
-          ar: [
-            {
-              name: '',
-            },
-          ],
-          id: 0,
-        };
-        const ie = item.resources[i];
-        obj.al.picUrl = ie.resourceExtInfo.songData.album.picUrl;
-        obj.name = ie.resourceExtInfo.songData.name;
-        obj.ar[0].name = ie.resourceExtInfo.songData.artists[0].name;
-        obj.id = ie.resourceExtInfo.songData.id;
-        list.push(obj);
+    const playId = computed(() => {
+      return store.state.songlist[store.state.curret].id;
+    });
+    /* item.creativeExtInfoVO.topListOriginId */
+    const play = async (item, index) => {
+      console.log(item);
+      const { data } = await getallsongs({
+        ids: item.creativeExtInfoVO.topListSongIds.join(),
+      });
+      playaudiorule(index, store, nextTick, Toast, data.songs, show);
+    };
+    const send = (item) => {
+      if (!item.creativeExtInfoVO.topListOriginId) {
+        return Toast('没有此歌单的ID');
       }
-      list.value = list;
-      playaudiorule(index, list.value, store, show, nextTick, Toast);
+      router.push({
+        name: 'songsdetails',
+        params: { id: item.creativeExtInfoVO.topListOriginId },
+      });
     };
     return {
       rankingtitle,
@@ -97,6 +98,10 @@ export default {
       playaudiorule,
       store,
       play,
+      playId,
+      getallsongs,
+      router,
+      send,
     };
   },
 };
@@ -104,13 +109,11 @@ export default {
 
 <style lang="less" scoped>
 .Random {
-  border-radius: 15px;
-  padding: 3px;
-  margin: 15px 0;
   .recommend {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 5px;
     .btn {
       width: 50px;
     }
@@ -119,58 +122,50 @@ export default {
     width: auto;
     height: auto;
     padding: 5px;
-    .my-swipe .van-swipe-item {
-      text-align: center;
-      color: #000;
-      background: #fff;
-      padding: 5px;
-      box-sizing: border-box;
-      border-radius: 15px;
 
-      .title {
-        font-size: 15px;
-        font-weight: bold;
-      }
-      .item {
-        margin: 5px 0;
-        .content {
+    .title {
+      font-size: 15px;
+      font-weight: bold;
+    }
+    .item {
+      margin: 5px 0;
+      .contents {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .left {
           display: flex;
           justify-content: space-between;
-          align-items: center;
-          .left {
-            display: flex;
-            justify-content: space-between;
 
-            .img {
-              margin-right: 5px;
-              position: relative;
-              .icon {
-                position: absolute;
-                left: 27%;
-                top: 27%;
-                z-index: 1;
-              }
+          .img {
+            margin-right: 5px;
+            position: relative;
+            .icon {
+              position: absolute;
+              left: 27%;
+              top: 27%;
+              z-index: 1;
             }
-            .index {
-              line-height: 50px;
-              margin: 0 5px;
-              font-size: 13px;
-              font-weight: bold;
-            }
-            .songdata {
-              display: flex;
-              flex-direction: column;
-              justify-content: space-around;
-              text-align: left;
-              .singer {
-                color: #c4c4c4;
-              }
+          }
+          .index {
+            line-height: 50px;
+            margin: 0 5px;
+            font-size: 13px;
+            font-weight: bold;
+          }
+          .songdata {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            text-align: left;
+            .singer {
+              color: #c4c4c4;
             }
           }
         }
-        .play {
-          margin-right: 15px;
-        }
+      }
+      .play {
+        margin-right: 15px;
       }
     }
   }

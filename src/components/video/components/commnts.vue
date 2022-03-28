@@ -8,6 +8,7 @@ import { useRouter } from 'vue-router';
 import { Toast } from 'vant';
 import { playCount } from '@/Util/fltter.js';
 export default {
+  name: 'videoid',
   setup(props, { attrs }) {
     const loading = ref(false);
     const finished = ref(false);
@@ -164,7 +165,7 @@ export default {
   .btn {
     width: 100%;
     height: 8%;
-    background: #fff;
+
     position: fixed;
     left: 0;
     right: 0;

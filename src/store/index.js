@@ -12,6 +12,7 @@ export default createStore({
     videocurret: 0,
     audioshow: false,
     playlistID: null,
+    theme: 'dark',
   },
 
   mutations: {
@@ -56,6 +57,9 @@ export default createStore({
     pushsonglist(state, data) {
       state.songlist.push(...data);
     },
+    changetheme(state, data) {
+      state.theme = data;
+    },
   },
   actions: {
     setisplay(mutation) {
@@ -95,6 +99,9 @@ export default createStore({
     },
     pushsonglist({ commit }, data) {
       commit('pushsonglist', data);
+    },
+    changetheme({ commit }, data) {
+      commit('changetheme', data);
     },
   },
 

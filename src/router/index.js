@@ -3,7 +3,7 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 const routes = [
   {
     path: '/',
-    name: 'layoue',
+    name: 'layout',
     meta: { keepAlive: true },
     component: () => import('@/views/layout/'),
     children: [
@@ -87,6 +87,12 @@ const routes = [
     path: '/ranking',
     name: 'ranking',
     component: () => import('@/components/ranking/'),
+    meta: { transition: 'slide-fade', keepAlive: true },
+  },
+  {
+    path: '/mymessage',
+    name: 'mymessage',
+    component: () => import('../views/my/mymessage.vue'),
     meta: { transition: 'slide-fade', keepAlive: true },
   },
 ];

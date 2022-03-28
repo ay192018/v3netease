@@ -1,5 +1,6 @@
 <script>
 export default {
+  name: 'advice',
   setup(props, { attrs }) {
     return {
       attrs,
