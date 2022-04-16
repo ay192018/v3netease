@@ -53,11 +53,8 @@ export default {
     const Radar = ref([]);
     const scenario = ref([]);
     const ranking = ref([]);
-
     const extInfo = ref([]);
-
     const cursor = ref('');
-
     const Dynamic = ref([]);
     const cookie = JSON.parse(localStorage.getItem('cookie'));
     provide('Dynamic', Dynamic);
@@ -74,14 +71,13 @@ export default {
           playlist.value = item.creatives;
           text.value = item.uiElement.button.text;
           listtitle.value = item.uiElement.subTitle.title;
-          return new Promise((resolve) => {
-            resolve(playlist);
-          });
+
           // ^推荐歌单
         } else if (item.blockCode === 'HOMEPAGE_BLOCK_LISTEN_LIVE') {
           extInfo.value = item.extInfo;
           lookbtn.value = item.uiElement.button.text;
           looktitle.value = item.uiElement.subTitle.title;
+
           // ^LOOK直播
         } else if (item.blockCode === 'HOMEPAGE_BLOCK_STYLE_RCMD') {
           Dynamic.value = item.creatives;
@@ -173,12 +169,16 @@ export default {
 <style lang="less" scoped>
 .findconent {
   scroll-behavior: hidden;
-
   margin: 0 auto;
   overflow-y: auto;
   margin-top: 46px;
   height: 85.5vh;
   padding-bottom: 100px;
+  .indexTop {
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+  }
 }
 </style>
 

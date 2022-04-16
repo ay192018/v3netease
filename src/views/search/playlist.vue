@@ -13,13 +13,13 @@ export default {
     const router = useRouter();
     const offset = ref(1);
     const onLoad = async () => {
-      console.log(attrs.attrs.value);
+      attrs.attrs.value;
       const { data } = await getcloudsearch({
         keywords: attrs.attrs.value,
         type: 1000,
         offset: (offset.value - 1) * 30,
       });
-      console.log(data);
+      data;
       album.value.push(...data.result.playlists);
       loading.value = false;
       if (data.result.playlists.length) {
@@ -44,7 +44,6 @@ export default {
 
 <style lang="less" scoped>
 .playlist {
-  background: #fff;
   padding-bottom: 20px;
   height: 80vh;
   overflow-y: auto;

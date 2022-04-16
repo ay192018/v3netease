@@ -7,6 +7,7 @@ import { useWindowSize } from '@vant/use';
 import { Toast } from 'vant';
 import { changeaudio, initaudio, debounce } from '@/Util/fltter.js';
 import { useStore } from 'vuex';
+import {watchEffect} from "@vue/runtime-core";
 export default {
   components: { Audio, Layout },
   name: 'App',
@@ -18,6 +19,8 @@ export default {
     const fail = () => {
       Toast.fail('请切换手机模式浏览！！！');
     };
+
+
 
     watch(
       () => width.value,
@@ -50,8 +53,7 @@ export default {
         case '/my':
           nextTick(() => {
             changeaudio();
-          });
-
+          })
           break;
         case '/follow':
           changeaudio();

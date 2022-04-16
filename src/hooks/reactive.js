@@ -8,7 +8,6 @@ export const Dynamictitle = ref('');
 export const recentVideo = ref('');
 export const Videotext = ref('');
 export const radartitle = ref('');
-
 export const radarbtn = ref('');
 export const scenariotitle = ref('');
 export const scenariobtn = ref('');

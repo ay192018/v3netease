@@ -30,7 +30,7 @@ export const getmvdetail = (params) => {
   });
 };
 export const getvideourl = (params) => {
-  console.log(params);
+
   return http({
     method: 'GET',
     url: '/video/url',

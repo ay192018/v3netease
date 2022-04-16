@@ -121,12 +121,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
-/deep/ .van-nav-bar,
-.van-nav-bar__content,
-.van-nav-bar--fixed {
+::v-deep(.van-nav-bar, .van-nav-bar__content, .van-nav-bar--fixed) {
   background: transparent;
 }
-/deep/ .van-image__img {
+::v-deep(.van-image__img) {
   position: absolute;
   left: 0;
   right: 0;
@@ -137,7 +135,13 @@ export default {
   width: 100%;
   height: 33vh;
   background-size: cover;
-
+  position: relative;
+  .img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    filter: blur(30px);
+  }
   .Songcontent {
     width: 95vw;
     margin: 0 auto;
@@ -195,12 +199,13 @@ export default {
     }
   }
 }
-/deep/ .van-nav-bar__title {
+::v-deep(.van-nav-bar__title) {
   color: #dfdfdf;
   font-size: 12px;
 }
 .title {
   margin-top: 5vh;
+  padding: 10px;
   display: flex;
   align-items: center;
   & van-icon,
@@ -243,7 +248,9 @@ export default {
           <van-icon name="ellipsis" size="23" color="#ccc" />
         </template>
       </van-nav-bar>
-      <div class="songdata" :style="`background-image: url(${songsdata.songs.coverImgUrl})`">
+      <!-- :style="`background-image: url(${songsdata.songs.coverImgUrl})`" -->
+      <div class="songdata">
+        <img class="img" :src="songsdata.songs.coverImgUrl" alt="" />
         <div class="Songcontent">
           <div class="left">
             <van-image width="130" height="130" radius="15" :src="songsdata.songs.coverImgUrl" @click="show = true">
@@ -321,8 +328,8 @@ export default {
         </div>
       </div>
       <div class="title">
-        <van-icon name="play-circle-o" size="20" color="red" />
-        <div>播放全部</div>
+        <van-icon name="play-circle-o" size="28" color="red" />
+        <div class="playallinfo">播放全部</div>
         <div>({{ playCount(songsdata.length) }}首)</div>
       </div>
       <van-overlay :show="show" @click="show = false" z-index="9999" :lock-scroll="false">

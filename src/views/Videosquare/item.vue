@@ -47,7 +47,6 @@ export default {
 
 <style lang="less" scoped>
 .item {
-  width: 95vw;
   margin: 0 auto;
   height: 74vh;
 
@@ -74,7 +73,7 @@ export default {
       }
     }
   }
-  /deep/.van-list {
+::v-deep(.van-list) {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;

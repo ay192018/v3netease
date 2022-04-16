@@ -31,7 +31,7 @@ export default {
         id: attrs.attrs.attrs,
         content: message.value,
       });
-      console.log(data);
+      data;
       if (data.code === 200) {
         shows.value = !shows.value;
         message.value = '';

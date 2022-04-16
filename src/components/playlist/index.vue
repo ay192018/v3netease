@@ -80,7 +80,7 @@ export default {
       //监听接收过来的当前播放时间来给绑定进度条的值进行赋值
       () => playId.value,
       (n) => {
-        console.log(document.querySelector('.content').scrollTop, document.querySelector('.active').offsetTop);
+        (document.querySelector('.content').scrollTop, document.querySelector('.active').offsetTop);
         document.querySelector('.content').scrollTop = document.querySelector('.active').offsetTop - 150;
       },
     ); */

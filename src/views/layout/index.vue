@@ -69,10 +69,7 @@ export default {
 
 <style lang="less" scoped>
 .layout {
-  /deep/ .van-tabbar,
-  .van-tabbar--fixed,
-  .van-hairline--top-bottom,
-  .van-safe-area-bottom {
+  ::v-deep(.van-tabbar, .van-tabbar--fixed, .van-hairline--top-bottom, .van-safe-area-bottom) {
     z-index: 100 !important;
   }
 }

@@ -123,11 +123,11 @@ export default {
         }
       });
       playlist.user.shift();
-      console.log(playlist);
+      playlist;
       const res = await getuserevent({
         uid: attrs.user.id,
       });
-      console.log(res);
+      res;
     });
     return {
       active,
@@ -158,7 +158,6 @@ export default {
     .like {
       .item {
         margin-top: 5px;
-
         font-size: 13px;
       }
     }
@@ -166,7 +165,7 @@ export default {
   .like {
     .item {
       margin-top: 10px;
-   
+
       font-size: 13px;
     }
   }
@@ -194,6 +193,7 @@ export default {
   }
   .ceateds {
     height: auto;
+    border-radius: 15px;
   }
   .trackCount {
     font-size: 8px;
@@ -214,7 +214,7 @@ export default {
     justify-content: space-around;
     margin-left: 10px;
     .name {
-      font-size: 12px;
+      font-size: 13px;
     }
   }
   .padding {

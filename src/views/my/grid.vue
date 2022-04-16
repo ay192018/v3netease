@@ -66,9 +66,7 @@ export default {
 
 <style lang="less" scoped>
 .grid {
-  width: 95vw;
-  height: 30vh;
-  box-sizing: b;
+  box-sizing: border-box;
   border-radius: 15px;
   margin: 20px auto;
 
@@ -78,7 +76,7 @@ export default {
   .title {
     margin-top: 5px;
     color: #bababa;
-    font-size: 10px;
+    font-size: 13px;
   }
 }
 </style>

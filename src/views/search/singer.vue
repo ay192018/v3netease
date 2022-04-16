@@ -12,7 +12,7 @@ export default {
     const router = useRouter();
     const offset = ref(1);
     const onLoad = async () => {
-      console.log(attrs.attrs.value);
+      attrs.attrs.value;
       const { data } = await getcloudsearch({
         keywords: attrs.attrs.value,
         type: 100,
@@ -21,7 +21,7 @@ export default {
 
       artists.value.push(...data.result.artists);
       loading.value = false;
-      console.log(data.result.artists);
+      data.result.artists;
       if (data.result.artists.length) {
         offset.value++;
       } else {
@@ -43,7 +43,6 @@ export default {
 
 <style lang="less" scoped>
 .singer {
-  background: #fff;
   padding-bottom: 20px;
   height: 80vh;
   overflow-y: auto;

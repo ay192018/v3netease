@@ -61,7 +61,7 @@ export default {
     };
     const loadedmetadata = (e) => {
       duration.value = e.target.duration;
-      // console.log(duration.value);
+      // (duration.value);
     };
     const play = () => {
       nextTick(() => {
@@ -79,7 +79,7 @@ export default {
           //视频详情
           id: attrs.id,
         });
-        // console.log(data);
+        // (data);
         const res = await getvideourl({
           //视频地址
           id: attrs.id,
@@ -99,7 +99,7 @@ export default {
         datas.creator = data.data.creator;
         datas.vid = data.data.vid;
         url.value = res.data.urls[0].url;
-        console.log(url);
+        url;
       } else {
         const data = await getmvdetail({
           //mv
@@ -114,10 +114,10 @@ export default {
           id: attrs.id,
           limit: 100,
         });
-        // console.log(data.data.data);
+        // (data.data.data);
         datas.data = data.data.data;
         url.value = res.data.data.url;
-        console.log(url.value);
+        url.value;
         let arr = [];
         comment.data.comments.forEach((item) => {
           arr.push(item.content);
@@ -128,7 +128,7 @@ export default {
 
         datas.artists = data.data.data.artists[0];
 
-        console.log(datas);
+        datas;
       }
     });
     return {
@@ -173,7 +173,7 @@ export default {
     top: 50%;
     transform: translateY(-70%);
   }
-  /deep/ .van-nav-bar {
+  ::v-deep(.van-nav-bar) {
     background: transparent;
   }
   .Danmaku {

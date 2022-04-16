@@ -30,12 +30,12 @@
               })
             "
           >
-            <span>{{ item.user.nickname }}</span>
+            <span>{{}}</span>
             <span class="type">{{ switchtype(item.type) }}</span
             ><br />
             <span class="time">{{ Dynamiclists(item.eventTime) }} </span>
           </div>
-          <div class="text" v-html="JSON.parse(item.json).msg.replace(/[\r\n]/g, '<br />')"></div>
+          <div class="text" v-html="item.json.msg.replace(/[\r\n]/g, '<br />')"></div>
 
           <!-- Mlog -->
 
@@ -56,25 +56,9 @@
               /></van-grid-item>
             </van-grid>
           </div>
-          <div class="song">
-            <!--    <van-image
-              width="40"
-              height="40"
-              radius="15"
-              fit="cover"
-              :src="JSON.parse(item.json).song.album.picUrl"
-              class="img"
-            />
 
-            <div class="data">
-              <span class="van-ellipsis name">{{
-                JSON.parse(item.json).song.name
-              }}</span
-              ><br />
-              <span style="color:#bfbfbf" class="van-ellipsis">{{
-                JSON.parse(item.json).song.artists[0].name
-              }}</span>
-            </div> -->
+          <div class="song" v-if="item.json.song">
+            <Song :song="item.json.song" />
           </div>
           <div class="ziliao">
             <div class="bottomitem"><van-icon size="15" class="icon" name="revoke" />转发</div>
@@ -84,7 +68,7 @@
             <div class="bottomitem">
               <van-icon size="18" class="icon" name="good-job-o" />{{ item.info.likedCount }}
             </div>
-            <van-icon name="ellipsis" size="20" @click.stop="showShare = !showShare" />
+            <van-icon name="ellipsis" size="20" @click.stop="deletes(item, index)" />
           </div>
         </div>
       </div>
@@ -97,7 +81,13 @@
       teleport="body"
       ><ItemDynamic @changeshow="changeshow" :item="itemActive"
     /></van-popup>
-    <van-share-sheet v-model:show="showShare" title="立即分享给好友" :options="option" teleport="body" />
+    <van-share-sheet
+      v-model:show="showShare"
+      title="立即分享给好友"
+      @select="select"
+      :options="options"
+      teleport="body"
+    />
   </div>
 </template>
 
@@ -107,33 +97,44 @@ import { getuserevent } from '@/api/user.js';
 import { getMlogtovideo } from '@/api/video.js';
 import { Dynamiclists } from '@/Util/dayjs.js';
 import { switchtype } from '@/Util/fltter.js';
-import { onMounted } from '@vue/runtime-core';
+import { getdelates } from '@/api/dynamic.js';
+import { useStore } from 'vuex';
+import Item from '@/views/follow/components/item.vue';
+import Song from '@/views/follow/components/song.vue';
 import { ImagePreview } from 'vant';
 import { useRouter } from 'vue-router';
 import { ref, inject, reactive, toRefs } from 'vue';
+import { Toast } from 'vant';
 export default {
   name: 'userid',
-  components: { ItemDynamic },
+  components: { ItemDynamic, Item, Song },
   setup(props, { attrs }) {
     const loading = ref(false);
     const finished = ref(false);
     const Dynamiclist = reactive({
       Dynamiclist: [],
     });
-
+    const store = useStore();
     const showShare = ref(false);
     const lasttime = ref(-1);
     const router = useRouter();
     const show = ref(false);
     const itemActive = ref(null);
     const Mlog = ref([]);
-    const option = [
-      { name: '微信', icon: 'wechat' },
-      { name: '微博', icon: 'weibo' },
-      { name: '复制链接', icon: 'link' },
-      { name: '分享海报', icon: 'poster' },
-      { name: '二维码', icon: 'qrcode' },
-    ];
+    const options = ref([
+      [
+        { name: '微信', icon: 'wechat' },
+        { name: '朋友圈', icon: 'wechat-moments' },
+        { name: '微博', icon: 'weibo' },
+        { name: 'QQ', icon: 'qq' },
+      ],
+      [
+        { name: '复制链接', icon: 'link' },
+        { name: '分享海报', icon: 'poster', index: null, id: null },
+        { name: '二维码', icon: 'qrcode' },
+        { name: '小程序码', icon: 'weapp-qrcode' },
+      ],
+    ]);
     const changeshow = () => {
       show.value = !show.value;
     };
@@ -153,7 +154,22 @@ export default {
         },
       });
     };
+    const deletes = (item, index) => {
+      item;
+      if (item.user.userId === store.state.profile.userId) {
+        options.value.flat()[5].name = '删除';
+        options.value.flat()[5].index = index;
+        options.value.flat()[5].id = item.id;
+        options.value.flat()[5].icon =
+          'https://img1.baidu.com/it/u=2198873381,3249768272&fm=253&fmt=auto&app=138&f=JPG?w=500&h=500';
+      } else {
+        options.value.flat()[5].name = '分享海报';
+        options.value.flat()[5].icon = 'poster';
+        options.value.flat()[5].index = null;
+      }
 
+      showShare.value = !showShare.value;
+    };
     const onLoad = async () => {
       const { data } = await getuserevent({
         lasttime: lasttime.value,
@@ -161,13 +177,18 @@ export default {
         uid: id,
       });
 
-      /*    if (!data.events.length) {
-        return (finished.value = true);
-      } */
-
+      /*  for (let i in data.event) {
+      }
+ */
       data.events.forEach((item) => {
+        Object.defineProperties(item, {
+          json: {
+            value: JSON.parse(item.json),
+          },
+        });
+
         if (item.type === 57) {
-          Mlog.value.push(JSON.parse(item.json));
+          Mlog.value.push(item.json);
         } else {
           Mlog.value.push(null);
         }
@@ -187,14 +208,25 @@ export default {
         images: [item.originUrl],
       });
     };
-
+    const select = async (name) => {
+      if (name.name === '删除') {
+        const { data } = await getdelates({
+          evId: name.id,
+        });
+        if (data.code === 200) {
+          Toast('删除成功');
+        }
+        Dynamiclist.Dynamiclist.splice(name.index, 1);
+        showShare.value = !showShare.value;
+      }
+    };
     return {
       ...toRefs(Dynamiclist),
 
       Dynamiclists,
       switchtype,
       Preview,
-      option,
+      options,
       showShare,
       attrs,
       onLoad,
@@ -209,6 +241,8 @@ export default {
       Mlog,
       getMlogtovideo,
       send,
+      deletes,
+      select,
     };
   },
 };
@@ -217,20 +251,19 @@ export default {
 <style lang="less" scoped>
 .content {
   width: 100%;
-  padding: 5px;
-  /*   height: 80vh;
-  box-sizing: border-box; */
+
+  box-sizing: border-box;
   overflow-y: auto;
   .items {
     margin-top: 15px;
     width: 100%;
     display: flex;
+
     .img {
       vertical-align: top;
       margin-right: 5px;
     }
     .content {
-      width: 86vw;
       height: auto;
       display: inline-block;
       .text {

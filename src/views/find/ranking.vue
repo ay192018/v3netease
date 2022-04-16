@@ -69,13 +69,12 @@ export default {
     const Dynamic = markRaw(inject('Dynamic'));
     const store = useStore();
     const router = useRouter();
-    console.log(attrs.ranking);
+
     const playId = computed(() => {
       return store.state.songlist[store.state.curret].id;
     });
     /* item.creativeExtInfoVO.topListOriginId */
     const play = async (item, index) => {
-      console.log(item);
       const { data } = await getallsongs({
         ids: item.creativeExtInfoVO.topListSongIds.join(),
       });
@@ -158,8 +157,10 @@ export default {
             flex-direction: column;
             justify-content: space-around;
             text-align: left;
+            font-size: 13px;
             .singer {
               color: #c4c4c4;
+              font-size: 12px;
             }
           }
         }

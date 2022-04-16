@@ -6,7 +6,7 @@
           <div
             class="user"
             @click="
-              !cookie
+              !store.state.profile.userId
                 ? router.push('/login')
                 : router.push({
                     name: 'user',
@@ -21,12 +21,12 @@
               height="30"
               round
               :src="
-                cookie
+                store.state.profile.userId
                   ? store.state.profile.avatarUrl
                   : 'http://p3.music.126.net/tBTNafgjNnTL1KlZMt7lVA==/18885211718935735.jpg'
               "
             />
-            &nbsp <span>{{ cookie ? store.state.profile.nickname : '立即登录' }}</span
+            &nbsp <span>{{ store.state.profile.userId ? store.state.profile.nickname : '立即登录' }}</span
             >&nbsp<van-icon name="arrow" size="15" color="#b0b0b0" />
           </div>
         </template>
@@ -139,7 +139,7 @@
             <!-- 使用 right-icon 插槽来自定义右侧图标 -->
           </van-cell>
         </div>
-        <van-button type="primary" class="btn">退出登录</van-button>
+        <van-button type="primary" class="btn" @click="loginout">退出登录</van-button>
       </div>
     </div>
   </div>
@@ -148,14 +148,16 @@
 <script>
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
+import { getlogout } from '@/api/user.js';
 import { ref, onMounted, watch } from 'vue';
 import { checked } from '@/hooks/status.js';
+import { Toast } from 'vant';
 export default {
   setup() {
     const router = useRouter();
     const store = useStore();
 
-    const cookie = JSON.parse(localStorage.getItem('cookie'));
+    const cookie = ref(JSON.parse(localStorage.getItem('cookie')));
     const change = () => {
       if (checked.value) {
         document.body.setAttribute('class', 'dark');
@@ -164,7 +166,20 @@ export default {
       } else {
         /*  store.dispatch('changetheme', 'bright'); */
         document.documentElement.style.backgroundColor = '#f0f0f0';
-        document.body.setAttribute('class', 'bright');
+        /*    document.body.setAttribute('class', 'bright'); */
+        document.body.removeAttribute('class', 'dark');
+      }
+    };
+    const loginout = async () => {
+      if (!cookie.value) {
+        return;
+      }
+      const { data } = await getlogout();
+      if (data.code === 200) {
+        localStorage.clear();
+        store.dispatch('setprofile', {});
+        router.push('/');
+        Toast.success('退出成功');
       }
     };
     return {
@@ -174,6 +189,7 @@ export default {
       checked,
       checked,
       change,
+      loginout,
     };
   },
 };

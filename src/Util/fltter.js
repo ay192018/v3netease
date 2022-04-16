@@ -145,7 +145,7 @@ export const switchtype = (val) => {
   } else if (val === 39) {
     return '发布视频';
   } else if (val === 35) {
-    return '分享歌单';
+    return '';
   } else if (val === 13) {
     return '分享歌单';
   } else if (val === 24) {
@@ -208,8 +208,13 @@ export const playaudiorule = (index, store, nextTick, Toast, songlist, show) => 
     });
   }
 };
+/**
+ * @param {Object}
+ * @param {String}
+ * @param {Array}
+ * @param {Number}
+ */
 export class Songs {
-  /* ^抽离每一项歌曲的数据 */
   constructor(al, name, ar, id) {
     this.al = al;
     this.name = name;
@@ -217,3 +222,16 @@ export class Songs {
     this.id = id;
   }
 }
+/**
+ * @param {Number}筛选用户的城市
+ *  */
+import { areaList } from '@vant/area-data';
+export const filtterArea = (num = 110000) => {
+  for (const k in areaList) {
+    for (const i in areaList[k]) {
+      if (i == num) {
+        return areaList[k][i];
+      }
+    }
+  }
+};

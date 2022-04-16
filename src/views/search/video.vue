@@ -13,7 +13,7 @@ export default {
     const router = useRouter();
     const offset = ref(1);
     const onLoad = async () => {
-      console.log(attrs.attrs.value);
+      attrs.attrs.value;
       const { data } = await getcloudsearch({
         keywords: attrs.attrs.value,
         type: 1014,

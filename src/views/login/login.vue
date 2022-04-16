@@ -23,7 +23,7 @@ export default {
         phone: phone.value,
         password: password.value,
       });
-      console.log(data);
+      data;
       if (data.code === 200) {
         store.dispatch('setprofile', data.profile);
         localStorage.setItem('cookie', JSON.stringify(data.cookie));
@@ -53,13 +53,13 @@ export default {
 .login {
   position: absolute;
   z-index: 9999;
-  /deep/ .van-nav-bar {
+ ::v-deep(.van-nav-bar ){
     background: red;
   }
-  /deep/ .van-form {
+::v-deep(.van-form) {
     margin-top: 30px;
   }
-  /deep/ .van-nav-bar__title {
+::v-deep(.van-nav-bar__title) {
     color: #fff;
   }
 }

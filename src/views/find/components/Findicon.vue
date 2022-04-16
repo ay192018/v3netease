@@ -16,7 +16,7 @@ export default {
     const store = useStore();
     onMounted(async () => {
       const { data } = await getindexFind();
-      // console.log(data.data);
+      // (data.data);
       icons.icon = markRaw(data.data);
     });
     const torouter = async (index) => {
@@ -25,7 +25,7 @@ export default {
       } else if (index === 1) {
         let list = [];
         const { data } = await geDM();
-        console.log(data.data);
+        data.data;
         data.data.forEach((item) => {
           list.push(new Songs({ picUrl: item.album.picUrl }, item.name, [{ name: item.artists[0].name }], item.id));
         });

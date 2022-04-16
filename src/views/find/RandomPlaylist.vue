@@ -134,6 +134,7 @@ export default {
           display: flex;
           flex-direction: column;
           justify-content: space-around;
+          font-size: 13px;
           width: 250px;
           .name {
             text-align: left !important;

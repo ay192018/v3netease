@@ -10,7 +10,7 @@ const qq = axios.create({
 qq.interceptors.request.use(
   function(config) {
     // Do something before request is sent
-    // console.log(config);
+    // (config);
     return config;
   },
 

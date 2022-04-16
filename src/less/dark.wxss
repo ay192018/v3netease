@@ -1,5 +1,5 @@
 .dark {
-  --van-nav-bar-text-color: #ff6700;
+  --van-nav-bar-text-color: #fff;
   --van-nav-bar-icon-color: #fff;
   --van-nav-bar-background-color: #f6f7f8;
   --van-button-primary-background-color: #171717;
@@ -38,10 +38,13 @@
   --van-picker-mask-color: #fff;
   --van-picker-confirm-action-color: #fff;
   --van-field-input-text-color: #fff;
+  --van-empty-description-color: #fff;
+}
+.dark .follow {
+  background: linear-gradient(#191919, #101010);
 }
 .dark .indexTop {
   background: #0a0a0a;
-  padding: 5px;
   color: #fff;
 }
 .dark .recommend {
@@ -67,7 +70,8 @@
   margin-right: 5px;
   box-sizing: border-box;
   border-radius: 15px;
-  text-align: left;
+  text-align: center;
+  color: #fff;
 }
 .dark .content {
   background: #0a0a0a;
@@ -130,8 +134,12 @@
   background-image: linear-gradient(#27241b, #1c1c1d);
   color: #fff;
 }
-.dark ::v-deep(.nut-backtop) {
-  background: #000;
+.dark .Rank {
+  background-image: linear-gradient(#191919, #101010);
+}
+.dark h3,
+.dark .playallinfo {
+  color: #fff !important;
 }
 /* html {
   background: rgb(7, 7, 7);

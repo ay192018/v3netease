@@ -1,24 +1,26 @@
 <script>
-import { getevent, gettopic, gettopics } from '@/api/user.js';
-import Item from './item.vue';
+import Song from './song.vue';
 import { Dynamiclists } from '@/Util/dayjs.js';
 import { switchtype } from '@/Util/fltter.js';
 import { onMounted } from '@vue/runtime-core';
 import { getMlogtovideo } from '@/api/video.js';
 import { ImagePreview } from 'vant';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { ref, computed } from 'vue';
 
 export default {
   name: 'item',
+  components: { Song },
   setup(props, { attrs }) {
     const router = useRouter();
+    const route = useRoute();
     const loading = ref(true);
     const item = computed(() => {
       return attrs.item;
     });
+
     const json = computed(() => {
-      return JSON.parse(attrs.item.json);
+      return attrs.item.json;
     });
     onMounted(() => {
       loading.value = false;
@@ -39,6 +41,8 @@ export default {
         },
       });
     };
+  //深拷贝 
+ 
 
     return {
       attrs,
@@ -51,6 +55,7 @@ export default {
       send,
       getMlogtovideo,
       loading,
+      route,
     };
   },
 };
@@ -73,9 +78,14 @@ export default {
       .text {
         margin: 5px 0;
         line-height: 18px;
+        font-size: 13px;
       }
       .data {
         margin: 5px 0;
+        .name {
+          font-size: 13px;
+          font-weight: bold;
+        }
         .type {
           font-size: 12px;
           color: #bfbfbf;
@@ -150,12 +160,14 @@ export default {
             })
           "
         >
-          <span>{{ item.user.nickname }}</span
+          <span class="name">{{ item.user.nickname }}</span
           >&nbsp <span class="type">{{ switchtype(item.type) }}</span
           ><br />
           <span class="time">{{ Dynamiclists(item.eventTime) }} </span>
         </div>
-        <div class="text" v-html="JSON.parse(item.json).msg.replace(/[\r\n]/g, '<br />')"></div>
+
+        <div class="text" v-if="route.path === '/follow'" v-html="item.json.msg.replace(/[\r\n]/g, '<br />')"></div>
+        <div class="text" v-else>{{ item.json.msg }}</div>
         <div v-if="item.type === 57">
           <van-image
             width="280"
@@ -176,20 +188,17 @@ export default {
                 fit="cover"
                 v-lazy="item.originUrl"
                 :src="item.originUrl"
+                radius="5"
             /></van-grid-item>
           </van-grid>
         </div>
-        <div class="song" v-if="item.type === 35 && json.song">
-          <van-image width="40" height="40" radius="15" fit="cover" :src="json.song.album.picUrl" class="img" />
 
-          <div class="data">
-            <span class="van-ellipsis name">{{ json.song.name }}</span
-            ><br />
-            <span style="color:#bfbfbf" class="van-ellipsis">{{ json.song.artists[0].name }}</span>
-          </div>
+        <div class="song" v-if="attrs.item.json.song">
+          <Song :song="attrs.item.json.song" />
         </div>
       </div>
     </div>
   </div>
+
   <van-skeleton title :row="3" v-else />
 </template>

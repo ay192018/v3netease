@@ -6,14 +6,14 @@
 import { onMounted } from '@vue/runtime-core';
 import { ranking, top } from '@/api/qq/ranking.js';
 export default {
-  name:"ranking",
+  name: 'ranking',
   setup() {
     onMounted(async () => {
       const { data } = await ranking();
       const res = await top({
         id: 62,
       });
-      console.log(data, res);
+      data, res;
     });
   },
 };

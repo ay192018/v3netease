@@ -17,7 +17,7 @@ export default {
       const res = await getvideocategory();
 
       tab.value = data.data;
-      // console.log(tab.value, res);
+      // (tab.value, res);
     });
 
     return {

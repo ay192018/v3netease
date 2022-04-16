@@ -2308,6 +2308,11 @@
     "@typescript-eslint/types" "4.33.0"
     eslint-visitor-keys "^2.0.0"
 
+"@vant/area-data@^1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@vant/area-data/-/area-data-1.2.3.tgz#9c1b5a0e5e563836969bfc78f8a56e63657f3007"
+  integrity sha512-9bDgEsFnTjdaYXPvsYKRQmxzKDdLCl0c1dOo4JGE6RhaIcq2kR2f5cK0LUdGK+U/SuBz9NfW5ejL1lejcFiP1Q==
+
 "@vant/icons@^1.7.1":
   version "1.7.3"
   resolved "https://registry.npmmirror.com/@vant/icons/download/@vant/icons-1.7.3.tgz#e51b46065cfde445617401ebe309a33b62a29725"

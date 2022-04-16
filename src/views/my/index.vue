@@ -2,10 +2,10 @@
   <div class="my animate__fadeIn animate__animated">
     <van-nav-bar :border="false" fixed>
       <template #left>
-        <van-icon name="bars" size="25" color="#646566" @click="sideShow = !sideShow" />
+        <van-icon name="bars" size="32" color="#646566" @click="sideShow = !sideShow" />
       </template>
       <template #right>
-        <van-icon name="search" size="25" color="#646566" @click="router.push('/search')" />
+        <van-icon name="search" size="32" color="#646566" @click="router.push('/search')" />
       </template>
     </van-nav-bar>
     <van-pull-refresh loosing-text=" " loading-text=" " @refresh="onRefresh">
@@ -69,7 +69,7 @@ import Grid from './grid.vue';
 import { useStore } from 'vuex';
 import { ref } from 'vue';
 import { sideShow } from '@/hooks/status.js';
-import { getuserdata } from '@/api/user.js';
+import { getuserdata, getlogout } from '@/api/user.js';
 import { onMounted } from '@vue/runtime-core';
 import { reactive, computed } from 'vue';
 import { useRouter } from 'vue-router';
@@ -93,7 +93,7 @@ export default {
     });
     const show = ref(false);
     const actions = [{ name: '个人资料' }, { name: '查看好友' }, { name: '退出登录', color: '#ee0a24' }];
-    const select = (index) => {
+    const select = async (index) => {
       if (index.name === '个人资料') {
         router.push({
           name: 'user',
@@ -104,10 +104,13 @@ export default {
       } else if (index.name === '查看好友') {
         return;
       } else {
-        localStorage.clear();
-        store.dispatch('setprofile', {});
-        router.push('/');
-        Toast.success('退出成功');
+        const { data } = await getlogout();
+        if (data.code === 200) {
+          localStorage.clear();
+          store.dispatch('setprofile', {});
+          router.push('/');
+          Toast.success('退出成功');
+        }
       }
     };
     const cookie = JSON.parse(localStorage.getItem('cookie'));
@@ -134,7 +137,7 @@ export default {
         user.level = data.level;
 
         store.dispatch('setprofile', data.profile);
-        // console.log(data);
+        // (data);
       }
     });
     return {
@@ -158,10 +161,11 @@ export default {
 .my {
   width: 100%;
   height: 87vh;
-
+  padding: 5px;
+  box-sizing: border-box;
   .userdata {
     position: relative;
-    width: 95vw;
+
     height: 15vh;
     border-radius: 15px;
     /*   background: #fefefe; */
@@ -185,8 +189,8 @@ export default {
       color: #bfbfbf;
     }
   }
-  /deep/.van-cell,
-  .van-cell--borderless {
+::v-deep(.van-cell,
+  .van-cell--borderless) {
     background: #f0f0f0 !important;
   }
   .temp {
@@ -194,7 +198,7 @@ export default {
     left: 40%;
   }
 }
-/deep/ .van-nav-bar__content {
+::v-deep(.van-nav-bar__content) {
   background: #f0f0f0 !important;
 }
 </style>

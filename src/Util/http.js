@@ -14,7 +14,7 @@ const http = axios.create({
 http.interceptors.request.use(
   function(config) {
     // Do something before request is sent
-    // console.log(config);
+    // (config);
     return config;
   },
 

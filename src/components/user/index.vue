@@ -6,6 +6,7 @@ import { reactive, onMounted, ref } from 'vue';
 import Content from './components/content.vue';
 import UserData from './components/userData.vue';
 import { Toast } from 'vant';
+import { filtterArea } from '@/Util/fltter.js';
 export default {
   components: { Content, UserData },
   name: 'userid',
@@ -16,6 +17,8 @@ export default {
       createDays: 0,
       createTime: 0,
       listenSongs: 0,
+      city: null,
+      province: null,
     });
     const show = ref(false);
     const router = useRouter();
@@ -39,6 +42,8 @@ export default {
         user.createDays = data.createDays;
         user.createTime = data.createTime;
         user.listenSongs = data.listenSongs;
+        user.city = data.profile.city;
+        user.province = data.profile.province;
       }
     });
     const usefollow = async () => {
@@ -63,6 +68,7 @@ export default {
       changeShow,
       getfollow,
       usefollow,
+      filtterArea,
     };
   },
 };
@@ -111,12 +117,6 @@ export default {
     }
   }
 }
-:root {
-  --van-white: #fff;
-  --van-blue: #1989fa;
-
-  --van-button-primary-border-color: pink;
-}
 </style>
 
 <template>
@@ -141,7 +141,10 @@ export default {
           {{ user.profile.vipType }}
         </span></van-icon
       ><br />
-
+      <div style="margin-bottom:20px;">
+        <van-button type="primary" color="#07c160" size="mini" round>{{ filtterArea(user.province) }}</van-button>
+        <van-button type="primary" color="#07c160" size="mini" round>{{ filtterArea(user.city) }}</van-button>
+      </div>
       <div>
         <span class="title">{{ user.profile.follows }} 关注</span>
         <span class="title">{{ user.profile.followeds }} 粉丝</span>

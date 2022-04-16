@@ -20,7 +20,7 @@ export const comment = (params) => {
 };
 
 export const sendcomment = (params) => {
-  console.log(params);
+
   return http({
     method: 'GET',
     url: '/comment',
@@ -28,7 +28,7 @@ export const sendcomment = (params) => {
   });
 };
 export const sendcommentlike = (params) => {
-  // console.log(params);
+
   return http({
     method: 'GET',
     url: '/comment/like',

@@ -33,7 +33,7 @@ export default {
 .history {
   display: flex;
   justify-content: space-around;
-  height: 4vh;
+  height: 5vh;
   align-items: center;
   .left,
   .item {
@@ -42,12 +42,10 @@ export default {
   .content {
     width: 75vw;
     height: 100%;
-
     display: flex;
     align-items: center;
     overflow-x: auto;
     .item {
-      
       border-radius: 15px;
       margin-left: 5px;
       width: auto;
@@ -56,6 +54,9 @@ export default {
       white-space: nowrap;
       .style {
         padding: 5px;
+        border: 1px solid #000;
+        border-radius: 8px;
+        margin-top: 5px;
       }
     }
   }

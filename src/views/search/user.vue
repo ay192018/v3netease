@@ -43,7 +43,6 @@ export default {
 
 <style lang="less" scoped>
 .user {
-  background: #fff;
   padding-bottom: 20px;
   height: 80vh;
   overflow-y: auto;

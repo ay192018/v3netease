@@ -56,7 +56,7 @@ export default {
     const onConfirm = async (value, index) => {
       userupdate.value.gender = index;
       const { data } = await getuserupdate();
-      console.log(data);
+      data;
       changeshow.value = !changeshow.value;
     };
     const gender = computed(() => {
@@ -92,12 +92,12 @@ export default {
     };
 
     const onClickRight = () => {
-      console.log('提交');
+      ('提交');
     };
 
     const afterRead = (file) => {
       // 此时可以自行将文件上传至服务器
-      console.log(file);
+      file;
     };
 
     return {
@@ -125,7 +125,7 @@ export default {
 <style lang="less" scoped>
 .userData {
   .data {
-    margin: 5px 0;
+    margin: 5px auto;
   }
   ::v-deep(.van-nav-bar__text) {
     color: #bfbfbf;

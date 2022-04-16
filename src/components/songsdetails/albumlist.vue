@@ -246,12 +246,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
-/deep/ .van-nav-bar,
-.van-nav-bar__content,
-.van-nav-bar--fixed {
+::v-deep(.van-nav-bar, .van-nav-bar__content, .van-nav-bar--fixed) {
   background: transparent;
 }
-/deep/ .van-image__img {
+::v-deep(.van-image__img) {
   position: absolute;
   left: 0;
   right: 0;
@@ -321,7 +319,7 @@ export default {
     }
   }
 }
-/deep/ .van-nav-bar__title {
+::v-deep(.van-nav-bar__title) {
   color: #dfdfdf;
   font-size: 12px;
 }

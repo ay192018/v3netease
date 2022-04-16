@@ -57,6 +57,7 @@ export default {
         height: auto;
         width: 100%;
         overflow: hidden;
+        font-size: 13px;
       }
     }
   }
@@ -79,7 +80,7 @@ export default {
     <div class="videolist">
       <div class="item" v-for="(item, index) in attrs.video" :key="index">
         <van-image
-          width="100"
+          width="110"
           height="130"
           radius="15"
           fit="cover"

@@ -47,7 +47,6 @@ export default {
         content: message.value,
       });
 
-      console.log(data);
       if (data.code === 200) {
         show.value = !show.value;
         message.value = '';
@@ -141,7 +140,7 @@ export default {
     top: 0;
     z-index: 3000;
   }
-  /deep/ .van-nav-bar__title {
+  ::v-deep(.van-nav-bar__title) {
     color: #000;
     font-size: 13px;
   }

@@ -1,7 +1,7 @@
 body {
-  transition: all 0.5s;
-  --van-nav-bar-text-color: #ff6700;
-  --van-nav-bar-text-color: #ff6700;
+  font-family: @base-font-family;
+  --van-nav-bar-text-color: @gray-8;
+  --van-button-default-font-size: @line-height-xs;
   ---van-nav-bar-background-color: #f6f7f8;
   --van-button-primary-background-color: @white;
   --van-button-primary-border-color: none;
@@ -18,9 +18,11 @@ body {
   --van-cell-background-color: #0a0a0a;
   --van-cell-group-title-color: @white;
   --van-cell-label-color: @gray-7; */
+  .info {
+    opacity: 0.8;
+  }
   .indexTop {
     background: @white;
-    padding: 5px;
   }
   .recommend {
     display: flex;
@@ -87,6 +89,12 @@ body {
   .params {
     background-color: #e8e8e8;
     color: @black;
+  }
+  .Rank {
+    background-color: @white;
+  }
+  .follow {
+    background: #fff;
   }
 }
 

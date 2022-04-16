@@ -6,6 +6,7 @@ import { Toast, Notify } from 'vant';
 
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
+import { watchEffect } from '@vue/runtime-core';
 export default {
   setup(props, { attrs, emit }) {
     const store = useStore();
@@ -32,15 +33,11 @@ export default {
     watch(
       () => playId,
       async (newval, oldval) => {
-        console.log(newval, oldval);
         const { data } = await getcheck({
           id: newval.value,
         });
         try {
-          console.log(data);
-        } catch (error) {
-          console.log(error);
-        }
+        } catch (error) {}
       },
       { deep: true },
     );
@@ -48,6 +45,7 @@ export default {
       //传递给父组件的弹出层状态
       emit('changeshow', !attrs.show);
     };
+
     watch(
       //监听接收过来的当前播放时间来给绑定进度条的值进行赋值
       () => attrs.currentTime,
@@ -71,7 +69,7 @@ export default {
         });
 
         const result = lyrics(data);
-        // console.log(result);
+
         lyric.value = result.result;
         lyric.key = result.key;
       },
@@ -170,13 +168,11 @@ export default {
   width: 100vw;
   height: 100vh;
   position: relative;
-  /deep/ .van-nav-bar__title,
-  .van-ellipsis {
+  ::v-deep(.van-nav-bar__title, .van-ellipsis) {
     font-size: 12px;
     color: gray;
   }
-  /deep/ .van-nav-bar,
-  .van-nav-bar--fixed {
+  ::v-deep(.van-nav-bar, .van-nav-bar--fixed) {
     background: transparent;
   }
   .bgimg {
@@ -184,10 +180,10 @@ export default {
     z-index: -99;
   }
   .rotateimg {
-    position: fixed;
-    left: 28%;
-    top: 28%;
-    transform: translate(-50%, -50%);
+    position: absolute;
+    left: 25%;
+    top: 25%;
+
     animation-name: Rotate;
     animation-iteration-count: infinite;
     animation-play-state: paused;
@@ -245,12 +241,10 @@ export default {
       height: 33.3%;
       text-align: center;
 
-      /deep/.van-badge__wrapper,
-      .van-icon,
-      .van-icon-down {
+      ::v-deep(.van-badge__wrapper, .van-icon, .van-icon-down) {
         margin: auto 0;
       }
-      /deep/ .van-slider {
+      ::v-deep(.van-slider) {
         width: 80vw;
         margin: 0 20px;
       }
@@ -272,9 +266,9 @@ export default {
       @click-right="onClickRight"
     >
       <template #left>
-        <van-icon name="arrow-down" color="#323233" size="25" />
+        <van-icon name="arrow-down" color="#323233" size="32" />
       </template>
-      <template #right> <van-icon name="share-o" size="25" color="#323233" /> </template
+      <template #right> <van-icon name="share-o" size="32" color="#323233" /> </template
     ></van-nav-bar>
     <van-image
       width="100vw"
@@ -284,8 +278,8 @@ export default {
       :src="store.state.songlist[store.state.curret].al.picUrl"
     />
     <van-image
-      width="180px"
-      height="180px"
+      width="200px"
+      height="200px"
       round
       fit="cover"
       class="rotateimg"
@@ -307,13 +301,13 @@ export default {
     </div>
     <ul class="components">
       <li>
-        <van-icon name="like-o" size="28" color="rgb(50,50,51)" /><van-icon
+        <van-icon name="like-o" size="32" color="rgb(50,50,51)" /><van-icon
           name="down"
           size="28"
           color="rgb(50,50,51)"
-        /><van-icon name="chat-o" size="28" color="rgb(50,50,51)" @click="tocommnts" /><van-icon
+        /><van-icon name="chat-o" size="32" color="rgb(50,50,51)" @click="tocommnts" /><van-icon
           name="ellipsis"
-          size="28"
+          size="32"
           color="rgb(50,50,51)"
         />
       </li>
@@ -334,28 +328,28 @@ export default {
         <van-icon name="replay" size="28" color="rgb(50,50,51)" v-if="store.state.playmodel === 0" @click="playstyle" />
         <van-icon
           name="circle"
-          size="28"
+          size="32"
           color="rgb(50,50,51)"
           v-else-if="store.state.playmodel === 1"
           @click="playstyle"
         />
         <van-icon
           name="exchange"
-          size="28"
+          size="32"
           color="rgb(50,50,51)"
           v-else-if="store.state.playmodel === 2"
           @click="playstyle"
         />
-        <van-icon name="like-o" size="28" color="rgb(50,50,51)" v-else @click="playstyle" />
-        <van-icon name="arrow-left" size="28" color="rgb(50,50,51)" @click="switchsong(-1)" />
+        <van-icon name="like-o" size="32" color="rgb(50,50,51)" v-else @click="playstyle" />
+        <van-icon name="arrow-left" size="32" color="rgb(50,50,51)" @click="switchsong(-1)" />
         <van-icon
           :name="store.state.isplay ? 'pause-circle-o' : 'play-circle-o'"
-          size="32"
+          size="52"
           color="rgb(50,50,51)"
           @click="attrs.play()"
         />
-        <van-icon name="arrow" size="28" color="rgb(50,50,51)" @click="switchsong(1)" />
-        <van-icon name="bars" size="28" color="rgb(50,50,51)" @click.stop="emit('playstate')" />
+        <van-icon name="arrow" size="32" color="rgb(50,50,51)" @click="switchsong(1)" />
+        <van-icon name="bars" size="32" color="rgb(50,50,51)" @click.stop="emit('playstate')" />
       </li>
     </ul>
   </div>

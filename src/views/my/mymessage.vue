@@ -5,22 +5,22 @@
         <van-icon name="arrow-left" color="#b0b0b0" size="18" />
       </template>
     </van-nav-bar>
-    <van-search v-model="value" placeholder="搜索用户" :shape="round" />
+    <van-search v-model="value" placeholder="搜索用户" />
     <div class="icons">
       <div class="items">
-        <van-icon name="friends" size="40" color="red" />
+        <van-icon name="friends" size="40" color="#e9445a" />
         <span>粉丝</span>
       </div>
       <div class="items">
-        <van-icon name="comment" size="40" color="#0084ff" />
+        <van-icon name="comment" size="40" color="#71b3e2" />
         <span>评论</span>
       </div>
       <div class="items">
-        <van-icon name="question" size="40" color="#ff5e00" />
+        <van-icon name="question" size="40" color="#e77357" />
         <span>@我</span>
       </div>
       <div class="items">
-        <van-icon name="bell" size="40" color="#ff5e00b6" />
+        <van-icon name="bell" size="40" color="#f4be49" />
         <span>通知</span>
       </div>
     </div>
@@ -62,7 +62,7 @@ export default {
       const { data } = await getusermsg();
       if (data.code === 200) {
         list.value = data.msgs;
-        console.log(data.msgs);
+        data.msgs;
       }
     });
 

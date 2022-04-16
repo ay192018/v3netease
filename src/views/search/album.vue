@@ -13,7 +13,7 @@ export default {
     const router = useRouter();
     const offset = ref(1);
     const onLoad = async () => {
-      console.log(attrs.attrs.value);
+      attrs.attrs.value;
       const { data } = await getcloudsearch({
         keywords: attrs.attrs.value,
         type: 10,
@@ -46,7 +46,6 @@ export default {
 
 <style lang="less" scoped>
 .album {
-  background: #fff;
   padding-bottom: 20px;
   height: 80vh;
   overflow-y: auto;

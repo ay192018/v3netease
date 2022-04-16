@@ -95,19 +95,22 @@ export default {
       font-size: 12px;
     }
   }
-  .title {
-    display: flex;
-    width: 95vw;
-    color: #000;
-    font-size: 14px;
-    margin: 10px auto;
-    .playall {
-      margin-left: 5px;
-    }
-  }
+
   .icons {
     .tv {
       margin-right: 15px;
+    }
+  }
+  .title {
+    padding: 10px;
+    display: flex;
+    color: #000;
+    font-size: 14px;
+    align-items: center;
+    box-sizing: border-box;
+
+    .playallinfo {
+      margin-left: 10px;
     }
   }
 }
@@ -115,9 +118,9 @@ export default {
 
 <template>
   <div class="list">
-    <div class="title">
-      <van-icon name="play-circle-o" size="20" color="red" />
-      <div class="playall">播放全部</div>
+    <div class="title" style="padding: 10px;">
+      <van-icon name="play-circle-o" size="28" color="red" />
+      <div class="playallinfo">播放全部</div>
     </div>
     <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
       <div class="songslist">

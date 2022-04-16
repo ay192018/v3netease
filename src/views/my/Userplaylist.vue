@@ -165,7 +165,6 @@ export default {
 
 <style lang="less" scoped>
 .Userplaylist {
-  width: 95vw;
   margin: 20px auto;
   .like {
     width: 100%;
@@ -185,15 +184,14 @@ export default {
       margin-right: -30px;
     }
   }
-  /deep/ .van-tabs__wrap {
+ ::v-deep(.van-tabs__wrap) {
     border-radius: 15px;
   }
-  /deep/ .van-tabs__nav {
+::v-deep(.van-tabs__nav){
     background: transparent;
   }
 
   .ceated {
-    width: 95vw;
     margin: 0 auto;
     height: auto;
     border-radius: 15px;
@@ -213,12 +211,11 @@ export default {
     justify-content: space-around;
     margin-left: 10px;
     .name {
-      font-size: 12px;
+      font-size: 13px;
     }
   }
   .ceateds {
     margin-top: 15px;
-    width: 95vw;
 
     height: auto;
   }

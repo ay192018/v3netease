@@ -22,9 +22,9 @@ export default {
         artists.creator = attrs.data.creator;
       } else {
         artists.followed = attrs.data.artists;
-        console.log(attrs.data.artists);
+        attrs.data.artists;
       }
-      // console.log(artists.followed);
+      // (artists.followed);
     });
     const tocommnts = () => {
       store.dispatch('setflag', 5);

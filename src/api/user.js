@@ -93,10 +93,17 @@ export const getusermsg = (params) => {
     params,
   });
 };
-/* export const getusermsg = (params) => {
+export const getrecord = (params) => {
   return http({
     method: 'GET',
-    url: '/inner/version',
+    url: '/user/record',
     params,
   });
-}; */
+};
+export const getlogout = (params) => {
+  return http({
+    method: 'GET',
+    url: '/logout',
+    params,
+  });
+};

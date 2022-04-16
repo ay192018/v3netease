@@ -2,8 +2,8 @@
   <div class="Recommendlist ">
     <div class="item" v-for="item in attrs.playlist" :key="item.creativeId">
       <van-image
-        width="100"
-        height="100"
+        width="110"
+        height="110"
         radius="15"
         fit="cover"
         :src="item.resources[0].uiElement.image.imageUrl"
@@ -52,13 +52,14 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.item {
+  position: relative;
+  margin-right: 15px;
 
-  .item {
-    position: relative;
-    margin-right: 15px;
-    .title {
-      height: auto;
-      width: 100%;
-    }
+  .title {
+    height: auto;
+    width: 100%;
+    font-size: 13px;
   }
+}
 </style>

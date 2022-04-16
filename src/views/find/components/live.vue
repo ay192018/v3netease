@@ -40,10 +40,10 @@ export default {
   .title {
     height: auto;
     width: 100%;
+    font-size: 13px;
   }
   .count {
     background: rgba(200, 30, 22, 0.3);
-
     border-radius: 15px;
     padding: 3px;
     box-sizing: border-box;
@@ -61,7 +61,7 @@ export default {
 
   <div class="Recommendlist ">
     <div class="item" v-for="item in attrs.extInfo" :key="item.coverId">
-      <van-image width="100" height="100" radius="15" fit="cover" :src="item.cover">
+      <van-image width="110" height="110" radius="15" fit="cover" :src="item.cover">
         <template v-slot:loading>
           <van-loading type="spinner" size="20" color="#000" />
         </template>

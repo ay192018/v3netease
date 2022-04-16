@@ -1,6 +1,7 @@
 body {
-  transition: all 0.5s;
-  --van-nav-bar-text-color: #ff6700;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
+  --van-nav-bar-text-color: #323233;
+  --van-button-default-font-size: 14px;
   ---van-nav-bar-background-color: #f6f7f8;
   --van-button-primary-background-color: #fff;
   --van-button-primary-border-color: none;
@@ -18,9 +19,11 @@ body {
   --van-cell-group-title-color: @white;
   --van-cell-label-color: @gray-7; */
 }
+body .info {
+  opacity: 0.8;
+}
 body .indexTop {
   background: #fff;
-  padding: 5px;
 }
 body .recommend {
   display: flex;
@@ -84,4 +87,10 @@ body .hotsearch {
 body .params {
   background-color: #e8e8e8;
   color: #000;
+}
+body .Rank {
+  background-color: #fff;
+}
+body .follow {
+  background: #fff;
 }
