@@ -48,7 +48,7 @@ export default {
 <style lang="less" scoped>
 .item {
   margin: 0 auto;
-  height: 74vh;
+  height: 78vh;
 
   overflow-y: auto;
   .videoitem {
@@ -73,7 +73,7 @@ export default {
       }
     }
   }
-::v-deep(.van-list) {
+  ::v-deep(.van-list) {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;

@@ -122,7 +122,7 @@ export default {
 .content {
   width: 100%;
   padding: 5px;
-  height: 80vh;
+  height: 83vh;
   box-sizing: border-box;
   overflow-y: auto;
   .itemmargin {

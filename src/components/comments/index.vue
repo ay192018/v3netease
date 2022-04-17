@@ -257,13 +257,13 @@ export default {
           @click-right-icon="sendcommit"
           :placeholder="placeholder"
           ><template #right-icon>
-            <van-button size="small" type="primary" round>评论</van-button>
+            <van-button size="small" type="primary" hairline round>评论</van-button>
           </template></van-field
         >
       </van-cell-group></van-popup
     >
     <div class="btn">
-      <van-button type="primary" size="large" round @click="commentdata">听说爱评论的粉丝很多</van-button>
+      <van-button type="primary" size="large" hairline round @click="commentdata">听说爱评论的粉丝很多</van-button>
     </div>
   </div>
 </template>

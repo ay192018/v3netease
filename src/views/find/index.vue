@@ -8,6 +8,7 @@ import RandomPlaylist from './RandomPlaylist.vue';
 import Radar from './components/radar.vue';
 import Scenario from './components/scenario.vue';
 import Ranking from './ranking.vue';
+import NewSongs from './components/newSongs.vue';
 import {
   text,
   looktitle,
@@ -26,7 +27,7 @@ import {
   rankingbtn,
 } from '@/hooks/reactive';
 import Look from './components/live.vue';
-import { ref } from '@vue/reactivity';
+import { reactive, ref } from '@vue/reactivity';
 import { Toast } from 'vant';
 import { getfindinfo } from '@/api/banner.js';
 import { onMounted, provide } from '@vue/runtime-core';
@@ -42,6 +43,7 @@ export default {
     Radar,
     Scenario,
     Ranking,
+    NewSongs,
   },
   name: 'find',
   setup() {
@@ -56,6 +58,7 @@ export default {
     const extInfo = ref([]);
     const cursor = ref('');
     const Dynamic = ref([]);
+    const NewSongs = ref([]);
     const cookie = JSON.parse(localStorage.getItem('cookie'));
     provide('Dynamic', Dynamic);
     const onLoad = async () => {
@@ -112,6 +115,11 @@ export default {
           scenario.value = item.creatives;
           scenariotitle.value = item.uiElement.subTitle.title;
           scenariobtn.value = item.uiElement.button.text;
+        } else if (item.blockCode === 'HOMEPAGE_BLOCK_NEW_ALBUM_NEW_SONG') {
+          //&新歌新碟数字专辑
+          NewSongs.value = item.creatives;
+        } else {
+          console.log(item);
         }
       });
       loading.value = false;
@@ -161,6 +169,7 @@ export default {
       scenario,
       extInfo,
       cookie,
+      NewSongs,
     };
   },
 };
@@ -201,13 +210,14 @@ export default {
             <Recommendlist :playlist="playlist" />
           </div>
 
-          <Look :extInfo="extInfo" v-if="cookie && extInfo.length" />
+          <Look :extInfo="extInfo" v-if="cookie && extInfo" />
 
           <RandomPlaylist />
-          <Video v-if="video.length" :video="video" />
-          <Ranking v-if="cookie && ranking.length" :ranking="ranking" />
+          <Video v-if="video" :video="video" />
+          <Ranking v-if="cookie && ranking" :ranking="ranking" />
           <Radar :playlist="Radar" v-if="Radar.length" />
           <Scenario :playlist="scenario" v-if="scenario.length" />
+          <NewSongs :NewSongs="NewSongs" v-if="NewSongs" />
         </van-list>
       </van-pull-refresh>
     </div>

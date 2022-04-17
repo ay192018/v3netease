@@ -43,6 +43,7 @@
 .dark .follow {
   background: linear-gradient(#191919, #101010);
 }
+.dark .child-view,
 .dark .indexTop {
   background: #0a0a0a;
   color: #fff;
@@ -141,7 +142,6 @@
 .dark .playallinfo {
   color: #fff !important;
 }
-/* html {
-  background: rgb(7, 7, 7);
+html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
 }
- */

@@ -8,7 +8,7 @@
       </van-button>
     </div>
     <div class="content">
-      <van-swipe class="my-swipe" indicator-color="white" :show-indicators="false" :width="325" :loop="false">
+      <van-swipe class="my-swipe" indicator-color="white" :show-indicators="false" :loop="false">
         <van-swipe-item v-for="(item, index) in attrs.ranking" :key="index"
           ><span class="title" @click="send(item)">{{ item.uiElement.mainTitle.title }}<van-icon name="arrow"/></span>
           <div class="item" v-for="(items, indexs) in item.resources" :key="indexs" @click="play(item, indexs)">
@@ -44,7 +44,6 @@
                   </div>
                 </div>
               </div>
-              <van-icon name="play-circle-o" class="play" size="25" color="#c4c4c4" />
             </div>
           </div>
         </van-swipe-item>

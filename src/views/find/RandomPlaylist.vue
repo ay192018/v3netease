@@ -42,7 +42,6 @@
                 </div>
               </div>
             </div>
-            <van-icon name="play-circle-o" class="play" size="25" color="#c4c4c4" />
           </div>
         </van-swipe-item>
       </van-swipe>

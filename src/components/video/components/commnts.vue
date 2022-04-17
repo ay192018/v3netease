@@ -220,6 +220,7 @@ export default {
           rows="1"
           autosize
           clickable
+          hairline
           type="textarea"
           @click-right-icon="sendcommit"
           placeholder="听说爱评论的粉丝很多"

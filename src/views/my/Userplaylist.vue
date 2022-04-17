@@ -21,7 +21,9 @@
           <span class="trackCount">{{ cookie ? playlist.like.trackCount : 0 }} 首</span>
         </div>
       </div>
-      <van-button round size="mini" type="primary" icon="like-o" class="btn" @click.stop="Cardiac">心动模式</van-button>
+      <van-button round size="mini" type="primary" icon="like-o" class="btn" hairline @click.stop="Cardiac"
+        >心动模式</van-button
+      >
     </div>
 
     <van-tabs v-model:active="active" scrollspy sticky>
@@ -184,10 +186,10 @@ export default {
       margin-right: -30px;
     }
   }
- ::v-deep(.van-tabs__wrap) {
+  ::v-deep(.van-tabs__wrap) {
     border-radius: 15px;
   }
-::v-deep(.van-tabs__nav){
+  ::v-deep(.van-tabs__nav) {
     background: transparent;
   }
 
