@@ -25,6 +25,7 @@ export default {
     const router = useRouter();
     const route = useRoute();
     const store = useStore();
+    const title = ref(false);
     const cookie = JSON.parse(localStorage.getItem('profile'));
     const issubscrib = async () => {
       if (songsdata.songs.subscribed) {
@@ -61,6 +62,13 @@ export default {
         }
       }
     };
+    const scroll = (e) => {
+      if (e.target.scrollTop > 80) {
+        title.value = true;
+      } else {
+        title.value = false;
+      }
+    };
     const tocommnts = async () => {
       store.dispatch('setflag', 2);
 
@@ -88,6 +96,7 @@ export default {
 
       try {
         songsdata.songs = data.playlist;
+
         songsdata.creator = data.playlist.creator;
         songsdata.trackIds = data.playlist.trackIds;
         songsdata.tags = data.playlist.tags;
@@ -99,7 +108,6 @@ export default {
         Toast.fail('加载失败,歌曲也许太多了');
       }
     });
-    const scroll = (e) => {};
 
     return {
       onClickLeft,
@@ -115,6 +123,7 @@ export default {
       show,
       cookie,
       issubscrib,
+      title,
     };
   },
 };
@@ -235,12 +244,20 @@ export default {
 .label {
   margin-left: 5px;
 }
+.index {
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+}
+::v-deep(.van-nav-bar) {
+  backdrop-filter: blur(30px);
+}
 </style>
 
 <template>
   <transition name="slide-fade">
-    <div>
-      <van-nav-bar :border="false" fixed @click-left="onClickLeft" :title="songsdata.songs.name">
+    <div class="index" @scroll="scroll">
+      <van-nav-bar :border="false" fixed @click-left="onClickLeft" :title="title ? songsdata.songs.name : '歌单'">
         <template #left>
           <van-icon name="arrow-left" size="23" color="#ccc" />
         </template>

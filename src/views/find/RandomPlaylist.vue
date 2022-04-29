@@ -13,7 +13,7 @@
           <div class="item" v-for="(items, indexs) in item.resources" :key="indexs" @click="play(items)">
             <div class="left">
               <div class="img">
-                <van-icon
+                <!-- <van-icon
                   :name="
                     item.resources.length === 3 && store.state.audio.played && indexs === store.state.curret
                       ? 'stop'
@@ -22,7 +22,7 @@
                   size="20"
                   color="#fff"
                   class="icon"
-                />
+                /> -->
                 <van-image
                   width="40"
                   height="40"

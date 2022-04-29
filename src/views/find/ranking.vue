@@ -15,7 +15,7 @@
             <div class="contents">
               <div class="left">
                 <div class="img">
-                  <van-icon
+                  <!-- <van-icon
                     :name="
                       item.resources.length === 3 && store.state.audio.played && indexs === store.state.curret
                         ? 'stop'
@@ -24,7 +24,7 @@
                     size="20"
                     color="#fff"
                     class="icon"
-                  />
+                  /> -->
                   <van-image
                     width="40"
                     height="40"

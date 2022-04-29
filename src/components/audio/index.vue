@@ -209,7 +209,7 @@ export default {
 </style>
 
 <template>
-  <div class="audio" @click="showPopup">
+  <div class="audio animate__animated animate__backInDown" @click="showPopup">
     <audio
       ref="audio"
       @timeupdate="onTimeupdate"

@@ -73,7 +73,7 @@ export default {
     <div class="recommend">
       <h3>{{ recentVideo }}</h3>
 
-      <van-button type="primary" class="btn" hairline round size="mini">
+      <van-button type="primary" class="btn" hairline round size="mini" @click="router.push('/Videosquare')">
         <template #icon> {{ Videotext }}<van-icon name="revoke" /> </template>
       </van-button>
     </div>
