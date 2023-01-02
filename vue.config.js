@@ -17,7 +17,7 @@ module.exports = {
   devServer: {
     proxy: {
       '/api': {
-        target: 'http://www.codeman.ink:3000', //代理URL
+        target: 'http://139.196.192.50:3000/', //代理URL
         /*   http://www.codeman.ink:3000 */
         changeOrigin: true, //是否跨域
         ws: true, //开实时通信
@@ -26,7 +26,7 @@ module.exports = {
         },
       },
       '/qq': {
-        target: 'http://localhost:2000', //代理URL
+        target: 'http://junyu.shop:3000/ ', //代理URL
         /*   http://www.codeman.ink:3000 */
         changeOrigin: true, //是否跨域
         ws: true, //开实时通信

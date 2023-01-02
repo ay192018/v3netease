@@ -48,9 +48,7 @@ export default {
 <style lang="less" scoped>
 .item {
   margin: 0 auto;
-  height: 78vh;
 
-  overflow-y: auto;
   .videoitem {
     width: 47%;
     height: auto;

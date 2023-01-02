@@ -7,7 +7,7 @@ import { useWindowSize } from '@vant/use';
 import { Toast } from 'vant';
 import { changeaudio, initaudio, debounce } from '@/Util/fltter.js';
 import { useStore } from 'vuex';
-import {watchEffect} from "@vue/runtime-core";
+import { watchEffect } from '@vue/runtime-core';
 export default {
   components: { Audio, Layout },
   name: 'App',
@@ -19,8 +19,6 @@ export default {
     const fail = () => {
       Toast.fail('请切换手机模式浏览！！！');
     };
-
-
 
     watch(
       () => width.value,
@@ -53,7 +51,7 @@ export default {
         case '/my':
           nextTick(() => {
             changeaudio();
-          })
+          });
           break;
         case '/follow':
           changeaudio();
@@ -86,14 +84,10 @@ export default {
 <template>
   <router-view v-slot="{ Component }">
     <transition name="slide-fade">
-      <keep-alive v-if="route.meta.keepAlive" :max="5" include="">
+      <keep-alive>
         <component class="child-view" :is="Component"> </component>
       </keep-alive>
-
-      <component v-else class="child-view" :is="Component"> </component>
     </transition>
-    <keep-alive v-if="route.path !== '/login'">
-      <component is="Audio"> </component>
-    </keep-alive>
   </router-view>
+  <component is="Audio"> </component>
 </template>

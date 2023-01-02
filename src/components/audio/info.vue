@@ -195,7 +195,6 @@ export default {
     text-align: center;
     position: fixed;
     left: 10%;
-
     top: 12%;
     width: 80vw;
     color: #ccc;

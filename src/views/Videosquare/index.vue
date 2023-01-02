@@ -51,13 +51,4 @@ export default {
       </van-tab>
     </van-tabs>
   </div>
-  <!--   <van-empty image="network" description="请登录" v-else>
-    <van-button
-      round
-      type="danger"
-      class="bottom-button"
-      @click="router.push('/login')"
-      >登录</van-button
-    >
-  </van-empty> -->
 </template>

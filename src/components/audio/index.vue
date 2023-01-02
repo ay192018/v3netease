@@ -61,7 +61,6 @@ export default {
       if (store.state.playmodel === 0) {
         store.commit('setcurret', store.state.curret + 1);
       } else if (store.state.playmodel === 1) {
-
         store.commit('setcurret', random(0, store.state.songlist.length - 1));
       } else {
         store.commit('setcurret', store.state.curret);
@@ -168,6 +167,7 @@ export default {
       .songname {
         margin-left: 10px;
         width: 190px;
+        line-height: 15px;
       }
       & i {
         margin-left: 30px;

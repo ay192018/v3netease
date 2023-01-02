@@ -29,7 +29,6 @@ export default {
 <style lang="less" scoped>
 .Recentplay {
   height: 84vh;
-  overflow-y: auto;
 
   padding: 5px;
   .Recentlyitem {

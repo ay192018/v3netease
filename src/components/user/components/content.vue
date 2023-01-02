@@ -111,9 +111,9 @@ export default {
     provide('id', attrs.user.id);
     const router = useRouter();
     onMounted(async () => {
-      const { data } = await getuserplaylist({
+      const { data } = await {
         uid: attrs.user.id,
-      });
+      };
       playlist.like = data.playlist[0];
       data.playlist.filter((item) => {
         if (item.userId == attrs.user.id) {

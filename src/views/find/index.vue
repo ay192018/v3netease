@@ -179,7 +179,6 @@ export default {
 .findconent {
   scroll-behavior: hidden;
   margin: 0 auto;
-  overflow-y: auto;
   margin-top: 46px;
   height: 85.5vh;
   padding-bottom: 100px;

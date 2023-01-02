@@ -83,7 +83,13 @@ export default {
           item.routername
         }}</van-tabbar-item>
       </van-tabbar>
-      <router-view />
+      <router-view v-slot="{ Component }">
+        <transition name="slide">
+          <keep-alive>
+            <component :is="Component" />
+          </keep-alive>
+        </transition>
+      </router-view>
     </div>
   </transition>
 </template>
